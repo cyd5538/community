@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, "패스워드를 입력해주세요"]
     },
-        profileImage: {
+    profileImage: {
         type: String,
         default: null
     }

@@ -22,14 +22,12 @@ const protect = asyncHandler(async (req, res, next) => {
       next()
     } catch (error) {
       console.log(error)
-      res.status(401)
-      throw new Error('인증되지 않았습니다')
+      res.status(401).json({ error: "인증되지 않았습니다" });
     }
   }
 
   if (!token) {
-    res.status(401)
-    throw new Error("토큰이 없습니다.")
+    res.status(401).json({ error: "토큰이 없습니다." });
   }
 })
 

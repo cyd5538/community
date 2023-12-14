@@ -4,6 +4,7 @@ const User = require('../models/userModel')
 
 const protect = asyncHandler(async (req, res, next) => {
   let token
+
   // Request의 header의 Authorization에서 토큰을 추출한다.
   if (
     req.headers.authorization &&
@@ -14,8 +15,7 @@ const protect = asyncHandler(async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1]
 
       // jwt.verify()함수를 이용하여 토큰 유효성을 확인
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
+      const decoded = jwt.verify(JSON.parse(token), process.env.JWT_SECRET)
       // .select('-password')하면 비밀번호를 읽어오지않는다
       req.user = await User.findById(decoded.id).select('-password')
 

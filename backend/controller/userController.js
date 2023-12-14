@@ -58,8 +58,7 @@ const LoginUser = asyncHandler(async (req,res) => {
             token: generateToken(user._id)
         })
     }else{
-        res.status(400)
-        throw new Error("이메일과 패스워드를 확인해주세요") 
+        res.status(400).json({ error: "이메일과 패스워드를 확인해주세요" });
     }
 })
 

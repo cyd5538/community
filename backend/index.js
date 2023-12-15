@@ -10,6 +10,7 @@ connectDB()
 app.use(express.json());
 app.use(cors());
 app.use('/api/users', require('./routes/userRoutes.js'))
+app.use('/api/posts', require('./routes/postRoutes.js'));
 
 app.listen(port, () => {
   console.log(`server connected ${port}`)

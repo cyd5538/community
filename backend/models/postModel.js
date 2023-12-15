@@ -13,6 +13,7 @@ const PostSchema = new Schema({
   },
   image: {
     type: String,
+    default: null
   },
   user: {
     type: mongoose.Types.ObjectId,

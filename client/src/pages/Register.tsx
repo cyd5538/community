@@ -2,7 +2,7 @@ import React, { useState, FormEvent } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from 'react-router-dom';
-import { register } from '../lib/api';
+import { register } from '../lib/userApi';
 import axios from 'axios';
 
 interface RegisterProps {}

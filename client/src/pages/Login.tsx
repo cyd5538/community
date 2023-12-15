@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from 'react-router-dom';
-import { login } from '../lib/api';
+import { login } from '../lib/userApi';
 import axios from 'axios';
 
 interface LoginForm {

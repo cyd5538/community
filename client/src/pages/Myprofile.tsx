@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getMyInfo } from '../lib/api';
+import { getMyInfo } from '../lib/userApi';
 import axios from 'axios';
 
 const Myprofile = () => {

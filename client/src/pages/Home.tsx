@@ -1,10 +1,14 @@
-import { Button } from '@/components/ui/button'
-import React from 'react'
+import PostModal from '@/components/Modal/PostModal'
+import usePostModel from '@/hook/userPostModel';
 
 const Home = () => {
+  const { onOpen } = usePostModel();
+
   return (
-    <div>
-      <Button>Click me</Button>
+    <div className='w-full flex flex-col'>
+      <PostModal />
+      <button onClick={onOpen}>클릭</button>
+
     </div>
   )
 }

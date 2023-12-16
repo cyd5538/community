@@ -1,6 +1,8 @@
 import { FormEvent, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from "@/components/ui/textarea";
+import { handlePostSubmit } from '@/lib/postApi';
+import Loading from '../ui/Loading';
 import Modal from '../ui/Modal';
 import usePostModel from '@/hook/userPostModel';
 
@@ -18,8 +20,26 @@ const PostModal = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
 
+    try {
+      setLoading(true); 
+      await handlePostSubmit(title, description, file, token);
+      setTitle("")
+      setDescription("")
+      setFile(null)
+      postModel.onClose()
+      alert("포스트가 완료되었습니다.")
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false); 
+    }
   };
+
+  if(loading) {
+    return <Loading />
+  }
 
   const bodyContent = (
     <form className='flex gap-4 flex-col'>

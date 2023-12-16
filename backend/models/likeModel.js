@@ -13,6 +13,8 @@ const LikeSchema = new Schema({
     ref: "Posts",
     required: true,
   },
+},{
+  timestamps : true
 });
 
 module.exports = mongoose.model("Like", LikeSchema);

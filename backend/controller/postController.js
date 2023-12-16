@@ -6,7 +6,7 @@ const getPaginatedPosts = asyncHandler(async (req, res) => {
   const pageSize = parseInt(req.query.pageSize) || 10; 
 
   const skip = (page - 1) * pageSize;
-  const posts = await Posts.find().skip(skip).limit(pageSize).populate('likes comments');
+  const posts = await Posts.find().sort({ createdAt: 'desc' }).skip(skip).limit(pageSize).populate('likes comments');
 
   res.status(200).json(posts);
 });
@@ -15,6 +15,7 @@ const getPostsByLikes = asyncHandler(async (req, res) => {
   const posts = await Posts.find().sort({ likes: 'desc' }).populate('likes comments');
   res.status(200).json(posts);
 });
+
 
 const createPost = asyncHandler(async (req, res) => {
   if (!req.body.title) {

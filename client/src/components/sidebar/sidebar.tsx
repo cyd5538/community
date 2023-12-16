@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {} from "react";
 import { CiMenuBurger } from "react-icons/ci";
 import { CiHome } from "react-icons/ci";
 import { AiTwotoneProfile } from "react-icons/ai";
@@ -6,6 +6,7 @@ import { IoSettings } from "react-icons/io5";
 import { FiMessageSquare } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { IoFootballOutline } from "react-icons/io5";
+import useSidebar from "@/hook/useSidebarWidth";
 
 const Sidebar = () => {
   const menus = [
@@ -15,19 +16,21 @@ const Sidebar = () => {
     { name: "Profile", link: "/", icon: AiTwotoneProfile, margin: true },
     { name: "Setting", link: "/", icon: IoSettings },
   ];
-  const [open, setOpen] = useState(true);
+
+  const sidebarWidth = useSidebar()
+
   return (
-    <section className="flex gap-6">
+    <section className="flex gap-6 fixed top-0 left-0 z-50">
       <div
         className={`bg-green-700 min-h-screen ${
-          open ? "w-72" : "w-16"
+          !sidebarWidth.Open ? "w-72" : "w-16"
         } duration-500 text-gray-100 px-4`}
       >
         <div className="py-3 flex justify-end">
           <CiMenuBurger
             size={26}
             className="cursor-pointer"
-            onClick={() => setOpen(!open)}
+            onClick={sidebarWidth.Open ? sidebarWidth.onClose : sidebarWidth.onOpen}
           />
         </div>
         <div className="mt-4 flex flex-col gap-4 relative">
@@ -45,14 +48,14 @@ const Sidebar = () => {
                   transitionDelay: `${i}00ms`,
                 }}
                 className={`whitespace-pre duration-500 ${
-                  !open && "opacity-0 translate-x-4 overflow-hidden"
+                  sidebarWidth.Open && "opacity-0 translate-x-4 overflow-hidden"
                 }`}
               >
                 {menu?.name}
               </h2>
               <h2
                 className={`${
-                  open && "hidden"
+                  !sidebarWidth.Open && "hidden"
                 } absolute left-48 bg-green-300 font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
               >
                 {menu?.name}

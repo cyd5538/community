@@ -1,22 +1,44 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from "@/components/ui/textarea";
 import { handlePostSubmit } from '@/lib/postApi';
 import Loading from '../ui/Loading';
 import Modal from '../ui/Modal';
 import usePostModel from '@/hook/userPostModel';
+import { IoMdClose } from "react-icons/io";
+import { CiImageOff } from "react-icons/ci";
 
 const PostModal = () => {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [file, setFile] = useState<string | null>(null);
+  const [filePreview, setFilePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const postModel = usePostModel();
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setFile(selectedFile);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleButtonClick = (e:FormEvent) => {
+    e.preventDefault();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (event: ProgressEvent<FileReader>) => {
+        setFilePreview(event.target?.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
+    } else {
+      setFilePreview(null);
+    }
+  };
+
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -40,7 +62,6 @@ const PostModal = () => {
   if(loading) {
     return <Loading />
   }
-
   const bodyContent = (
     <form className='flex gap-4 flex-col'>
       <Input
@@ -55,15 +76,26 @@ const PostModal = () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <div className='flex gap-4'>
+      <div className='flex gap-4 justify-between'>
         <Input
-          className='h-32'
+          className='hidden'
+          ref={fileInputRef}
           type="file"
-          placeholder="업로드할 이미지를 선택해주세요"
           onChange={handleFileChange}
         />
-        <div className='flex justify-center items-center'>
-          <button className='shadow-lg bg-green-400 text-white hover:bg-green-500 w-40 h-16 rounded-full' onClick={handleSubmit}>
+        {filePreview ? 
+        <div className='relative w-full'>
+          <img className='w-full h-48 object-cover' src={filePreview} alt="File Preview" /> 
+          <div className='text-white absolute top-2 right-4 p-1 rounded-full bg-blue-300 cursor-pointer hover:bg-blue-500' onClick={() => setFilePreview(null)}>
+            <IoMdClose className="text-xl"/>
+          </div>
+        </div> :
+        <>
+          <CiImageOff className="text-2xl cursor-pointer" onClick={handleButtonClick}/>
+        </>
+        }
+        <div className='flex justify-end items-center'>
+          <button className='shadow-lg bg-green-400 text-white hover:bg-green-500 w-20 h-12 rounded-full' onClick={handleSubmit}>
             Post
           </button>
         </div>

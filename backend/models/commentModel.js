@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
@@ -16,3 +18,5 @@ const CommentSchema = new Schema({
     required: true,
   },
 });
+
+module.exports = mongoose.model("Comment", CommentSchema);

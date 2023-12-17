@@ -6,13 +6,27 @@ const getPaginatedPosts = asyncHandler(async (req, res) => {
   const pageSize = parseInt(req.query.pageSize) || 10; 
 
   const skip = (page - 1) * pageSize;
-  const posts = await Posts.find().sort({ createdAt: 'desc' }).skip(skip).limit(pageSize).populate('likes comments user');
+  const posts = await Posts.find()
+    .sort({ createdAt: 'desc' })
+    .skip(skip)
+    .limit(pageSize)
+    .populate({
+      path: 'likes comments user',
+      select: '-password', 
+    });
 
   res.status(200).json(posts);
 });
 
+
 const getPostsByLikes = asyncHandler(async (req, res) => {
-  const posts = await Posts.find().sort({ likes: 'desc' }).populate('likes comments user');
+  const posts = await Posts.find()
+    .sort({ likes: 'desc', createdAt: 'desc' }) 
+    .populate({
+      path: 'likes comments user',
+      select: '-password', 
+    });
+
   res.status(200).json(posts);
 });
 

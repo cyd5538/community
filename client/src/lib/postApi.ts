@@ -40,3 +40,12 @@ export const handlePostSubmit = async (title, description, file, token) => {
   }
 };
 
+export const getAllposts = async ({ pageParam }: { pageParam: number }) => {
+  const res = await axios.get(`${API_URL}?page=${pageParam}`);
+  return res.data;
+};
+
+export const getLikeposts = async ({ pageParam }: { pageParam: number }) => {
+  const res = await axios.get(`${API_URL}/like?page=${pageParam}`);
+  return res.data;
+};

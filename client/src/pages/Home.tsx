@@ -1,16 +1,22 @@
-import Allposts from '@/components/Home/Allposts';
+import Post from '@/components/Home/Post';
 import Searchbar from '@/components/Home/Searchbar';
 import PostModal from '@/components/Modal/PostModal'
-import usePostModel from '@/hook/userPostModel';
 
 const Home = () => {
-  const { onOpen } = usePostModel();
 
   return (
     <div className='w-full flex flex-col relative'>
       <Searchbar />
       <PostModal />
-      <button onClick={onOpen}>클릭</button>
+      <div className='pt-16 w-full flex'>
+        <div className='w-full sm:w-2/3 border-gray-10 border-[1px] p-4'>
+          <Post />
+        </div>
+        <div className='hidden sm:block bg-gray-400'>
+
+        </div>
+      </div>
+      
     </div>
   )
 }

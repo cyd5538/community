@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 interface PostLikeProps {
-  id: string | null
+  id: string | undefined
   data: PostType
 }
 

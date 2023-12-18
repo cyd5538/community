@@ -4,6 +4,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { getLikeposts } from '@/lib/postApi';
 import type { PostType } from "@/types/types";
 import Post from './Post';
+import useUserInfo from '@/hook/getUser';
 
 const Likeposts = () => {
   const {
@@ -20,6 +21,7 @@ const Likeposts = () => {
     },
   });
 
+  const user = useUserInfo()
 
   return (
     <InfiniteScroll
@@ -32,7 +34,7 @@ const Likeposts = () => {
         {data?.pages.map((group, idx) => (
           <React.Fragment key={idx}>
             {group.map((post:PostType) => (
-                <Post key={post._id} data={post} />
+                <Post key={post._id} data={post} user={user}/>
               ))}
           </React.Fragment>
         ))}

@@ -12,7 +12,8 @@ export type CommentType = {
 
 export type UserType = {
   profileImage: string | null;
-  _id: string;
+  _id?: string;
+  id?: string
   nickname: string;
   email: string;
   createdAt: string;
@@ -27,7 +28,7 @@ export type PostType = {
   likes: LikeType[]; 
   title: string;
   updatedAt: string;
-  user: string;
+  user: UserType;
   __v: number;
 };
 

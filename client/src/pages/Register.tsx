@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from 'react-router-dom';
 import { register } from '../lib/userApi';
 import axios from 'axios';
+import customToast from '@/components/ui/customToast';
 
 interface RegisterProps {}
 
@@ -29,14 +30,14 @@ const Register: React.FC<RegisterProps> = () => {
     try {
       const userData = { email, nickname, password };
       const response = await register(userData);
-
-      alert("회원가입 완료 로그인 해주세요.");
+      customToast('success', '회원가입 완료 로그인 해주세요.');
       navigate('/login');
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        alert(error.response?.data.error);
+        alert();
+        customToast('error', error.response?.data.error);
       }
-      else alert('회원가입 중에 에러가 발생했습니다.');
+      else customToast('error', '회원가입 중에 에러가 발생했습니다.');
     }
   };
 

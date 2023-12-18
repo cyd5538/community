@@ -2,7 +2,13 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:5000/api/users/'
 
-export const register = async (userData) => {
+type UserData = {
+  email: string, 
+  nickname?: string, 
+  password: string
+}
+
+export const register = async (userData : UserData) => {
   const response = await axios.post(API_URL, userData)
 
   if (response.data) {
@@ -12,7 +18,7 @@ export const register = async (userData) => {
   return response.data
 }
 
-export const login = async (userData) => {
+export const login = async (userData: UserData) => {
   const response = await axios.post(API_URL + 'login', userData)
 
   if (response.data) {
@@ -22,7 +28,7 @@ export const login = async (userData) => {
   return response.data
 }
 
-export const getMyInfo = async (token) => {
+export const getMyInfo = async (token : string | null) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,

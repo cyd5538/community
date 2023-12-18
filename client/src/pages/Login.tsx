@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from 'react-router-dom';
 import { login } from '../lib/userApi';
 import axios from 'axios';
+import customToast from '@/components/ui/customToast';
 
 interface LoginForm {
   email: string;
@@ -29,13 +30,13 @@ const Login = () => {
 
     try {
       const response = await login(formData);
-      alert("로그인 완료");
+      customToast('success', '로그인 성공했습니다.');
       navigate('/');
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        alert(error.response?.data.error);
+        customToast('error', error.response?.data.error);
       }
-      else alert('로그인 중에 에러가 발생했습니다.');
+      else customToast('error', '로그인 실패했습니다.');
     }
   };
 

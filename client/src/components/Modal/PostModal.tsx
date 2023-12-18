@@ -8,6 +8,7 @@ import usePostModel from '@/hook/userPostModel';
 import { IoMdClose } from "react-icons/io";
 import { CiImageOff } from "react-icons/ci";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import customToast from '../ui/customToast';
 
 const PostModal = () => {
   const [title, setTitle] = useState<string>('');
@@ -33,7 +34,7 @@ const PostModal = () => {
       setTitle("")
       setDescription("")
       setFile(null)
-      alert("포스트가 완료되었습니다.")
+      customToast('succes', "포스트가 완료되었습니다.")
       postModel.onClose();
     } catch (error) {
       console.log(error)

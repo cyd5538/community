@@ -5,6 +5,8 @@ import Register from "./pages/Register"
 import Myprofile from "./pages/Myprofile"
 import Sidebar from "./components/sidebar/sidebar"
 import Container from "./components/ui/Container"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -12,6 +14,7 @@ function App() {
     <div className="flex">
       <Sidebar />
       <Container>
+      <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/login" element={<Login />}/>

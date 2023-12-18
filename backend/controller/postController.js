@@ -20,8 +20,15 @@ const getPaginatedPosts = asyncHandler(async (req, res) => {
 
 
 const getPostsByLikes = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page) || 1; 
+  const pageSize = parseInt(req.query.pageSize) || 10; 
+
+  const skip = (page - 1) * pageSize;
+
   const posts = await Posts.find()
     .sort({ likes: 'desc', createdAt: 'desc' }) 
+    .skip(skip)
+    .limit(pageSize)
     .populate({
       path: 'likes comments user',
       select: '-password', 

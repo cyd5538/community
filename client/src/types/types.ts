@@ -1,4 +1,4 @@
-export type Comment = {
+export type CommentType = {
   _id: string;
   createdAt: string;
   description: string;
@@ -10,7 +10,7 @@ export type Comment = {
   __v: number;
 };
 
-export type User = {
+export type UserType = {
   profileImage: string | null;
   _id: string;
   nickname: string;
@@ -18,7 +18,7 @@ export type User = {
   createdAt: string;
 };
 
-export type Post = {
+export type PostType = {
   _id: string;
   comments: Comment[];
   createdAt: string;

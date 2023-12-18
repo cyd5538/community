@@ -1,52 +1,40 @@
-import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import usePostModel from '@/hook/userPostModel';
-import Allposts from './Allposts';
-import Likeposts from './Likeposts';
+import type { PostType } from "@/types/types";
+import { format, parseISO } from "date-fns";
+import { AiOutlineComment, AiOutlineHeart } from "react-icons/ai";
 
-const Post = () => {
-  const [searchParams] = useSearchParams();
-  const [active, setActive] = useState<string | null>(null)
-  const param = searchParams.get('posts');
-
-  const { onOpen } = usePostModel();
-
-  const menus = [
-    { name: "최신", link: "/" },
-    { name: "좋아요", link: "?posts=like" },
-  ];
-
-  useEffect(() => {
-    setActive(param ? "좋아요" : "최신")
-  }, [param])
-
+interface PostProps {
+  data: PostType
+}
+ 
+const Post:React.FC<PostProps> = ({data}) => {
+ 
   return (
-    <div>
-      <div className='flex justify-between'>
-        <div className='flex gap-4 py-2'>
-          {menus.map((menu) => (
-            <Link
-              key={menu.name}
-              className={`${active === menu.name ? 'text-gray-500 underline' : ""} text-lg`}
-              to={menu.link}
-              onClick={() => setActive(menu.name)}
-            >
-              {menu.name}
-            </Link>
-          ))}
+    <div className="flex gap-2 flex-col shadow-sm p-2">
+      <div className='flex gap-2 items-center justify-between'>
+        <div className='flex gap-2'>
+          <img src={data.user.profileImage ? data.user.profileImage : '/public/user.png'} width={30} height={30} alt={data.title} />
+          <div>{data.user.nickname}</div>
         </div>
-        <button
-          className='px-4 py-2 border-[1px] rounded-full bg-green-400 text-white drop-shadow-md hover:bg-green-500'
-          onClick={onOpen}
-        >
-          글쓰기
-        </button>
+        <div>
+          <div>
+            {format(parseISO(data.createdAt), 'yy-MM-dd')}
+          </div>
+        </div>
       </div>
-      <div className='mt-8'>
-        {active === "좋아요" ?
-          <Likeposts /> :
-          <Allposts /> 
-        }
+      <div className='flex flex-col gap-4'>
+        <h2 className='font-semibold text-lg'>{data.title}</h2>
+        <div>{data.description}</div>
+        <div className="m-auto">
+          {data.image && <img src={data.image} width={400} height={200} alt={data.title}/>}
+        </div>
+      </div>
+      <div className="flex gap-2">
+        <div className="cursor-pointer text-2xl hover:text-green-500">
+          <AiOutlineComment />
+        </div>
+        <div className="cursor-pointer text-2xl hover:text-green-500">
+          <AiOutlineHeart />
+        </div>
       </div>
     </div>
   )

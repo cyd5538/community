@@ -36,7 +36,7 @@ const Posts = () => {
           ))}
         </div>
         <button
-          className='px-4 py-2 border-[1px] rounded-full bg-green-400 text-white drop-shadow-md hover:bg-green-500'
+          className='px-2 py-1 border-[1px] rounded-full bg-green-400 text-white drop-shadow-md hover:bg-green-500'
           onClick={onOpen}
         >
           글쓰기

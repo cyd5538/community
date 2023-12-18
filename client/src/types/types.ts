@@ -27,12 +27,12 @@ export type PostType = {
   likes: LikeType[]; 
   title: string;
   updatedAt: string;
-  user: UserType;
+  user: string;
   __v: number;
 };
 
 export type LikeType = {
-  user: UserType;
+  user: string;
   post: PostType;
   createdAt: string;
   description: string;

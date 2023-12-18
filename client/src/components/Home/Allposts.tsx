@@ -28,7 +28,7 @@ const Allposts = () => {
       pageStart={0}
       loadMore={() => fetchNextPage()}
       hasMore={hasNextPage}
-      loader={<div>Loading...</div>}
+      loader={<div key={0}>Loading...</div>}
     >
       <div className="flex flex-col gap-16">
         {data?.pages.map((group, idx) => (

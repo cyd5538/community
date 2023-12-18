@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from 'react-router-dom';
 import { login } from '../lib/userApi';
 import axios from 'axios';
 import customToast from '@/components/ui/customToast';
+import useUserInfo from '@/hook/getUser';
 
 interface LoginForm {
   email: string;
@@ -12,7 +13,9 @@ interface LoginForm {
 }
 
 const Login = () => {
+  const user = useUserInfo();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState<LoginForm>({
     email: '',
     password: '',
@@ -39,6 +42,12 @@ const Login = () => {
       else customToast('error', '로그인 실패했습니다.');
     }
   };
+
+  useEffect(() => {
+    if (user){
+       return navigate("/");
+    }
+  },[user, navigate]);
 
   return (
     <div className="w-full h-screen sm:bg-green-500 bg-white flex justify-center items-center">

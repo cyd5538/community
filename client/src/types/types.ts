@@ -3,10 +3,10 @@ export type CommentType = {
   createdAt: string;
   description: string;
   image: string;
-  likes: any[]; 
+  likes: LikeType[]; 
   title: string;
   updatedAt: string;
-  user: User;
+  user: UserType;
   __v: number;
 };
 
@@ -20,13 +20,20 @@ export type UserType = {
 
 export type PostType = {
   _id: string;
-  comments: Comment[];
+  comments: CommentType[];
   createdAt: string;
   description: string;
   image: string;
-  likes: any[]; 
+  likes: LikeType[]; 
   title: string;
   updatedAt: string;
-  user: User;
+  user: UserType;
   __v: number;
 };
+
+export type LikeType = {
+  user: UserType;
+  post: PostType;
+  createdAt: string;
+  description: string;
+}

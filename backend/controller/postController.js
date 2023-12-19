@@ -43,11 +43,16 @@ const createPost = asyncHandler(async (req, res) => {
     res.status(400).json({ error: "제목을 입력해주세요" });
   }
 
+  if (!req.body.description) {
+    res.status(400).json({ error: "내용을 입력해주세요" });
+  }
+
   const post = await Posts.create({
     title: req.body.title,
     description: req.body.description,
     image: req.body.image,
     user: req.user.id,
+    video: req.body.video
   });
 
   res.status(200).json(post);

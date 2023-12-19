@@ -15,6 +15,10 @@ const PostSchema = new Schema({
     type: String,
     default: null
   },
+  video: {
+    type: String,
+    default: null
+  },
   user: {
     type: mongoose.Types.ObjectId,
     ref: "User",

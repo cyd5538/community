@@ -12,16 +12,28 @@ const imageStorage = async (file:File) => {
   return await getDownloadURL(storageRef);
 }
 
+const videoStorage = async (file:File) => {
+  const storage = getStorage(app);
+  const storageRef = ref(storage, 'videos/' + file.name);
+  await uploadBytes(storageRef, file);
+  return await getDownloadURL(storageRef);
+}
+
 export const handlePostSubmit = async (
   title: string,
   description: string,
   file: File | null, 
+  video: File | null,
   token: string | null
 ) => {
   let imageUrl = null;
+  let videoUrl = null;
 
   if (file) {
     imageUrl = await imageStorage(file)
+  }
+  if (video) {
+    videoUrl = await videoStorage(video)
   }
   
   const config = {
@@ -33,7 +45,8 @@ export const handlePostSubmit = async (
   const data = {
     title,
     description,
-    image: imageUrl
+    image: imageUrl,
+    video: videoUrl
   }
 
   try {

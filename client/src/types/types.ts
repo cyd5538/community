@@ -22,9 +22,10 @@ export type UserType = {
 export type PostType = {
   _id: string;
   comments: CommentType[];
+  video: string | null;
   createdAt: string;
   description: string;
-  image: string;
+  image: string | null;
   likes: LikeType[]; 
   title: string;
   updatedAt: string;

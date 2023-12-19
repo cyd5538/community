@@ -1,20 +1,20 @@
-import { FormEvent, useState, useRef } from 'react';
+import { FormEvent, useState } from 'react';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Input } from '@/components/ui/input';
 import { Textarea } from "@/components/ui/textarea";
 import { handlePostSubmit } from '@/lib/postApi';
 import Loading from '@/components/ui/Loading';
 import Modal from '@/components/ui/Modal';
 import usePostModel from '@/hook/userPostModel';
-import { IoMdClose } from "react-icons/io";
-import { CiImageOff } from "react-icons/ci";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import customToast from '../ui/customToast';
+import PostModalImage from './PostModalImage';
+import PostModalVideo from './PostModalVideo';
 
 const PostModal = () => {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
-  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [video, setVideo] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const postModel = usePostModel();
 
@@ -30,7 +30,7 @@ const PostModal = () => {
 
     try {
       setLoading(true); 
-      await handlePostSubmit(title, description, file, token);
+      await handlePostSubmit(title, description, file, video, token);
       setTitle("")
       setDescription("")
       setFile(null)
@@ -53,31 +53,6 @@ const PostModal = () => {
     }
   })
 
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleButtonClick = (e:FormEvent) => {
-    e.preventDefault();
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.onload = (event: ProgressEvent<FileReader>) => {
-        setFilePreview(event.target?.result as string);
-      };
-      reader.readAsDataURL(selectedFile);
-      setFile(selectedFile);
-    } else {
-      setFilePreview(null);
-    }
-    
-  };
-
   if(loading) {
     return <Loading />
   }
@@ -96,27 +71,14 @@ const PostModal = () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <div className='flex gap-4 justify-between'>
-        <Input
-          className='hidden'
-          ref={fileInputRef}
-          type="file"
-          onChange={handleFileChange}
+      <div className='flex gap-4'>
+        <PostModalImage 
+          setFile={setFile}
         />
-        {filePreview ? 
-        <div className='relative w-full'>
-          <img className='w-full h-48 object-cover' src={filePreview} alt="File Preview" /> 
-          <div 
-            className='text-white absolute top-2 right-4 p-1 rounded-full bg-blue-300 cursor-pointer hover:bg-blue-500' 
-            onClick={() => setFilePreview(null)
-          }>
-            <IoMdClose className="text-xl"/>
-          </div>
-        </div> :
-        <>
-          <CiImageOff className="text-2xl cursor-pointer" onClick={handleButtonClick}/>
-        </>
-        }
+        <PostModalVideo 
+          setVideo={setVideo}
+        />
+      </div>
         <div className='flex justify-end items-center'>
           <button 
             className='shadow-lg bg-green-400 text-white hover:bg-green-500 w-20 h-12 rounded-full' 
@@ -125,7 +87,6 @@ const PostModal = () => {
             Post
           </button>
         </div>
-      </div>
     </form>
   );
 

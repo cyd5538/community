@@ -26,11 +26,11 @@ const Post:React.FC<PostProps> = ({data, user}) => {
       <div className='flex flex-col gap-4'>
         <h2 className='font-semibold text-lg'>{data.title}</h2>
         <div>{data.description}</div>
-        <div className="m-auto ml-4">
+        <div className="m-auto ml-4 flex justify-center items-center w-full">
           {data.image && <img src={data.image} width={400} height={200} alt={data.title}/>}
         </div>
-        <div className="m-auto ml-4">
-          {data.video && <video src={data.video} width={400} height={200} controls/>}
+        <div className="m-auto ml-4 flex justify-center items-center w-full">
+          {data.video && <video src={data.video} width={500} height={300} controls/>}
         </div>
       </div>
       <div className="flex gap-2">

@@ -26,7 +26,7 @@ const PostComment:React.FC<PostCommentProps> = ({userId, postId}) => {
   return (
     <div className='flex flex-col pt-4'>
       <form onSubmit={handleSubmit} className='flex gap-2'>
-        <Input type="text" onChange={(e) => setComment(e.target.value)}/>
+        <Input value={comment} type="text" onChange={(e) => setComment(e.target.value)}/>
         <Button>댓글</Button>
       </form>
     </div>

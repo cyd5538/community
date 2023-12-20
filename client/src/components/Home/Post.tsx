@@ -40,7 +40,7 @@ const Post:React.FC<PostProps> = ({data, user}) => {
         </div>
         <PostLike data={data} id={user?.id}/>
       </div>
-      <PostComment userId={user?.id} postId={data._id}/>
+      <PostComment userId={user?.id} postId={data._id} comments={data.comments}/>
     </div>
   )
 }

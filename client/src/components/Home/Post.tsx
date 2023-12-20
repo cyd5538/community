@@ -2,6 +2,7 @@ import type { PostType, UserType } from "@/types/types";
 import { format, parseISO } from "date-fns";
 import { AiOutlineComment } from "react-icons/ai";
 import PostLike from "./PostLike";
+import PostComment from "./PostComment";
 
 interface PostProps {
   data: PostType
@@ -39,6 +40,7 @@ const Post:React.FC<PostProps> = ({data, user}) => {
         </div>
         <PostLike data={data} id={user?.id}/>
       </div>
+      <PostComment userId={user?.id} postId={data._id}/>
     </div>
   )
 }

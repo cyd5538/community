@@ -1,12 +1,15 @@
 export type CommentType = {
-  _id: string;
+  _id: string; 
   createdAt: string;
-  description: string;
-  image: string;
-  likes: LikeType[]; 
-  title: string;
+  post: string;
+  text: string;
   updatedAt: string;
-  user: UserType;
+  user: {
+    createdAt: string;
+    nickname: string;
+    profileImage: string | null;
+    _id: string;
+  };
   __v: number;
 };
 

@@ -47,7 +47,11 @@ const PostComment:React.FC<PostCommentProps> = ({userId, postId, comments}) => {
       </form>
       <div className='flex flex-col gap-4 py-4'>
         {comments.map((com) => (
-          <PostCommentList key={com._id} com={com}/>
+          <PostCommentList 
+            key={com._id} 
+            com={com}
+            userId={userId}
+          />
         ))}
       </div>
     </div>

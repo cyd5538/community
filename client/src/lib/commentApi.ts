@@ -29,3 +29,19 @@ export const handleCommentSubmit = async (
   }
 };
 
+export const handleCommentDelete = async (
+  postId: string,
+  token: string | null
+) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(`${apiUrl}/${postId}`, config);
+  } catch (error) {
+    console.log(error)
+  }
+};

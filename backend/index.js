@@ -12,6 +12,7 @@ app.use(cors());
 app.use('/api/users', require('./routes/userRoutes.js'))
 app.use('/api/posts', require('./routes/postRoutes.js'));
 app.use('/api/posts', require('./routes/likeRoute.js'));
+app.use('/api/comments', require('./routes/commentRoute.js'));
 
 require("./models/likeModel.js");
 require("./models/commentModel.js");

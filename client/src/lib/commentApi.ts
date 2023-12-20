@@ -4,7 +4,7 @@ import customToast from "@/components/ui/customToast";
 const apiUrl = "http://localhost:5000/api/comments";
 
 export const handleCommentSubmit = async (
-  user: string,
+  user: string | undefined,
   post: string,
   text: string,
   token: string | null

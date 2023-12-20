@@ -4,7 +4,7 @@ import { Button } from '../ui/button'
 import { handleCommentSubmit } from '@/lib/commentApi'
 
 interface PostCommentProps {
-  userId: string
+  userId: string | undefined
   postId: string
 }
 

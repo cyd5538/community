@@ -2,8 +2,8 @@ const asyncHandler = require('express-async-handler');
 const Posts = require('../models/postModel');
 
 const getPaginatedPosts = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page) || 1; 
-  const pageSize = parseInt(req.query.pageSize) || 10; 
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
 
   const skip = (page - 1) * pageSize;
   const posts = await Posts.find()
@@ -11,13 +11,23 @@ const getPaginatedPosts = asyncHandler(async (req, res) => {
     .skip(skip)
     .limit(pageSize)
     .populate({
-      path: 'likes comments user',
-      select: '-password', 
+      path: 'likes',
+      select: 'user',
+    })
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'user',
+        select: 'profileImage nickname createdAt', 
+      },
+    })
+    .populate({
+      path: 'user',
+      select: '-password',
     });
 
   res.status(200).json(posts);
 });
-
 
 const getPostsByLikes = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) || 1; 
@@ -30,8 +40,19 @@ const getPostsByLikes = asyncHandler(async (req, res) => {
     .skip(skip)
     .limit(pageSize)
     .populate({
-      path: 'likes comments user',
-      select: '-password', 
+      path: 'likes',
+      select: 'user',
+    })
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'user',
+        select: 'profileImage nickname createdAt', 
+      },
+    })
+    .populate({
+      path: 'user',
+      select: '-password',
     });
 
   res.status(200).json(posts);

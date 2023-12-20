@@ -28,14 +28,22 @@ const updateComment = asyncHandler(async (req, res) => {
 const deleteComment = asyncHandler(async (req, res) => {
   const { commentId } = req.params;
 
-  const comment = await Comment.findById(commentId);
-  const postId = comment.post;
+  try {
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: '댓글을 찾을 수 없습니다.' });
+    }
 
-  await Post.findByIdAndUpdate(postId, { $pull: { comments: commentId } });
+    const postId = comment.post;
 
-  await Comment.findByIdAndRemove(commentId);
+    await Post.findByIdAndUpdate(postId, { $pull: { comments: commentId } });
 
-  res.status(204).json({ message: '댓글 삭제 완료' });
+    await comment.deleteOne(); 
+
+    res.status(204).json({ message: '댓글 삭제 완료' });
+  } catch (error) {
+    res.status(500).json({ message: '서버 오류' });
+  }
 });
 
 module.exports = {

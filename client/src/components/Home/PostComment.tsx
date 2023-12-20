@@ -2,33 +2,54 @@ import { FormEvent, useState } from 'react';
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { handleCommentSubmit } from '@/lib/commentApi'
+import PostCommentList from './PostCommentList';
+import { CommentType } from '@/types/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface PostCommentProps {
   userId: string | undefined
   postId: string
+  comments: CommentType[]
 }
 
-const PostComment:React.FC<PostCommentProps> = ({userId, postId}) => {
+const PostComment:React.FC<PostCommentProps> = ({userId, postId, comments}) => {
   const [comment, setComment] = useState<string>("")
   
+  const queryClient = useQueryClient()
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const token = localStorage.getItem('token');
     
     try {
-      const response = handleCommentSubmit(userId,postId,comment,token)
+      const response = await handleCommentSubmit(userId,postId,comment,token)
       setComment("")
     } catch (error) {
       console.log(error)
     }
   }
 
+  const CommentMutation = useMutation({
+    mutationFn: handleSubmit,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["post"]});
+    },
+    onError : (err) => {
+      console.log(err)
+    }
+  })
+
   return (
     <div className='flex flex-col pt-4'>
-      <form onSubmit={handleSubmit} className='flex gap-2'>
+      <form onSubmit={CommentMutation .mutate} className='flex gap-2'>
         <Input value={comment} type="text" onChange={(e) => setComment(e.target.value)}/>
         <Button>댓글</Button>
       </form>
+      <div className='flex flex-col gap-4 py-4'>
+        {comments.map((com) => (
+          <PostCommentList key={com._id} com={com}/>
+        ))}
+      </div>
     </div>
   )
 }

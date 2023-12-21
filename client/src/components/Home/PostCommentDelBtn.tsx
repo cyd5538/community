@@ -41,7 +41,7 @@ const PostCommentDelBtn:React.FC<PostCommentDelBtnProps> = ({postId}) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="hover:bg-green-300 px-1 rounded-full">
+      <AlertDialogTrigger className="hover:bg-green-300 bg-green-100 text-lg px-[8px] py-[8px] rounded-full">
         <AiOutlineDelete />
       </AlertDialogTrigger>
       <AlertDialogContent>

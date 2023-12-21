@@ -45,3 +45,25 @@ export const handleCommentDelete = async (
     console.log(error)
   }
 };
+
+export const handelCommentUpdate = async (
+  postId: string,
+  text: string,
+  token: string | null
+) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const data = {
+    text,
+  };
+
+  try {
+    const response = await axios.patch(`${apiUrl}/${postId}`,data, config);
+  } catch (error) {
+    console.log(error)
+  }
+};

@@ -34,6 +34,7 @@ const PostModal = () => {
       setTitle("")
       setDescription("")
       setFile(null)
+      setVideo(null)
       customToast('succes', "포스트가 완료되었습니다.")
       postModel.onClose();
     } catch (error) {

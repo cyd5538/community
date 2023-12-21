@@ -2,7 +2,7 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from 'react-router-dom';
-import { register } from '../lib/userApi';
+import { IscheckNickname, register } from '../lib/userApi';
 import axios from 'axios';
 import customToast from '@/components/ui/customToast';
 import useUserInfo from '@/hook/getUser';
@@ -15,11 +15,36 @@ const Register: React.FC<RegisterProps> = () => {
 
   const [email, setEmail] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
+  const [checkNickname, setCheckNickname] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
+  useEffect(() => {
+    setCheckNickname(false);
+  },[nickname])
+
+  const duplicateCheckNickname = async () => {
+    if(!nickname) {
+      return customToast("error", "닉네임을 입력해주세요")
+    }
+
+    try {
+      const response = await IscheckNickname(nickname)
+      customToast("succes", response.message)
+      setCheckNickname(true)
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        customToast("succes", error.response?.data.error)
+      }
+    } 
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    if(!checkNickname) {
+      return;
+    }
 
     if (!email || !nickname || !password) {
       return alert("빈 칸을 입력해주세요.")
@@ -32,7 +57,7 @@ const Register: React.FC<RegisterProps> = () => {
     try {
       const userData = { email, nickname, password };
       const response = await register(userData);
-      customToast('success', '회원가입 완료 로그인 해주세요.');
+      customToast('success', '회원가입 완료');
       navigate('/login');
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -50,7 +75,7 @@ const Register: React.FC<RegisterProps> = () => {
   },[user, navigate]);
 
   return (
-    <div className="w-full h-screen sm:bg-green-500 bg-white flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
         className="w-full sm:w-96 px-4 py-4 flex flex-col gap-8 drop-shadow-md bg-white rounded-xl"
@@ -62,12 +87,17 @@ const Register: React.FC<RegisterProps> = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Input
-          type="text"
-          placeholder="닉네임을 입력해주세요."
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-        />
+        <div className='flex gap-2'>
+          <Input
+            type="text"
+            placeholder="닉네임을 입력해주세요."
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+          />
+          <Button disabled={checkNickname} onClick={duplicateCheckNickname}>
+            {!checkNickname ? '중복 체크' : '체크 완료'}
+          </Button>
+        </div>
         <Input
           type="password"
           placeholder="비밀번호를 입력해주세요."

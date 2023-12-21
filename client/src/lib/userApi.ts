@@ -28,6 +28,12 @@ export const login = async (userData: UserData) => {
   return response.data
 }
 
+export const IscheckNickname = async (nickname: string) => {
+  const response = await axios.get(`${API_URL}${nickname}`)
+
+  return response.data
+}
+
 export const getMyInfo = async (token : string | null) => {
   const config = {
     headers: {

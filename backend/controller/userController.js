@@ -72,6 +72,23 @@ const GetLoginUser = asyncHandler(async (req,res) => {
     }) 
 })
 
+const checkNickname = asyncHandler(async (req, res) => {
+    const { nickname } = req.params;
+
+    if (!nickname) {
+        res.status(400).json({ error: "닉네임을 입력해주세요" });
+        return;
+    }
+
+    const existingUser = await User.findOne({ nickname });
+
+    if (existingUser) {
+        res.status(400).json({ error: "이미 사용 중인 닉네임입니다." });
+    } else {
+        res.status(200).json({ message: "사용 가능한 닉네임입니다." });
+    }
+});
+
 // 토큰 생성
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -83,4 +100,5 @@ module.exports = {
     registerUser,
     LoginUser,
     GetLoginUser,
+    checkNickname
 }

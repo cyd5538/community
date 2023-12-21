@@ -9,7 +9,7 @@ const {
 const { protect } = require("../middlewear/authmiddlewear");
 
 router.post('/', protect, createComment);
-router.put('/:commentId', protect, updateComment);
+router.patch('/:commentId', protect, updateComment);
 router.delete('/:commentId', protect, deleteComment);
 
 module.exports = router;

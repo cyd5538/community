@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { IscheckNickname, register } from '../lib/userApi';
 import axios from 'axios';
 import customToast from '@/components/ui/customToast';
-import useUserInfo from '@/hook/getUser';
+import useAuth from '@/store/useAuth';
 
 interface RegisterProps {}
 
 const Register: React.FC<RegisterProps> = () => {
-  const user = useUserInfo();
+  const { user } = useAuth()
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>('');

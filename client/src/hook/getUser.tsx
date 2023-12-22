@@ -1,24 +1,27 @@
 import { useState, useEffect } from 'react';
 import { getMyInfo } from '@/lib/userApi';
 import { UserType } from '@/types/types';
+import useAuth from '@/store/useAuth';
 
 const useUserInfo = () => {
   const [userInfo, setUserInfo] = useState<UserType | null>(null);
-
+  const { token } = useAuth()
+  
   useEffect(() => {
     const fetchMyInfo = async () => {
       try {
-        const token = localStorage.getItem('token');
-
+        
         if (token) {
           const response = await getMyInfo(token);
           setUserInfo(response);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error)
+      }
     };
 
     fetchMyInfo();
-  }, []);
+  }, [token]);
 
   return userInfo;
 };

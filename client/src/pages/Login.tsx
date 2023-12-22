@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from 'react-router-dom';
-import { login } from '../lib/userApi';
 import axios from 'axios';
-import customToast from '@/components/ui/customToast';
-import useUserInfo from '@/hook/getUser';
+import customToast from '@/components/ui/customToast';;
+import useAuth from '@/store/useAuth';
 
 interface LoginForm {
   email: string;
@@ -13,8 +12,8 @@ interface LoginForm {
 }
 
 const Login = () => {
-  const user = useUserInfo();
   const navigate = useNavigate();
+  const { user, login } = useAuth()
 
   const [formData, setFormData] = useState<LoginForm>({
     email: '',

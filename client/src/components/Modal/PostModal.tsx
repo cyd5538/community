@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { handlePostSubmit } from '@/lib/postApi';
 import Loading from '@/components/ui/Loading';
 import Modal from '@/components/ui/Modal';
-import usePostModel from '@/hook/userPostModel';
+import usePostModel from '@/store/userPostModel';
 import customToast from '../ui/customToast';
 import PostModalImage from './PostModalImage';
 import PostModalVideo from './PostModalVideo';

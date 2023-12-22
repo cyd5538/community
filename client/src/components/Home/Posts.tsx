@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import usePostModel from '@/hook/userPostModel';
+import usePostModel from '@/store/userPostModel';
 import Allposts from './Allposts';
 import Likeposts from './Likeposts';
 

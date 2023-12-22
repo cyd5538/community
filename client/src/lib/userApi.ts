@@ -11,10 +11,6 @@ type UserData = {
 export const register = async (userData : UserData) => {
   const response = await axios.post(API_URL, userData)
 
-  if (response.data) {
-    localStorage.setItem('token', JSON.stringify(response.data.token))
-  }
-
   return response.data
 }
 

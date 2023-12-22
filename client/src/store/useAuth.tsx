@@ -1,3 +1,4 @@
+import customToast from '@/components/ui/customToast';
 import { login } from '@/lib/userApi';
 import { create } from 'zustand'
 
@@ -32,6 +33,7 @@ const useAuth = create<AuthState>((set) => {
     logout: () => {
       localStorage.removeItem('token');
       set({ user: false, token: null });
+      customToast("success", "로그아웃 ⭕")
     },
   };
 });

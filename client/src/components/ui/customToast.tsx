@@ -4,7 +4,7 @@ import { toast, ToastOptions } from 'react-toastify';
 const customToast = (type: string, message: string) => {
   const toastOptions: ToastOptions = {
     position: "top-center",
-    autoClose: 5000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

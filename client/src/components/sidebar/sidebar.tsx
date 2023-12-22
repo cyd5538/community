@@ -1,20 +1,39 @@
 import React, { useState } from "react";
 import { CiMenuBurger } from "react-icons/ci";
-import { CiHome } from "react-icons/ci";
+import { CiHome, CiLogin, CiLogout  } from "react-icons/ci";
 import { AiTwotoneProfile } from "react-icons/ai";
 import { IoSettings } from "react-icons/io5";
 import { FiMessageSquare } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { IoFootballOutline } from "react-icons/io5";
+import { FaWpforms } from "react-icons/fa6";
+import useAuth from "@/store/useAuth";
 
 const Sidebar = () => {
+  const { user, logout } = useAuth()
   const menus = [
     { name: "Home", link: "/", icon: CiHome },
     { name: "Chat", link: "/", icon: FiMessageSquare },
     { name: "League", link: "/", icon: IoFootballOutline },
     { name: "Profile", link: "/", icon: AiTwotoneProfile, margin: true },
     { name: "Setting", link: "/", icon: IoSettings },
+    { name: "Login", link: "/login", icon: CiLogin, margin: true },
+    { name: "Logout", link: "/", icon: CiLogout , margin: true, onClick: logout },
+    { name: "Sign up", link: "/register", icon: FaWpforms, },
   ];
+
+  const filteredMenus = menus.filter((menu) => {
+    if (menu.name === "Logout" && !user) {
+      return false;
+    }
+  
+    if ((menu.name === "Login" || menu.name === "Sign up") && user) {
+      return false;
+    }
+  
+    return true;
+  });
+
   const [open, setOpen] = useState(false);
   
   return (
@@ -32,9 +51,10 @@ const Sidebar = () => {
           />
         </div>
         <div className="mt-4 flex flex-col gap-4 relative">
-          {menus?.map((menu, i) => (
+          {filteredMenus?.map((menu, i) => (
             <Link
               to={menu?.link}
+              onClick={menu.onClick}
               key={i}
               className={` ${
                 menu?.margin && "mt-5"

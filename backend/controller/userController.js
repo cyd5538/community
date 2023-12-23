@@ -124,7 +124,7 @@ module.exports = {
     registerUser,
     LoginUser,
     GetLoginUser,
-    updateUser.
+    updateUser,
     checkNickname
     
 }

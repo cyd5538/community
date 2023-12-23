@@ -72,6 +72,30 @@ const GetLoginUser = asyncHandler(async (req,res) => {
     }) 
 })
 
+const updateUser = asyncHandler(async (req, res) => {
+    const userId = req.user.id;
+    const { nickname, profileImage } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $set: { nickname, profileImage } },
+        { new: true } 
+    );
+
+    if (!updatedUser) {
+        return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
+    }
+
+    const { _id, email, nickname: updatedNickname, profileImage: updatedProfileImage } = updatedUser;
+
+    res.status(200).json({
+        id: _id,
+        email,
+        nickname: updatedNickname,
+        profileImage: updatedProfileImage,
+    });
+});
+
 const checkNickname = asyncHandler(async (req, res) => {
     const { nickname } = req.params;
 
@@ -100,5 +124,7 @@ module.exports = {
     registerUser,
     LoginUser,
     GetLoginUser,
+    updateUser.
     checkNickname
+    
 }

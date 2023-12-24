@@ -7,8 +7,11 @@ import Sidebar from "./components/sidebar/sidebar"
 import Container from "./components/ui/Container"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ProtectedRoute } from "./components/ProtectedRoute"
+import useAuth from "./store/useAuth"
 
 function App() {
+  const { user } = useAuth();
 
   return (
     <div className="flex">
@@ -17,9 +20,11 @@ function App() {
       <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path="/login" element={<Login />}/>
           <Route path="/Register" element={<Register />}/>
-          <Route path="/me" element={<Myprofile />}/>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/me" element={<ProtectedRoute user={user}>
+            <Myprofile />
+          </ProtectedRoute>} />
         </Routes>
       </Container>
     </div>

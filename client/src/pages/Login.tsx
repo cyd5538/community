@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import customToast from '@/components/ui/customToast';;
 import useAuth from '@/store/useAuth';
 
 interface LoginForm {
@@ -32,13 +30,8 @@ const Login = () => {
 
     try {
       const response = await login(formData);
-      customToast('success', '로그인 성공했습니다.');
-      navigate('/');
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        customToast('error', error.response?.data.error);
-      }
-      else customToast('error', '로그인 실패했습니다.');
+      console.log(error);
     }
   };
 
@@ -49,7 +42,7 @@ const Login = () => {
   },[user, navigate]);
 
   return (
-    <div className="w-full h-screen sm:bg-green-500 bg-white flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
         className="w-full sm:w-96 px-4 py-4 flex flex-col gap-8 drop-shadow-md bg-white rounded-xl"

@@ -1,6 +1,7 @@
-import customToast from '@/components/ui/customToast';
-import { login } from '@/lib/userApi';
 import { create } from 'zustand'
+import axios from 'axios';
+import { login } from '@/lib/userApi';
+import customToast from '@/components/ui/customToast';
 
 interface AuthState {
   user: boolean;
@@ -26,8 +27,11 @@ const useAuth = create<AuthState>((set) => {
         const response = await login(userData);
         localStorage.setItem('token', response.token);
         set({ user: true, token: response.token });
-      } catch (error) {
-        set({ user: false, token: null });
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+          customToast("error", error?.response?.data.error)
+          set({ user: false, token: null });
+        }
       }
     },
     logout: () => {

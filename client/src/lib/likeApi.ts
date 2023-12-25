@@ -1,5 +1,6 @@
 import customToast from "@/components/ui/customToast";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import { status401Error, status402Error } from "./userApi";
 
 const apiUrl = "http://localhost:5000/api/posts";
 
@@ -9,6 +10,10 @@ export const toggleLike = async (postId: string, token: string | null) => {
       Authorization: `Bearer ${token}`,
     },
   };
+
+  if(!token) {
+    return status402Error()
+  }
 
   try {
     const response = await axios.post(
@@ -20,9 +25,10 @@ export const toggleLike = async (postId: string, token: string | null) => {
     customToast("succes", response.data.message);
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response?.status === 401) {
-        customToast("error", "로그인을 해주세요");
+      if(axios.isAxiosError(error)){
+        if(error?.response?.status === 401) {
+          status401Error()
+        }
       }
     }
   }

@@ -5,6 +5,8 @@ import { handleCommentSubmit } from '@/lib/commentApi'
 import PostCommentList from './PostCommentList';
 import { CommentType } from '@/types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { status401Error, status402Error } from '@/lib/userApi';
+import axios from 'axios';
 
 interface PostCommentProps {
   userId: string | undefined
@@ -21,11 +23,19 @@ const PostComment:React.FC<PostCommentProps> = ({userId, postId, comments}) => {
     e.preventDefault()
     const token = localStorage.getItem('token');
     
+    if(!token) {
+      return status402Error()
+    }
+
     try {
       const response = await handleCommentSubmit(userId,postId,comment,token)
       setComment("")
-    } catch (error) {
-      console.log(error)
+    } catch (error: unknown) {
+      if(axios.isAxiosError(error)){
+        if(error?.response?.status === 401) {
+          status401Error()
+        }
+      }
     }
   }
 

@@ -17,9 +17,7 @@ const PostLike: React.FC<PostLikeProps> = ({ data, id }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["post"] });
     },
-    onError: (err) => {
-      console.log(err)
-    }
+    onError: () => {}
   })
   console.log()
 

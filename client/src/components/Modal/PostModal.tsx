@@ -9,6 +9,8 @@ import usePostModel from '@/store/userPostModel';
 import customToast from '../ui/customToast';
 import PostModalImage from './PostModalImage';
 import PostModalVideo from './PostModalVideo';
+import { status401Error, status402Error } from '@/lib/userApi';
+import axios from 'axios';
 
 const PostModal = () => {
   const [title, setTitle] = useState<string>('');
@@ -24,6 +26,10 @@ const PostModal = () => {
     e.preventDefault();
     const token = localStorage.getItem('token');
 
+    if(!token) {
+      status402Error()
+    }
+
     if(!title || !description) {
       return alert("제목이나 내용을 입력해주세요")
     }
@@ -37,8 +43,12 @@ const PostModal = () => {
       setVideo(null)
       customToast('succes', "포스트가 완료되었습니다.")
       postModel.onClose();
-    } catch (error) {
-      console.log(error)
+    } catch (error: unknown) {
+      if(axios.isAxiosError(error)){
+        if(error?.response?.status === 401) {
+          status401Error()
+        }
+      }
     } finally {
       setLoading(false); 
     }

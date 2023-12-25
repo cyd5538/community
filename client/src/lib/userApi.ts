@@ -1,3 +1,4 @@
+import customToast from '@/components/ui/customToast'
 import axios from 'axios'
 
 const API_URL = 'http://localhost:5000/api/users/'
@@ -41,3 +42,14 @@ export const getMyInfo = async (token : string | null) => {
   return response.data;
 };
 
+
+export const status401Error = () => {
+  customToast("error", "토큰이 만료되었습니다. 다시 로그인 해주세요.")
+  localStorage.removeItem('token')
+  return 
+}
+
+export const status402Error = () => {
+  customToast("error", "로그인이 필요합니다. 로그인해주세요.")
+  return 
+}

@@ -27,7 +27,7 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 
   if (!token) {
-    res.status(401).json({ error: "토큰이 없습니다." });
+    res.status(402).json({ error: "토큰이 없습니다." });
   }
 })
 

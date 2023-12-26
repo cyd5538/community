@@ -1,5 +1,6 @@
+import MyInfo from "@/components/Myprofile/MyInfo";
+import Mypost from "@/components/Myprofile/Mypost";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import useUserInfo from '@/hook/getUser';
 
 const Myprofile = () => {
 
@@ -11,10 +12,10 @@ const Myprofile = () => {
           <TabsTrigger value="mypost">내 글 목록</TabsTrigger>
         </TabsList>
         <TabsContent value="profile">
-          내 정보
+          <MyInfo />
         </TabsContent>
         <TabsContent value="mypost">
-          내 글 목록
+          <Mypost />
         </TabsContent>
       </Tabs>
     </div>

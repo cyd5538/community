@@ -15,7 +15,7 @@ const Sidebar = () => {
     { name: "Home", link: "/", icon: CiHome },
     { name: "Chat", link: "/", icon: FiMessageSquare },
     { name: "League", link: "/", icon: IoFootballOutline },
-    { name: "Profile", link: "/", icon: AiTwotoneProfile, margin: true },
+    { name: "Profile", link: "/me", icon: AiTwotoneProfile, margin: true },
     { name: "Setting", link: "/", icon: IoSettings },
     { name: "Login", link: "/login", icon: CiLogin, margin: true },
     { name: "Logout", link: "/", icon: CiLogout , margin: true, onClick: logout },

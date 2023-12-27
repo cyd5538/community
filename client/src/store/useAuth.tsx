@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import axios from 'axios';
-import { login } from '@/lib/userApi';
+import { getMyInfo, login } from '@/lib/userApi';
 import customToast from '@/components/ui/customToast';
 
 interface AuthState {
@@ -8,6 +8,7 @@ interface AuthState {
   token: string | null;
   login: (userData: UserData) => Promise<void>;
   logout: () => void;
+  getMe: () => Promise<void>;
 }
 
 interface UserData {
@@ -39,6 +40,16 @@ const useAuth = create<AuthState>((set) => {
       set({ user: false, token: null });
       customToast("success", "로그아웃 ⭕")
     },
+    getMe: async () => {
+      try {
+        const response = await getMyInfo()
+        return response
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+          customToast("error", error?.response?.data.error)
+        }
+      }
+    }
   };
 });
 

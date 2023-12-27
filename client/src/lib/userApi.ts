@@ -31,7 +31,8 @@ export const IscheckNickname = async (nickname: string) => {
   return response.data
 }
 
-export const getMyInfo = async (token : string | null) => {
+export const getMyInfo = async () => {
+  const token = localStorage.getItem("token");
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -42,6 +43,26 @@ export const getMyInfo = async (token : string | null) => {
   return response.data;
 };
 
+export const profieUpdate = async (
+  nickname: string,
+  profileImage: string,
+  token: string | null
+) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const data = {
+    nickname,
+    profileImage
+  }
+
+  const response = await axios.patch(API_URL + 'update',data,config);
+
+  return response.data;
+}
 
 export const status401Error = () => {
   customToast("error", "토큰이 만료되었습니다. 다시 로그인 해주세요.")

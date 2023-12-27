@@ -2,13 +2,14 @@ import { create } from 'zustand'
 import axios from 'axios';
 import { getMyInfo, login } from '@/lib/userApi';
 import customToast from '@/components/ui/customToast';
+import { UserType } from '@/types/types';
 
 interface AuthState {
   user: boolean;
   token: string | null;
   login: (userData: UserData) => Promise<void>;
   logout: () => void;
-  getMe: () => Promise<void>;
+  getMe: () => Promise<UserType>;
 }
 
 interface UserData {

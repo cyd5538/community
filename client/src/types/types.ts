@@ -19,7 +19,7 @@ export type UserType = {
   id?: string
   nickname: string;
   email: string;
-  createdAt: string;
+  createdAt?: string;
 };
 
 export type PostType = {

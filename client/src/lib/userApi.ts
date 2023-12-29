@@ -46,36 +46,31 @@ export const getMyInfo = async () => {
 };
 
 export const profieUpdate = async (
-  nickname: string,
+  nickname: string | undefined,
   file: File | null,
   token: string | null
 ) => {
   let imageUrl = null;
 
   if (file) {
-    imageUrl = await imageStorage(file)
+    imageUrl = await imageStorage(file);
   }
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  }
+  };
 
   const data = {
     nickname,
-    profileImage: imageUrl
-  }
+    profileImage: file ? imageUrl : undefined,
+  };
 
-  try {
-    const response = await axios.post(API_URL + 'update', data, config);
-    return response;
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      customToast('error', error.response?.data.error)
-    }
-  }
-}
+  const response = await axios.patch(API_URL + 'update', data, config);
+  return response.data;
+};
+
 
 export const status401Error = () => {
   customToast("error", "토큰이 만료되었습니다. 다시 로그인 해주세요.")

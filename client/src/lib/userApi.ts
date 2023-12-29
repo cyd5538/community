@@ -1,5 +1,7 @@
 import customToast from '@/components/ui/customToast'
 import axios from 'axios'
+import { imageStorage } from './postApi'
+
 
 const API_URL = 'http://localhost:5000/api/users/'
 
@@ -45,9 +47,15 @@ export const getMyInfo = async () => {
 
 export const profieUpdate = async (
   nickname: string,
-  profileImage: string,
+  file: File | null,
   token: string | null
 ) => {
+  let imageUrl = null;
+
+  if (file) {
+    imageUrl = await imageStorage(file)
+  }
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -56,12 +64,17 @@ export const profieUpdate = async (
 
   const data = {
     nickname,
-    profileImage
+    profileImage: imageUrl
   }
 
-  const response = await axios.patch(API_URL + 'update',data,config);
-
-  return response.data;
+  try {
+    const response = await axios.post(API_URL + 'update', data, config);
+    return response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      customToast('error', error.response?.data.error)
+    }
+  }
 }
 
 export const status401Error = () => {

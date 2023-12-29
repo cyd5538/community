@@ -1,33 +1,48 @@
-import useUserInfo from '@/hook/getUser';
+import { useEffect, useState } from 'react';
+import useAuth from '@/store/useAuth';
+import { useQuery } from '@tanstack/react-query';
+import { Button } from '../ui/button';
 import { Input } from '../ui/input';
+import MyInfoImage from './MyInfoImage';
 
 const MyInfo = () => {
-  const user = useUserInfo()
+  const { getMe } = useAuth();
 
+  const { isLoading, data } = useQuery({
+    queryKey: ['users'],
+    queryFn: getMe,
+  });
+
+  const [nickname, setNickname] = useState<string>();
+  const [file, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (data) {
+      setNickname(data.nickname);
+    }
+  }, [data]);
+  
   return (
-    <form className='gap-6 flex flex-col '>
-      <div className='flex flex-col gap-2 pt-8'>
-        <span className='font-semibold text-md'>현재 닉네임 : {user?.nickname}</span>
-        <Input placeholder='변경할 닉넴을 입력해주세요.'/>
-      </div>
-      <div className='flex flex-col gap-2'>
-        <span className='font-semibold text-md'>Email</span>
-        <div>{user?.email}</div>
-      </div>
-      <div className='flex flex-col gap-2'>
-        <img 
-          className='rounded-full'
-          src={user?.profileImage ? user.profileImage : '/public/user.png'} 
-          alt={user?.email} 
-          width={200} 
-          height={200} 
-        />
-      </div>
-      <button className='w-28 bg-green-600 text-white rounded-md transition-colors delay-100 px-2 py-2 text-md hover:bg-green-500'>
-        수정
-      </button>
-    </form>
-  )
-}
+    <form className='pt-4'>
+      <div className='flex flex-col gap-4'>
+        <div>
+          <label className="text-md block text-gray-700 font-semibold mb-2">Email</label>
+          <div className="text-gray-900">{data?.email}</div>
+        </div>
 
-export default MyInfo
+        <div>
+          <label className="text-md block text-gray-700 font-semibold mb-2">Nickname</label>
+          <Input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+        </div>
+        <div>
+          <MyInfoImage setFile={setFile} profileImage={data?.profileImage} />
+        </div>
+        <div>
+          <Button>수정하기</Button>
+        </div>
+      </div>
+    </form>
+  );
+};
+
+export default MyInfo;

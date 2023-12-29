@@ -76,6 +76,12 @@ const updateUser = asyncHandler(async (req, res) => {
     const userId = req.user.id;
     const { nickname, profileImage } = req.body;
 
+    const existingUserWithNickname = await User.findOne({ nickname });
+
+    if (existingUserWithNickname && existingUserWithNickname._id.toString() !== userId) {
+        return res.status(400).json({ message: "이미 존재하는 닉네임입니다." });
+    }
+
     const updatedUser = await User.findByIdAndUpdate(
         userId,
         { $set: { nickname, profileImage } },
@@ -95,6 +101,7 @@ const updateUser = asyncHandler(async (req, res) => {
         profileImage: updatedProfileImage,
     });
 });
+
 
 const checkNickname = asyncHandler(async (req, res) => {
     const { nickname } = req.params;

@@ -5,7 +5,7 @@ import customToast from '@/components/ui/customToast';
 
 const API_URL = 'http://localhost:5000/api/posts';
 
-const imageStorage = async (file:File) => {
+export const imageStorage = async (file:File) => {
   const storage = getStorage(app);
   const storageRef = ref(storage, 'images/' + file.name);
   await uploadBytes(storageRef, file);

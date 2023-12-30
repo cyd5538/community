@@ -113,10 +113,35 @@ const deletePost = asyncHandler(async (req, res) => {
   res.status(200).json({ id: req.params.id });
 });
 
+const getPostsByUser = asyncHandler(async (req, res) => {
+  const userId = req.params.userId; 
+
+  const posts = await Posts.find({ user: userId })
+    .sort({ createdAt: 'desc' })
+    .populate({
+      path: 'likes',
+      select: 'user',
+    })
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'user',
+        select: 'profileImage nickname createdAt',
+      },
+    })
+    .populate({
+      path: 'user',
+      select: '-password',
+    });
+
+  res.status(200).json(posts);
+}); 
+
 module.exports = {
   getPaginatedPosts,
   getPostsByLikes,
   createPost,
   updatePost,
   deletePost,
+  getPostsByUser
 };

@@ -1,8 +1,16 @@
 import MyInfo from "@/components/Myprofile/MyInfo";
-import Mypost from "@/components/Myprofile/Mypost";
+import Myposts from "@/components/Myprofile/Myposts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import useAuth from "@/store/useAuth";
+import { useQuery } from "@tanstack/react-query";
 
 const Myprofile = () => {
+  const { getMe } = useAuth();
+
+  const { isLoading, data } = useQuery({
+    queryKey: ['users'],
+    queryFn: getMe,
+  });
 
   return (
     <div>
@@ -12,10 +20,10 @@ const Myprofile = () => {
           <TabsTrigger value="mypost">내 글 목록</TabsTrigger>
         </TabsList>
         <TabsContent value="profile">
-          <MyInfo />
+          <MyInfo isLoading={isLoading} user={data} />
         </TabsContent>
         <TabsContent value="mypost">
-          <Mypost />
+          <Myposts isLoading={isLoading} user={data} />
         </TabsContent>
       </Tabs>
     </div>

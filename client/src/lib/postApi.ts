@@ -59,6 +59,17 @@ export const handlePostSubmit = async (
   }
 };
 
+export const getMyposts = async (userId: string) => {
+  const token = localStorage.getItem("token");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.get(`${API_URL}/user/${userId}`, config);
+  return response.data;
+};
+
 export const getAllposts = async ({ pageParam }: { pageParam: number }) => {
   const res = await axios.get(`${API_URL}?page=${pageParam}`);
   return res.data;

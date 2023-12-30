@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import useAuth from '@/store/useAuth';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import MyInfoImage from './MyInfoImage';
@@ -8,24 +8,25 @@ import { profieUpdate, status401Error, status402Error } from '@/lib/userApi';
 import axios from 'axios';
 import customToast from '../ui/customToast';
 import Loading from '../ui/Loading';
+import { UserType } from '@/types/types';
 
-const MyInfo = () => {
-  const { getMe, token } = useAuth();
+interface MyInfoProps {
+  user: UserType | undefined
+  isLoading: boolean;
+}
 
-  const { isLoading, data } = useQuery({
-    queryKey: ['users'],
-    queryFn: getMe,
-  });
+const MyInfo:React.FC<MyInfoProps> = ({user, isLoading}) => {
+  const { token } = useAuth();
 
   const [nickname, setNickname] = useState<string>();
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   
   useEffect(() => {
-    if (data) {
-      setNickname(data.nickname);
+    if (user) {
+      setNickname(user.nickname);
     }
-  }, [data]);
+  }, [user]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -39,6 +40,7 @@ const MyInfo = () => {
       
       const response = await profieUpdate(nickname, file,  token);
       customToast("succes", "프로필이 성공적으로 변경되었습니다.")
+      return response;
     } catch (error: unknown) {
       if(axios.isAxiosError(error)){
         if(error?.response?.status === 401) {
@@ -72,7 +74,7 @@ const MyInfo = () => {
       <div className='flex flex-col gap-4'>
         <div>
           <label className="text-md block text-gray-700 font-semibold mb-2">Email</label>
-          <div className="text-gray-900">{data?.email}</div>
+          <div className="text-gray-900">{user?.email}</div>
         </div>
 
         <div>
@@ -80,7 +82,7 @@ const MyInfo = () => {
           <Input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} />
         </div>
         <div>
-          <MyInfoImage setFile={setFile} profileImage={data?.profileImage} />
+          <MyInfoImage setFile={setFile} profileImage={user?.profileImage} />
         </div>
         <div>
           <Button>수정하기</Button>

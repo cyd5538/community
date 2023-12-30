@@ -42,3 +42,9 @@ export type LikeType = {
   createdAt: string;
   description: string;
 }
+
+export type UserData = {
+  email: string, 
+  nickname?: string, 
+  password: string
+}

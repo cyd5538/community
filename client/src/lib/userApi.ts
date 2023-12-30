@@ -1,35 +1,25 @@
 import customToast from '@/components/ui/customToast'
 import axios from 'axios'
 import { imageStorage } from './postApi'
-
+import { UserData } from '@/types/types'
 
 const API_URL = 'http://localhost:5000/api/users/'
 
-type UserData = {
-  email: string, 
-  nickname?: string, 
-  password: string
-}
-
 export const register = async (userData : UserData) => {
   const response = await axios.post(API_URL, userData)
-
   return response.data
 }
 
 export const login = async (userData: UserData) => {
   const response = await axios.post(API_URL + 'login', userData)
-
   if (response.data) {
     localStorage.setItem('token', JSON.stringify(response.data.token))
   }
-
   return response.data
 }
 
 export const IscheckNickname = async (nickname: string) => {
   const response = await axios.get(`${API_URL}${nickname}`)
-
   return response.data
 }
 
@@ -41,7 +31,6 @@ export const getMyInfo = async () => {
     },
   }
   const response = await axios.post(API_URL + 'me',{}, config);
-
   return response.data;
 };
 

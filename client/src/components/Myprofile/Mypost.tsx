@@ -6,7 +6,8 @@ import {
 import useWindowWidth from "@/hook/useWindowWidth"
 import { PostType } from "@/types/types"
 import { format, parseISO } from "date-fns"
-import { AiFillDelete, AiFillEdit } from "react-icons/ai"
+import { AiFillEdit } from "react-icons/ai"
+import MypostDelbtn from "./MypostDelbtn"
 
 interface MypostProp {
   post: PostType
@@ -33,9 +34,9 @@ const Mypost: React.FC<MypostProp> = ({ post }) => {
           <div className="text-center">
             {format(parseISO(post.createdAt), 'yy-MM-dd')}
           </div>
-          <div className="flex justify-center gap-4 cursor-pointer">
-            <AiFillDelete size={16} />
+          <div className="flex justify-center gap-4">
             <AiFillEdit size={16} />
+            <MypostDelbtn id={post?._id}/>
           </div>
         </TableCell>
       </TableRow>

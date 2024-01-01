@@ -1,10 +1,46 @@
+import {
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@/components/ui/table"
+import useWindowWidth from "@/hook/useWindowWidth"
+import { PostType } from "@/types/types"
+import { format, parseISO } from "date-fns"
+import { AiFillDelete, AiFillEdit } from "react-icons/ai"
 
+interface MypostProp {
+  post: PostType
+}
 
-const Mypost = () => {
+const Mypost: React.FC<MypostProp> = ({ post }) => {
+  const width = useWindowWidth()
+
   return (
-    <div>
-      Mypost
-    </div>
+    <TableBody>
+      <TableRow>
+        {width > 650 ?
+          <TableCell>
+            {post.image && <img className="w-12 h-12" src={post.image} alt={post.title} />}
+          </TableCell> : 
+          <></>
+        }
+        <TableCell className="flex flex-col">
+          <div className="font-bold">{post.title}</div>
+          <div>{post.description}</div>
+        </TableCell>
+        <TableCell className="text-center">{post.comments.length}</TableCell>
+        <TableCell className="flex flex-col gap-2">
+          <div className="text-center">
+            {format(parseISO(post.createdAt), 'yy-MM-dd')}
+          </div>
+          <div className="flex justify-center gap-4 cursor-pointer">
+            <AiFillDelete size={16} />
+            <AiFillEdit size={16} />
+          </div>
+        </TableCell>
+      </TableRow>
+    </TableBody>
+
   )
 }
 

@@ -79,7 +79,7 @@ const MyInfo:React.FC<MyInfoProps> = ({user, isLoading}) => {
 
         <div>
           <label className="text-md block text-gray-700 font-semibold mb-2">Nickname</label>
-          <Input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+          <Input className='w-[300px]' type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} />
         </div>
         <div>
           <MyInfoImage setFile={setFile} profileImage={user?.profileImage} />

@@ -98,19 +98,18 @@ const updatePost = asyncHandler(async (req, res) => {
 });
 
 const deletePost = asyncHandler(async (req, res) => {
-  const post = await Posts.findById(req.params.id);
+  try {
+    const post = await Posts.findOneAndDelete({ _id: req.params.id, user: req.user.id });
 
-  if (!post) {
-    res.status(400).json({ error: "포스트가 존재하지 않습니다" });
+    if (!post) {
+      return res.status(400).json({ error: "포스트가 존재하지 않거나 권한이 없습니다" });
+    }
+
+    res.status(200).json({ id: req.params.id });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "서버 오류" });
   }
-
-  if (post.user.toString() !== req.user.id) {
-    res.status(401).json({ error: "인증되지 않은 유저입니다" });
-  }
-
-  await post.remove();
-
-  res.status(200).json({ id: req.params.id });
 });
 
 const getPostsByUser = asyncHandler(async (req, res) => {

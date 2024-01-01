@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useDebounce } from "@uidotdev/usehooks";
 
 const useWindowWidth = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const debounce = useDebounce(windowWidth, 300);
 
   useEffect(() => {
     const handleResize = () => {
@@ -15,7 +17,7 @@ const useWindowWidth = () => {
     };
   }, []);
 
-  return windowWidth;
+  return debounce;
 };
 
 export default useWindowWidth;

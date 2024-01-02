@@ -8,6 +8,7 @@ import { PostType } from "@/types/types"
 import { format, parseISO } from "date-fns"
 import { AiFillEdit } from "react-icons/ai"
 import MypostDelbtn from "./MypostDelbtn"
+import usePostModel from "@/store/userPostModel"
 
 interface MypostProp {
   post: PostType
@@ -15,6 +16,18 @@ interface MypostProp {
 
 const Mypost: React.FC<MypostProp> = ({ post }) => {
   const width = useWindowWidth()
+  const postModal = usePostModel()
+
+  const handleEditClick = () => {
+    postModal.onOpen();
+    usePostModel.setState({
+      titleStore: post.title || "", 
+      descriptionStore: post.description || "",
+      imageStore: post.image || "",
+      videoStore: post.video || "",
+      postIdStore: post._id || ""
+    });
+  }
 
   return (
     <TableBody>
@@ -35,7 +48,9 @@ const Mypost: React.FC<MypostProp> = ({ post }) => {
             {format(parseISO(post.createdAt), 'yy-MM-dd')}
           </div>
           <div className="flex justify-center gap-4">
-            <AiFillEdit size={16} />
+            <div onClick={handleEditClick} className="hover:bg-green-500 bg-green-300 text-lg px-[8px] py-[8px] rounded-full cursor-pointer">
+              <AiFillEdit size={16}/>
+            </div>
             <MypostDelbtn id={post?._id}/>
           </div>
         </TableCell>

@@ -30,7 +30,7 @@ const Myposts:React.FC<MyPostProps> = ({user}) => {
   }
 
   const { isLoading, data } = useQuery({
-    queryKey: ['posts', 'mypost'],
+    queryKey: ["post", "mypost"],
     queryFn: getMypost,
   });
 

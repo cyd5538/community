@@ -9,7 +9,7 @@ const Posts = () => {
   const [active, setActive] = useState<string | null>(null)
   const param = searchParams.get('posts');
 
-  const { onOpen } = usePostModel();
+  const postModal = usePostModel();
 
   const menus = [
     { name: "최신", link: "/" },
@@ -19,6 +19,17 @@ const Posts = () => {
   useEffect(() => {
     setActive(param ? "좋아요" : "최신")
   }, [param])
+
+  const handlePostClick = () => {
+    postModal.onOpen();
+    usePostModel.setState({
+      titleStore: "", 
+      descriptionStore: "",
+      imageStore: "",
+      videoStore: "",
+      postIdStore: ""
+    });
+  }
 
   return (
     <div>
@@ -37,7 +48,7 @@ const Posts = () => {
         </div>
         <button
           className='px-2 py-1 border-[1px] rounded-full bg-green-400 text-white drop-shadow-md hover:bg-green-500'
-          onClick={onOpen}
+          onClick={handlePostClick}
         >
           글쓰기
         </button>

@@ -59,6 +59,49 @@ export const handlePostSubmit = async (
   }
 };
 
+export const handlePostUpdate = async (
+  title: string,
+  description: string,
+  file: File | null, 
+  video: File | null,
+  token: string | null,
+  id: string,
+  imgurl: string | null,
+  videourl: string | null
+) => {
+  let imageUrl = imgurl;
+  let videoUrl = videourl;
+
+  if (file) {
+    imageUrl = await imageStorage(file)
+  }
+  if (video) {
+    videoUrl = await videoStorage(video)
+  }
+  
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  
+  const data = {
+    title,
+    description,
+    image: imageUrl,
+    video: videoUrl
+  }
+
+  try {
+    const response = await axios.patch(`${API_URL}/${id}`, data, config);
+    return response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      customToast('error', error.response?.data.error)
+    }
+  }
+};
+
 export const getMyposts = async (userId: string) => {
   const token = localStorage.getItem("token");
   const config = {

@@ -1,3 +1,4 @@
+import PostModal from "@/components/Modal/PostModal";
 import MyInfo from "@/components/Myprofile/MyInfo";
 import Myposts from "@/components/Myprofile/Myposts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -26,6 +27,7 @@ const Myprofile = () => {
           <Myposts isLoading={isLoading} user={data} />
         </TabsContent>
       </Tabs>
+      <PostModal />
     </div>
   )
 }

@@ -1,7 +1,10 @@
-import { RegisterType } from '@/types/types'
-import { ZodType, z } from 'zod'
+import { z } from 'zod'
 
-export const RegisterSchema:ZodType<RegisterType> = z.object({
+export const RegisterSchema = z.object({
+    nickname: z
+        .string().trim().toLowerCase()
+        .min(2, { message: "닉네임은 최소 2글자 이상 10글자 이하입니다." })
+        .max(10, { message: "닉네임은 최소 2글자 이상 10글자 이하입니다." }),
     email: z.string()
         .email({ message: "올바른 이메일 형식이 아닙니다." })
         .trim().toLowerCase(),
@@ -21,3 +24,5 @@ export const RegisterSchema:ZodType<RegisterType> = z.object({
   message: "비밀번호가 일치하지 않습니다.",
   path: ["confirmPassword"]
 })
+
+export type RegisterType = z.infer<typeof RegisterSchema>;

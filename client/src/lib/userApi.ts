@@ -5,7 +5,7 @@ import { UserData } from '@/types/types'
 
 const API_URL = 'http://localhost:5000/api/users/'
 
-export const register = async (userData : UserData) => {
+export const registerFun = async (userData : UserData) => {
   const response = await axios.post(API_URL, userData)
   return response.data
 }

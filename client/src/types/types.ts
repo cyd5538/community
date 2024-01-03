@@ -48,3 +48,10 @@ export type UserData = {
   nickname?: string, 
   password: string
 }
+
+export type RegisterType = {
+  email: string, 
+  nickname?: string, 
+  password: string
+  confirmPassword?: string
+}

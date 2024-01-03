@@ -9,7 +9,7 @@ import useAuth from '@/store/useAuth';
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterSchema, RegisterType } from '@/utils/register';
+import { RegisterSchema, RegisterType } from '@/utils/formSchema';
 
 interface RegisterProps {}
 

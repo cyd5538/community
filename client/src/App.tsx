@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ProtectedRoute } from "./components/ProtectedRoute"
 import useAuth from "./store/useAuth"
+import Search from "./pages/Search"
 
 function App() {
   const { user } = useAuth();
@@ -20,6 +21,7 @@ function App() {
       <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />}/>
+          <Route path="/search" element={<Search />}/>
           <Route path="/Register" element={<Register />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/me" element={<ProtectedRoute user={user}>

@@ -6,7 +6,7 @@ import PostComment from "./PostComment";
 
 interface PostProps {
   data: PostType
-  user: UserType | null
+  user: UserType | undefined
 }
  
 const Post:React.FC<PostProps> = ({data, user}) => {

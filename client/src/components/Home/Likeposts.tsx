@@ -1,10 +1,10 @@
 import React from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
 import { getLikeposts } from '@/lib/postApi';
 import type { PostType } from "@/types/types";
 import Post from './Post';
-import useUserInfo from '@/hook/getUser';
+import useAuth from '@/store/useAuth';
 
 const Likeposts = () => {
   const {
@@ -20,8 +20,8 @@ const Likeposts = () => {
       return nextPage;
     },
   });
-
-  const user = useUserInfo()
+  const { getMe } = useAuth();
+  const userQuery = useQuery({ queryKey: ['users'], queryFn: getMe })
 
   return (
     <InfiniteScroll
@@ -34,7 +34,7 @@ const Likeposts = () => {
         {data?.pages.map((group, idx) => (
           <React.Fragment key={idx}>
             {group.map((post:PostType) => (
-                <Post key={post._id} data={post} user={user}/>
+                <Post key={post._id} data={post} user={userQuery.data}/>
               ))}
           </React.Fragment>
         ))}

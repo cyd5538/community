@@ -1,9 +1,14 @@
-import React from 'react'
+import Searchbar from '@/components/Home/Searchbar';
+import SearchResult from '@/components/search/SearchResult';
 
 const Search = () => {
+
   return (
     <div>
-      Search
+      <Searchbar />
+      <div className='mt-20'>
+        <SearchResult />
+      </div>
     </div>
   )
 }

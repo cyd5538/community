@@ -136,11 +136,41 @@ const getPostsByUser = asyncHandler(async (req, res) => {
   res.status(200).json(posts);
 }); 
 
+const getPostsBySearch = asyncHandler(async (req, res) => {
+  const searchQuery = req.query.search || ''; 
+
+  const posts = await Posts.find({
+    $or: [
+      { title: { $regex: searchQuery, $options: 'i' } }, 
+      { description: { $regex: searchQuery, $options: 'i' } },
+    ],
+  })
+    .sort({ createdAt: 'desc' })
+    .populate({
+      path: 'likes',
+      select: 'user',
+    })
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'user',
+        select: 'profileImage nickname createdAt',
+      },
+    })
+    .populate({
+      path: 'user',
+      select: '-password',
+    });
+
+  res.status(200).json(posts);
+});
+
 module.exports = {
   getPaginatedPosts,
   getPostsByLikes,
   createPost,
   updatePost,
   deletePost,
-  getPostsByUser
+  getPostsByUser,
+  getPostsBySearch
 };

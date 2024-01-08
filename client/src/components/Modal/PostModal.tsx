@@ -29,7 +29,7 @@ const PostModal = () => {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      status402Error()
+      return status402Error()
     }
 
     if (!title || !description) {

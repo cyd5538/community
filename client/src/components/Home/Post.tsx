@@ -3,6 +3,7 @@ import { format, parseISO } from "date-fns";
 import { AiOutlineComment } from "react-icons/ai";
 import PostLike from "./PostLike";
 import PostComment from "./PostComment";
+import { useState } from "react";
 
 interface PostProps {
   data: PostType
@@ -10,6 +11,7 @@ interface PostProps {
 }
  
 const Post:React.FC<PostProps> = ({data, user}) => {
+  const [commentShow, setCommentShow] = useState<boolean>(false);
 
   return (
     <div className="flex gap-2 flex-col shadow-sm p-2">
@@ -34,13 +36,23 @@ const Post:React.FC<PostProps> = ({data, user}) => {
           {data.video && <video src={data.video} width={500} height={300} controls/>}
         </div>
       </div>
-      <div className="flex gap-2">
-        <div className="cursor-pointer text-2xl hover:text-green-500 gap[2px] items-center flex">
-          <AiOutlineComment/>
+      <div className="flex gap-4">
+        <div 
+          onClick={() => setCommentShow(!commentShow)} 
+          className="cursor-pointer text-2xl hover:text-green-500 gap[2px] items-center flex"
+        >
+          <AiOutlineComment/> 
+          <span className="text-xl">{data.comments.length}</span>
         </div>
         <PostLike data={data} id={user?.id}/>
       </div>
-      <PostComment userId={user?.id} postId={data._id} comments={data.comments}/>
+      <div
+        className={`${
+          commentShow ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        } transition-opacity duration-500`}
+      >
+        {commentShow && <PostComment userId={user?.id} postId={data._id} comments={data.comments}/> }
+      </div>
     </div>
   )
 }

@@ -46,9 +46,7 @@ const useAuth = create<AuthState>((set) => {
         const response = await getMyInfo()
         return response
       } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-          customToast("error", error?.response?.data.error)
-        }
+        
       }
     }
   };

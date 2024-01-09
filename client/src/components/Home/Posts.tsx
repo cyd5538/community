@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import usePostModel from '@/store/userPostModel';
 import Allposts from './Allposts';
-import Likeposts from './Likeposts';
+import { getAllposts, getLikeposts } from '@/lib/postApi';
 
 const Posts = () => {
   const [searchParams] = useSearchParams();
-  const [active, setActive] = useState<string | null>(null)
+  const [active, setActive] = useState<string>("")
   const param = searchParams.get('posts');
 
   const postModal = usePostModel();
@@ -31,6 +31,26 @@ const Posts = () => {
     });
   }
 
+  const getPosts = (tab: string) => {
+    switch (tab) {
+      case '좋아요':
+        return async ({ pageParam = 1 }: { pageParam?: number }) => {
+          const result = await getLikeposts({ pageParam });
+          return result;
+        };
+      case '최신':
+        return async ({ pageParam = 1 }: { pageParam?: number }) => {
+          const result = await getAllposts({ pageParam });
+          return result;
+        };    
+      default:
+        return async ({ pageParam = 1 }: { pageParam?: number }) => {
+          const result = await getAllposts({ pageParam });
+          return result;
+        };
+    }
+  };
+  
   return (
     <div>
       <div className='flex justify-between'>
@@ -54,10 +74,7 @@ const Posts = () => {
         </button>
       </div>
       <div className='mt-8'>
-        {active === "좋아요" ?
-          <Likeposts /> :
-          <Allposts /> 
-        }
+        <Allposts active={active} handleGet={getPosts(active)} /> 
       </div>
     </div>
   )

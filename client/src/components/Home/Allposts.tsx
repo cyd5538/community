@@ -1,19 +1,25 @@
 import React from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
-import { getAllposts } from '@/lib/postApi';
 import type { PostType } from "@/types/types";
 import Post from './Post';
 import useAuth from '@/store/useAuth';
 
-const Allposts = () => {
+interface allPostsProps {
+  handleGet: ({ pageParam }: {
+      pageParam?: number | undefined;
+  }) => Promise<PostType[]>
+  active: string
+}
+
+const Allposts:React.FC<allPostsProps> = ({handleGet, active}) => {
   const {
     data,
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ['post'],
-    queryFn: getAllposts,
+    queryKey: ['post', active],
+    queryFn: handleGet,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = lastPage.length ? allPages.length + 1 : undefined;

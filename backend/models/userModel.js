@@ -22,7 +22,11 @@ const userSchema = mongoose.Schema({
     socketId: {
         type: String,
         default: null
-    }
+    },
+    room: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Room",
+    },
 },
 {
     timestamps : true

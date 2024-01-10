@@ -13,7 +13,7 @@ const Sidebar = () => {
   const { user, logout } = useAuth()
   const menus = [
     { name: "Home", link: "/", icon: CiHome },
-    { name: "Chat", link: "/", icon: FiMessageSquare },
+    { name: "Chat", link: "/room", icon: FiMessageSquare },
     { name: "League", link: "/", icon: IoFootballOutline },
     { name: "Profile", link: "/me", icon: AiTwotoneProfile, margin: true },
     { name: "Setting", link: "/", icon: IoSettings },

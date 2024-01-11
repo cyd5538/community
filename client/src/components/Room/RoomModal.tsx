@@ -1,17 +1,73 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Modal from '@/components/ui/Modal';
 import useRoomModel from '@/store/useRoomModel';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { status401Error, status402Error } from '@/lib/userApi';
+import { postRoom } from '@/lib/roomApi';
+import axios from 'axios';
+import Loading from '../ui/Loading';
+import useAuth from '@/store/useAuth';
 
 const RoomModal = () => {
   const [title, setTitle] = useState<string>("");
   const [maxpeople, setMaxpeople] = useState<number>(3);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const roomModel = useRoomModel();
+  const queryClient = useQueryClient()
+
+  const { getMe } = useAuth();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      return status402Error()
+    }
+
+    if (!title) {
+      return alert("제목을 입력해주세요")
+    }
+
+    const user = await getMe();
+    try {
+      setLoading(true);
+      if(user) {
+        const response = await postRoom(title, user.id as string, maxpeople, token);
+        setTitle("")
+        setMaxpeople(3)
+        console.log(user)
+        return response.data
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.status === 401) {
+          status401Error()
+        }
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const RoomMutation = useMutation({
+    mutationFn: handleSubmit,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["room"] });
+    },
+    onError: (err) => {
+      console.log(err)
+    }
+  })
+
+  if (loading) {
+    return <Loading />
+  }
 
   const bodyContent = (
-    <form className='flex gap-8 flex-col'>
+    <form onSubmit={RoomMutation.mutate} className='flex gap-8 flex-col'>
       <div className="flex flex-col gap-2">
         <Label className='font-semibold' htmlFor="email">제목</Label>
         <Input
@@ -32,10 +88,10 @@ const RoomModal = () => {
       </div>
       <div className='flex justify-end items-center'>
         <button
-          className='shadow-lg bg-green-400 text-white hover:bg-green-500 w-28 h-12 rounded-md'
+          className='shadow-lg bg-green-400 text-white hover:bg-green-500 w-20 h-12 rounded-md'
           type="submit"
         >
-          채팅방 생성
+          Create
         </button>
       </div>
     </form>

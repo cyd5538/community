@@ -5,7 +5,6 @@ const roomSchema = new mongoose.Schema(
     room: {
       type: String,
       required: true,
-      unique: true,
     },
     owner: {
       type: mongoose.Schema.ObjectId,
@@ -16,7 +15,6 @@ const roomSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.ObjectId,
         ref: "User",
-        unique: true,
       },
     ],
     maxMembers: {

@@ -1,13 +1,15 @@
 import useRoomModel from '@/store/useRoomModel';
-import { Button } from '../ui/button'
 
 const RoomCreateBtn = () => {
   const roomModel = useRoomModel();
 
   return (
-    <Button onClick={roomModel.onOpen}>
-      채팅방 생성
-    </Button>
+    <button 
+      className='shadow-lg bg-green-400 text-white hover:bg-green-500 w-32 h-12 rounded-md'
+      onClick={roomModel.onOpen}
+    >
+      채팅방 만들기
+    </button>
   )
 }
 

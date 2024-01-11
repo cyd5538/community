@@ -9,6 +9,8 @@ import { postRoom } from '@/lib/roomApi';
 import axios from 'axios';
 import Loading from '../ui/Loading';
 import useAuth from '@/store/useAuth';
+import { useNavigate } from 'react-router-dom';
+import customToast from '../ui/customToast';
 
 const RoomModal = () => {
   const [title, setTitle] = useState<string>("");
@@ -18,7 +20,7 @@ const RoomModal = () => {
   const queryClient = useQueryClient()
 
   const { getMe } = useAuth();
-
+  const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
@@ -38,7 +40,8 @@ const RoomModal = () => {
         const response = await postRoom(title, user.id as string, maxpeople, token);
         setTitle("")
         setMaxpeople(3)
-        console.log(user)
+        navigate(`/room/${response.room._id}`)
+        customToast("succes", "채팅방이 생성되었습니다.")
         return response.data
       }
     } catch (error: unknown) {
@@ -47,6 +50,7 @@ const RoomModal = () => {
           status401Error()
         }
       }
+      customToast("error", "방 생성에 실패했습니다.");
     } finally {
       setLoading(false);
     }

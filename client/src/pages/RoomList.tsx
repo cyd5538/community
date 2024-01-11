@@ -1,9 +1,12 @@
 import React from 'react'
+import RoomModal from '@/components/Room/RoomModal'
+import RoomCreateBtn from '@/components/Room/RoomCreateBtn'
 
 const RoomList = () => {
   return (
     <div>
-      RoomList
+      <RoomCreateBtn />
+      <RoomModal />
     </div>
   )
 }

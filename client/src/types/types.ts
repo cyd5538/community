@@ -50,7 +50,7 @@ export type UserData = {
 }
 
 
-interface Room {
+export type RoomType = {
   _id: string;
   room: string;
   owner: UserType;

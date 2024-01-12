@@ -1,14 +1,13 @@
-import React from 'react'
 import RoomModal from '@/components/Room/RoomModal'
 import RoomCreateBtn from '@/components/Room/RoomCreateBtn'
 
-const RoomList = () => {
+const ChatRoom = () => {
   return (
-    <div>
+    <div className='relative w-full'>
       <RoomCreateBtn />
       <RoomModal />
     </div>
   )
 }
 
-export default RoomList
+export default ChatRoom

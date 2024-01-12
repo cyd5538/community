@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ProtectedRoute } from "./components/ProtectedRoute"
 import useAuth from "./store/useAuth"
 import Search from "./pages/Search"
-import RoomList from "./pages/RoomList"
+import ChatRoom from "./pages/ChatRoom"
 import Chat from "./pages/Chat"
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
           <Route path="/search" element={<Search />}/>
           <Route path="/Register" element={<Register />}/>
           <Route path="/login" element={<Login />}/>
-          <Route path="/room" element={<RoomList />}/>
+          <Route path="/room" element={<ChatRoom />}/>
           <Route path="/me" element={<ProtectedRoute user={user}>
             <Myprofile />
           </ProtectedRoute>} />

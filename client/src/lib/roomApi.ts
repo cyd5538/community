@@ -21,3 +21,14 @@ export const postRoom = async (
   const response = await axios.post(API_URL, data, config);
   return response.data;
 };
+
+export const getRooms = async () => {
+  try {
+    const response = await axios.get(API_URL);
+    return response.data
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.log(error);
+    }
+  }
+};

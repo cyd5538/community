@@ -56,6 +56,7 @@ export type RoomType = {
   owner: UserType;
   members: UserType[];
   maxMembers: number;
+  currentMembers: number;
   createdAt: string;
   updatedAt: string;
   __v: number;

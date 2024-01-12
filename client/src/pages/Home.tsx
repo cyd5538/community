@@ -14,7 +14,7 @@ const Home = () => {
           <Posts />
         </div>
         <div className='hidden md:block '>
-          <RoomList cardHeight={48}/>
+          <RoomList cardHeight={200} cardWidth={350}/>
         </div>
       </div>
       

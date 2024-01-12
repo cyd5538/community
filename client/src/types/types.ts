@@ -48,3 +48,15 @@ export type UserData = {
   nickname?: string, 
   password: string
 }
+
+
+interface Room {
+  _id: string;
+  room: string;
+  owner: UserType;
+  members: UserType[];
+  maxMembers: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}

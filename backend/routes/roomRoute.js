@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const {
-  createRoom
+  createRoom,
+  getRooms
 } = require('../controller/roomController');
 const { protect } = require('../middlewear/authmiddlewear');
 
-router.route('/').post(protect, createRoom)
+router.route('/').post(protect, createRoom).get(getRooms);
 
 module.exports = router;

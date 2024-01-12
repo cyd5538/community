@@ -19,6 +19,18 @@ const createRoom = asyncHandler(async (req, res) => {
   }
 });
 
+const getRooms = asyncHandler(async (req, res) => {
+  try {
+    const rooms = await Room.find().populate('owner', 'email _id nickname profileImage');
+    res.status(200).json(rooms);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '서버 오류' });
+  }
+});
+
+
 module.exports = {
-  createRoom
+  createRoom,
+  getRooms
 }

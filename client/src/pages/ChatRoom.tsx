@@ -7,7 +7,9 @@ const ChatRoom = () => {
     <div className='relative w-full'>
       <RoomCreateBtn />
       <RoomModal />
-      <RoomList />
+      <div className='pt-24 w-full flex justify-center'>
+        <RoomList cardHeight={96}/>
+      </div>
     </div>
   )
 }

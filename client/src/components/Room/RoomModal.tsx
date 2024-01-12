@@ -42,6 +42,7 @@ const RoomModal = () => {
         setMaxpeople(3)
         navigate(`/room/${response.room._id}`)
         customToast("succes", "채팅방이 생성되었습니다.")
+        roomModel.onClose()
         return response.data
       }
     } catch (error: unknown) {

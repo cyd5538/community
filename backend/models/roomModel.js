@@ -20,6 +20,10 @@ const roomSchema = new mongoose.Schema(
     maxMembers: {
       type: Number,
     },
+    currentMembers: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

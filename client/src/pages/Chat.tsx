@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import socket from '../lib/socket';
 import useAuth from '@/store/useAuth';
 import { useQuery } from '@tanstack/react-query';
+import ChatContainer from '@/components/Chat/ChatContainer';
+import ChatInput from '@/components/Chat/ChatInput';
+import { ChatType, RoomType } from '@/types/types';
 
 const Chat = () => {  
-  const [message, setMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
-  const [rooms, setRooms] = useState([])
-  
+  const [message, setMessage] = useState<string>("");
+  const [messageList, setMessageList] = useState<ChatType[]>([]);
+  const [rooms, setRooms] = useState<RoomType[]>([])
+
   const { getMe } = useAuth();
 
   const { data } = useQuery({
@@ -27,18 +30,27 @@ const Chat = () => {
     })
   },[])
 
-  const sendMessage = (e) => {
+  const sendMessage = (e: FormEvent) => {
     e.preventDefault()
 
     socket.emit("sendMessage", message, (res) => {
       
     })
+    setMessage("")
   }
-  console.log(messageList)
+
   return (
-    <form onSubmit={sendMessage}>
-      <input placeholder='chat' type="text" value={message} onChange={(e) => setMessage(e.target.value)}/>
-    </form>
+    <div className="h-screen w-full relative bg-green-500">
+      <ChatContainer 
+        messageList={messageList}
+        user={data?.nickname}
+      />
+      <ChatInput 
+        submit={sendMessage}
+        message={message}
+        setMessage={setMessage}
+      />
+    </div>
   )
 }
 

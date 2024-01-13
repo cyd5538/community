@@ -8,7 +8,8 @@ const chatSchema = mongoose.Schema(
         type: mongoose.Schema.ObjectId,
         ref: "User"
       },
-      name: String
+      name: String,
+      profileImg: String
     },
     room: {
       type: mongoose.Schema.ObjectId,

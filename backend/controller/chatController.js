@@ -15,7 +15,8 @@ chatController.saveChat = async(message, user) => {
     chat: message,
     user: {
       id: user._id,
-      name: user.nickname
+      name: user.nickname,
+      profileImg: user.profileImage
     }
   })
   await newMessage.save()

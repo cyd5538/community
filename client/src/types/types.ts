@@ -61,3 +61,16 @@ export type RoomType = {
   updatedAt: string;
   __v: number;
 }
+
+export type ChatType = {
+  _id: string;
+  __v: number;
+  chat: string;
+  createdAt: string;
+  updatedAt: string;
+  user: {
+    id: string;
+    name: string;
+    profileImg: string | null
+  }
+}

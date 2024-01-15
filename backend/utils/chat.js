@@ -15,7 +15,15 @@ module.exports = function(io) {
       const user = await User.findByIdAndUpdate(userId, { socketId: socket.id });
 
       // 채팅방 정보
-      const room = await Room.findById(roomId).populate('owner').populate('members');
+      const room = await Room.findById(roomId)
+      .populate({
+        path: 'owner',
+        select: '_id profileImage nickname'
+      })
+      .populate({
+        path: 'members',
+        select: '_id profileImage nickname'
+    });
 
       // 사용자에게 채팅방 정보 전송
       socket.emit('currentRoomInfo', room);

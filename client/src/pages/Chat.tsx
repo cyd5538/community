@@ -4,12 +4,13 @@ import useAuth from '@/store/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import ChatContainer from '@/components/Chat/ChatContainer';
 import ChatInput from '@/components/Chat/ChatInput';
-import { ChatType } from '@/types/types';
+import ChatInfo from '@/components/Chat/ChatInfo';
+import { ChatType, RoomType } from '@/types/types';
 import { useLocation } from 'react-router-dom';
 
 const Chat = () => {
   const [message, setMessage] = useState<string>("");
-  const [roominfo, setRoomInfo] = useState([]);
+  const [roominfo, setRoomInfo] = useState<RoomType[]>([]);
   const [messageList, setMessageList] = useState<ChatType[]>([]);
 
   const { getMe } = useAuth();
@@ -74,9 +75,11 @@ const Chat = () => {
     }
   };
 
-  console.log(roominfo)
   return (
     <div className="h-screen w-full relative bg-green-500">
+      <ChatInfo 
+        roominfo={roominfo}
+      />
       <ChatContainer
         messageList={messageList}
         user={data?.nickname}

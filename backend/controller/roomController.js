@@ -29,8 +29,26 @@ const getRooms = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteRoom = asyncHandler(async (req, res) => {
+  const roomId = req.params.id;
+
+  try {
+    const deletedRoom = await Room.findOneAndDelete(roomId);
+    
+    if (!deletedRoom) {
+      res.status(404).json({ message: '채팅방을 찾을 수 없습니다.' });
+      return;
+    }
+
+    res.status(200).json({message: `${deletedRoom.room} 방이 삭제되었습니다.`, room: deletedRoom });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '서버 오류' });
+  }
+});
 
 module.exports = {
   createRoom,
-  getRooms
+  getRooms,
+  deleteRoom
 }

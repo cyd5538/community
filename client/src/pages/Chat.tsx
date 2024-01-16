@@ -75,7 +75,7 @@ const Chat = () => {
       setMessage("");
     }
   };
-
+  
   return (
     <div className="h-screen w-full relative bg-green-500">
       <ChatTitle 
@@ -83,6 +83,7 @@ const Chat = () => {
       />
       <ChatInfo 
         roominfo={roominfo}
+        user={data}
       />
       <ChatContainer
         messageList={messageList}

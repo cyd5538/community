@@ -32,3 +32,22 @@ export const getRooms = async () => {
     }
   }
 };
+
+export const deleteRoom = async (
+  id: string,
+  token: string | null
+) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`, config);
+    return response.data
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.log(error);
+    }
+  }
+};

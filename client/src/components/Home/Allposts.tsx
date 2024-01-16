@@ -18,7 +18,7 @@ const Allposts:React.FC<allPostsProps> = ({handleGet, active}) => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ['post', active],
+    queryKey: ["post", "mypost", active],
     queryFn: handleGet,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {

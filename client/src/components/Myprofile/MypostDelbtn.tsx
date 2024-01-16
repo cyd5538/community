@@ -31,7 +31,7 @@ const MypostDelbtn: React.FC<MypostDelbtnProps> = ({ id }) => {
   const mypostDelete = useMutation({
     mutationFn: handleDelete,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts", "mypost"]});
+      queryClient.invalidateQueries({ queryKey: ["post", "mypost"]});
     },
     onError : (err) => {
       console.log(err)

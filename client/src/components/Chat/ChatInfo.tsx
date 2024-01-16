@@ -1,4 +1,4 @@
-import { RoomType } from "@/types/types"
+import { RoomType, UserType } from "@/types/types"
 import {
   Sheet,
   SheetContent,
@@ -8,13 +8,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { MenuIcon } from "lucide-react"
+import ChatDelete from "./ChatDelete";
+import ChatUser from "./ChatUser";
 
 interface ChatInfoProps {
-  roominfo: RoomType
+  roominfo: RoomType;
+  user: UserType | undefined
 }
 
-const ChatInfo: React.FC<ChatInfoProps> = ({ roominfo }) => {
-  console.log(roominfo)
+const ChatInfo: React.FC<ChatInfoProps> = ({ roominfo,user }) => {
+
   return (
     <Sheet>
       <SheetTrigger>
@@ -34,28 +37,31 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ roominfo }) => {
                 />
               <div className="text-black text-base flex">
                 {roominfo.owner?.nickname}
-                <p className="rounded-full w-6 h-6 text-xs bg-green-300 flex justify-center items-center">
+                <span className="rounded-full w-6 h-6 text-xs bg-green-300 flex justify-center items-center">
                   방장
-                </p>
+                </span>
               </div>
             </div>
             <span> 현재 인원 {roominfo.currentMembers} /</span> 
             <span> 총 인원 {roominfo.maxMembers}</span>
           </SheetDescription>
           <SheetDescription className="pt-10">
-            <div className="text-black text-base pb-4 text-left">참여중인 유저 </div>
-            {roominfo.members?.map((member) => (
-              <div className="flex gap-4 items-center">
-                <img 
-                  src={member.profileImage ? member.profileImage : "/public/user.png"} 
-                  alt={member.nickname}
-                  width={50}
-                  height={50}
-                  className="rounded-full"
+          <div className="text-black text-base pb-4 text-left">참여중인 유저 </div>
+            <div>
+              {roominfo.members?.map((member) => (
+                <ChatUser 
+                  key={member._id}
+                  member={member}
                 />
-                <div className="text-black">{member.nickname}</div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </SheetDescription>
+          <SheetDescription>
+            {user?.nickname === roominfo.owner?.nickname && 
+              <ChatDelete 
+                id={roominfo._id}
+              />
+            }
           </SheetDescription>
         </SheetHeader>
       </SheetContent>

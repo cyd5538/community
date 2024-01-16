@@ -7,7 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Button } from "../ui/button"
+import { MenuIcon } from "lucide-react"
 
 interface ChatInfoProps {
   roominfo: RoomType
@@ -18,7 +18,7 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ roominfo }) => {
   return (
     <Sheet>
       <SheetTrigger>
-        <Button className="bg-green-800 text-white hover:bg-green-900 fixed top-2 right-2">방 정보</Button>
+        <MenuIcon className="fixed top-2 hover:bg-slate-700 hover:text-white right-6 p-1 rounded-full" size={40}/>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

@@ -7,10 +7,11 @@ import ChatInput from '@/components/Chat/ChatInput';
 import ChatInfo from '@/components/Chat/ChatInfo';
 import { ChatType, RoomType } from '@/types/types';
 import { useLocation } from 'react-router-dom';
+import ChatTitle from '@/components/Chat/ChatTitle';
 
 const Chat = () => {
   const [message, setMessage] = useState<string>("");
-  const [roominfo, setRoomInfo] = useState<RoomType[]>([]);
+  const [roominfo, setRoomInfo] = useState<RoomType>([]);
   const [messageList, setMessageList] = useState<ChatType[]>([]);
 
   const { getMe } = useAuth();
@@ -77,6 +78,9 @@ const Chat = () => {
 
   return (
     <div className="h-screen w-full relative bg-green-500">
+      <ChatTitle 
+        roominfo={roominfo}
+      />
       <ChatInfo 
         roominfo={roominfo}
       />

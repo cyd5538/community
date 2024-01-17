@@ -7,31 +7,58 @@ module.exports = function(io) {
   // 듣는 함수 on
   io.on('connection', (socket) => {
   
-    // 유저 채팅방 입장
     socket.on('joinRoom', async (roomId, userId) => {
       socket.join(roomId);
-      console.log(roomId, userId)
+    
       // 사용자의 소켓 ID를 업데이트
       const user = await User.findByIdAndUpdate(userId, { socketId: socket.id });
-
+    
       // 채팅방 정보
       const room = await Room.findById(roomId)
-      .populate({
-        path: 'owner',
-        select: '_id profileImage nickname'
-      })
-      .populate({
-        path: 'members',
-        select: '_id profileImage nickname'
-    });
-
+        .populate({
+          path: 'owner',
+          select: '_id profileImage nickname'
+        })  
+        .populate({
+          path: 'members',
+          select: '_id profileImage nickname'
+        });
+    
+      // 사용자를 방의 멤버로 추가
+      if (room) {
+        if (!room.members.includes(userId)) {
+          room.members.push(user);
+          room.currentMembers += 1;
+          await room.save();
+        }
+      }
+    
       // 사용자에게 채팅방 정보 전송
-      socket.emit('currentRoomInfo', room);
+      io.to(roomId).emit('currentRoomInfo', room);
     });
   
     // 유저 채팅방 퇴장
-    socket.on('leaveRoom', (roomId) => {
+    socket.on('leaveRoom', async (roomId, userId) => {
       socket.leave(roomId);
+    
+      const room = await Room.findById(roomId)
+        .populate({
+          path: 'owner',
+          select: '_id profileImage nickname'
+        })  
+        .populate({
+          path: 'members',
+          select: '_id profileImage nickname'
+        });
+    
+      if (room) {
+        room.members = room.members?.filter(memberId => !memberId.equals(userId));
+        room.currentMembers -= 1;
+    
+        await room.save();
+    
+        io.to(roomId).emit('currentRoomInfo', room);
+      } 
     });
 
     // 채팅 메시지 전송

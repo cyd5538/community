@@ -15,7 +15,7 @@ import { Button } from "../ui/button";
 import customToast from "../ui/customToast";
 
 interface ChatDeleteProp {
-  id: string
+  id: string | undefined
 }
 
 const ChatDelete:React.FC<ChatDeleteProp> = ({id}) => {
@@ -27,7 +27,7 @@ const ChatDelete:React.FC<ChatDeleteProp> = ({id}) => {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await deleteRoom(id,token)
+      const response = await deleteRoom(id as string,token)
      
       customToast("success", response.message)
       navigate("/")

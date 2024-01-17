@@ -11,7 +11,7 @@ import ChatTitle from '@/components/Chat/ChatTitle';
 
 const Chat = () => {
   const [message, setMessage] = useState<string>("");
-  const [roominfo, setRoomInfo] = useState<RoomType>([]);
+  const [roominfo, setRoomInfo] = useState<RoomType | null>(null);
   const [messageList, setMessageList] = useState<ChatType[]>([]);
 
   const { getMe } = useAuth();
@@ -27,22 +27,35 @@ const Chat = () => {
 
   useEffect(() => {
     if (data && title) {
-      
-      const id = data.id
-      socket.emit('leaveRoom', title[1], id); // 기존의 방이 있다면 나가주고 
-      socket.emit('joinRoom', title[1], id); // 새로운 방의 입장
-
-      socket.on('currentRoomInfo', (room) => {
-        setRoomInfo(room)
-      });
+      const id = data.id;
+  
+      // 페이지를 나갈 때 leaveRoom 이벤트 실행
+      socket.emit('leaveRoom', title[1], id);
   
       return () => {
-        socket.off('currentRoomInfo');
-        socket.off('userJoined');
+        socket.emit('leaveRoom', title[1], id);
       };
     }
   }, [data]);
+  
+  useEffect(() => {
+    if (data && title) {
+      const id = data.id;
+      socket.emit('joinRoom', title[1], id);
+    }
+  }, [data]);
+  
+  // 방 정보 갱신
+  useEffect(() => {
+    socket.on('currentRoomInfo', (room) => {
+      setRoomInfo(room);
+    });
 
+    return () => {
+      socket.off('currentRoomInfo');
+    };
+  }, [])
+  
   // 메세지 저장
   useEffect(() => {
     socket.on('message', (newMessage) => {
@@ -76,6 +89,8 @@ const Chat = () => {
     }
   };
   
+
+  console.log(roominfo)
   return (
     <div className="h-screen w-full relative bg-green-500">
       <ChatTitle 

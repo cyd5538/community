@@ -23,11 +23,11 @@ const RoomCard:React.FC<RoomCardType> = ({room}) => {
       onClick={redirect}
       className={`w-full flex justify-between bg-gray-100 p-2 gap-4 items-center rounded-lg disabled`}
     >
-      <div className='w-14 flex flex-col justify-center items-center'>
+      <div className='w-24  flex flex-col justify-center items-center'>
         <span className='text-xs'>{room.owner.nickname}</span>
-        <img src={room.owner.profileImage ? room.owner.profileImage : "/public/user.png"} alt={room.owner.nickname} width={35} height={35} />
+        <img className='rounded-full' src={room.owner.profileImage ? room.owner.profileImage : "/public/user.png"} alt={room.owner.nickname} width={45} height={45} />
       </div>
-      <div className='w-3/5'>
+      <div className='w-3/5 flex flex-col gap-2'>
         <h3 className='text-sm'>{room.room}</h3>
         <span className='text-xs'>{room.currentMembers} / {room.maxMembers}</span>
       </div>
@@ -42,11 +42,11 @@ const RoomCard:React.FC<RoomCardType> = ({room}) => {
       to={`/room/${room._id}`}
       className={`w-full flex justify-between hover:bg-green-300 p-2 cursor-pointer gap-4 items-center rounded-lg`}
     >
-      <div className='w-14 flex flex-col justify-center items-center'>
+      <div className='w-24 flex flex-col justify-center items-centeer'>
         <span className='text-xs'>{room.owner.nickname}</span>
-        <img src={room.owner.profileImage ? room.owner.profileImage : "/public/user.png"} alt={room.owner.nickname} width={35} height={35} />
+        <img className='rounded-full' src={room.owner.profileImage ? room.owner.profileImage : "/public/user.png"} alt={room.owner.nickname} width={45} height={45} />
       </div>
-      <div className='w-3/5'>
+      <div className='w-3/5 flex flex-col gap-2'>
         <h3 className='text-sm'>{room.room}</h3>
         <span className='text-xs'>{room.currentMembers} / {room.maxMembers}</span>
       </div>

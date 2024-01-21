@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import usePostModel from '@/store/userPostModel';
 import Allposts from './Allposts';
-import { getAllposts, getLikeposts } from '@/lib/postApi';
+import { getAllposts, getCommentposts, getLikeposts } from '@/lib/postApi';
 
 const Posts = () => {
   const [searchParams] = useSearchParams();
@@ -12,13 +12,20 @@ const Posts = () => {
   const postModal = usePostModel();
 
   const menus = [
-    { name: "최신", link: "/" },
-    { name: "좋아요", link: "?posts=like" },
+    { name: "최신순", link: "/" },
+    { name: "좋아요순", link: "?posts=like" },
+    { name: "댓글순", link: "?posts=comments"}
   ];
 
   useEffect(() => {
-    setActive(param ? "좋아요" : "최신")
-  }, [param])
+    const paramMapping: { [key: string]: string } = {
+      'null': "최신순",
+      'like': "좋아요순",
+      'comments': "댓글순",
+    };
+
+    setActive(paramMapping[String(param)] || "최신순");
+  }, [param]);  
 
   const handlePostClick = () => {
     postModal.onOpen();
@@ -33,14 +40,19 @@ const Posts = () => {
 
   const getPosts = (tab: string) => {
     switch (tab) {
-      case '좋아요':
+      case '좋아요순':
         return async ({ pageParam = 1 }: { pageParam?: number }) => {
           const result = await getLikeposts({ pageParam });
           return result;
         };
-      case '최신':
+      case '최신순':
         return async ({ pageParam = 1 }: { pageParam?: number }) => {
           const result = await getAllposts({ pageParam });
+          return result;
+        };    
+      case '댓글순':
+        return async ({ pageParam = 1 }: { pageParam?: number }) => {
+          const result = await getCommentposts({ pageParam });
           return result;
         };    
       default:
@@ -58,7 +70,7 @@ const Posts = () => {
           {menus.map((menu) => (
             <Link
               key={menu.name}
-              className={`${active === menu.name ? 'text-gray-500 underline' : ""} text-lg`}
+              className={`${active === menu.name ? 'bg-green-400 text-white rounded-md' : ""} text-lg p-1`}
               to={menu.link}
               onClick={() => setActive(menu.name)}
             >

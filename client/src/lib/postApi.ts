@@ -140,3 +140,8 @@ export const getLikeposts = async ({ pageParam }: { pageParam: number }) => {
   return res.data;
 };
 
+export const getCommentposts = async ({ pageParam }: { pageParam: number }) => {
+  const res = await axios.get(`${API_URL}/comment?page=${pageParam}`);
+  return res.data;
+};
+

@@ -7,7 +7,7 @@ const createComment = asyncHandler(async (req, res) => {
 
   const newComment = await Comment.create({ user, post, text });
 
-  await Post.findByIdAndUpdate(post, { $push: { comments: newComment._id } });
+  await Post.findByIdAndUpdate(post, { $push: { comments: newComment._id }, $inc: { commentsCount: 1 } });
 
   res.status(201).json({ message: '댓글 등록 완료' });
 });
@@ -36,7 +36,7 @@ const deleteComment = asyncHandler(async (req, res) => {
 
     const postId = comment.post;
 
-    await Post.findByIdAndUpdate(postId, { $pull: { comments: commentId } });
+    await Post.findByIdAndUpdate(postId, { $pull: { comments: commentId }, $inc: { commentsCount: -1 } });
 
     await comment.deleteOne(); 
 

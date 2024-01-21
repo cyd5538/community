@@ -13,8 +13,10 @@ const Home = () => {
         <div className='w-full md:w-2/3 border-gray-10 border-[1px] p-4'>
           <Posts />
         </div>
-        <div className='hidden md:block '>
-          <RoomList cardHeight={200} cardWidth={350}/>
+        <div className='hidden md:block'>
+          <div className='fixed'>
+            <RoomList cardHeight={200} cardWidth={350}/>
+          </div>
         </div>
       </div>
       

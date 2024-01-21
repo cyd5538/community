@@ -14,7 +14,7 @@ const Myprofile = () => {
   });
 
   return (
-    <div>
+    <div className="pl-4 py-4">
       <Tabs defaultValue="profile" className="w-full">
         <TabsList>
           <TabsTrigger value="profile">내 정보</TabsTrigger>

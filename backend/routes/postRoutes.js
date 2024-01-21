@@ -7,7 +7,8 @@ const {
   getPostsByLikes,
   deletePost,
   getPostsByUser,
-  getPostsBySearch
+  getPostsBySearch,
+  getPostsByComments
 } = require('../controller/postController');
 
 const { protect } = require("../middlewear/authmiddlewear");
@@ -17,5 +18,6 @@ router.route('/like').get(getPostsByLikes);
 router.route('/:id').delete(protect, deletePost).patch(protect, updatePost);
 router.route('/user/:userId').get(protect, getPostsByUser);
 router.route('/search').get(getPostsBySearch);
+router.route('/comment').get(getPostsByComments);
 
 module.exports = router;

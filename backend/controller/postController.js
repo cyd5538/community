@@ -32,7 +32,7 @@ const getPaginatedPosts = asyncHandler(async (req, res) => {
 const getPostsByLikes = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) || 1; 
   const pageSize = parseInt(req.query.pageSize) || 10; 
-
+  
   const skip = (page - 1) * pageSize;
 
   const posts = await Posts.find()
@@ -48,6 +48,35 @@ const getPostsByLikes = asyncHandler(async (req, res) => {
       populate: {
         path: 'user',
         select: 'profileImage nickname createdAt', 
+      },
+    })
+    .populate({
+      path: 'user',
+      select: '-password',
+    });
+
+  res.status(200).json(posts);
+});
+
+const getPostsByComments = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+
+  const skip = (page - 1) * pageSize;
+  
+  const posts = await Posts.find()
+    .sort({ 'commentsCount': 'desc', createdAt: 'desc' })
+    .skip(skip)
+    .limit(pageSize)
+    .populate({
+      path: 'likes',
+      select: 'user',
+    })
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'user',
+        select: 'profileImage nickname createdAt',
       },
     })
     .populate({
@@ -120,7 +149,7 @@ const getPostsByUser = asyncHandler(async (req, res) => {
     .populate({
       path: 'likes',
       select: 'user',
-    })
+    })  
     .populate({
       path: 'comments',
       populate: {
@@ -172,5 +201,6 @@ module.exports = {
   updatePost,
   deletePost,
   getPostsByUser,
-  getPostsBySearch
+  getPostsBySearch,
+  getPostsByComments
 };

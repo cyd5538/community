@@ -39,9 +39,9 @@ const Sidebar = () => {
   return (
     <section className="flex fixed top-0 left-0 z-40 gap-6">
       <div
-        className={`bg-green-700 min-h-screen ${
+        className={`bg-green-400 min-h-screen ${
           open ? "w-40" : "w-16"
-        } duration-500 text-gray-100 px-4`}
+        } duration-500 text-black px-4`}
       >
         <div className="py-3 flex justify-end">
           <CiMenuBurger
@@ -58,7 +58,7 @@ const Sidebar = () => {
               key={i}
               className={` ${
                 menu?.margin && "mt-5"
-              } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-green-950 rounded-md`}
+              } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-green-500 rounded-md`}
             >
               <div>{React.createElement(menu?.icon, { size: "20" })}</div>
               <h2

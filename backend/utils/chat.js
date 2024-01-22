@@ -22,8 +22,10 @@ module.exports = function(io) {
         .populate({
           path: 'members',
           select: '_id profileImage nickname'
+        })
+        .populate({
+          path: 'chats', 
         });
-    
       // 사용자를 방의 멤버로 추가
       if (room) {
         if (!room.members.includes(userId)) {
@@ -41,6 +43,7 @@ module.exports = function(io) {
     socket.on('leaveRoom', async (roomId, userId) => {
       socket.leave(roomId);
     
+      // Room 정보와 채팅 메시지들을 함께 가져오기
       const room = await Room.findById(roomId)
         .populate({
           path: 'owner',
@@ -49,6 +52,9 @@ module.exports = function(io) {
         .populate({
           path: 'members',
           select: '_id profileImage nickname'
+        })
+        .populate({
+          path: 'chats', 
         });
     
       if (room) {
@@ -61,7 +67,6 @@ module.exports = function(io) {
       } 
     });
 
-    // 채팅 메시지 전송
     socket.on('sendMessage', async (roomId, userId, message) => {
       try {
         const user = await User.findById(userId);
@@ -70,18 +75,26 @@ module.exports = function(io) {
           console.error('유저가 없습니다.');
           return;
         }
+    
         // 채팅 메시지 저장
         const chat = new Chat({
           chat: message,
           user: {
             id: user._id,
-            name: user.name,
+            name: user.nickname,
             profileImg: user.profileImage,
           },
           room: roomId,
         });
-        
+    
         await chat.save();
+    
+        // Room 모델에 채팅 메시지 추가
+        const room = await Room.findByIdAndUpdate(
+          roomId,
+          { $push: { chats: chat._id } },
+          { new: true }
+        );
     
         // 채팅 메시지 전송
         io.to(roomId).emit('message', {

@@ -49,6 +49,7 @@ const Chat = () => {
   useEffect(() => {
     socket.on('currentRoomInfo', (room) => {
       setRoomInfo(room);
+      setMessageList(room.chats)
     });
 
     return () => {
@@ -90,7 +91,6 @@ const Chat = () => {
   };
   
 
-  console.log(roominfo)
   return (
     <div className="h-screen w-full relative bg-green-500">
       <ChatTitle 

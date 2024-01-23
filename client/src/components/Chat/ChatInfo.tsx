@@ -42,7 +42,7 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ roominfo,user }) => {
                 </span>
               </div>
             </div>
-            <span> 현재 인원 {roominfo?.currentMembers} /</span> 
+            <span> 현재 인원 {roominfo?.members.length} /</span> 
             <span> 총 인원 {roominfo?.maxMembers}</span>
           </SheetDescription>
           <SheetDescription className="pt-10">

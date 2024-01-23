@@ -18,7 +18,7 @@ const RoomCard:React.FC<RoomCardType> = ({room}) => {
     }
   }
  
-  return room.currentMembers === room.maxMembers ? (
+  return room.members.length === room.maxMembers ? (
     <div
       onClick={redirect}
       className={`w-full flex justify-between bg-gray-100 p-2 gap-4 items-center rounded-lg disabled`}
@@ -29,7 +29,7 @@ const RoomCard:React.FC<RoomCardType> = ({room}) => {
       </div>
       <div className='w-3/5 flex flex-col gap-2'>
         <h3 className='text-sm'>{room.room}</h3>
-        <span className='text-xs'>{room.currentMembers} / {room.maxMembers}</span>
+        <span className='text-xs'>{room.members.length} / {room.maxMembers}</span>
       </div>
       <div className='text-xs w-20 flex flex-col gap-2 items-center'>
         <p>{format(parseISO(room.createdAt), 'MM월dd일')}</p>
@@ -48,7 +48,7 @@ const RoomCard:React.FC<RoomCardType> = ({room}) => {
       </div>
       <div className='w-3/5 flex flex-col gap-2'>
         <h3 className='text-sm'>{room.room}</h3>
-        <span className='text-xs'>{room.currentMembers} / {room.maxMembers}</span>
+        <span className='text-xs'>{room.members.length}  / {room.maxMembers}</span>
       </div>
       <div className='text-xs w-20 flex flex-col gap-2 items-center'>
         <p>{format(parseISO(room.createdAt), 'MM월dd일')}</p>

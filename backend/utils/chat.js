@@ -60,7 +60,7 @@ module.exports = function(io) {
       if (room) {
         room.members = room.members?.filter(memberId => !memberId.equals(userId));
         room.currentMembers -= 1;
-    
+        room.increment();
         await room.save();
     
         io.to(roomId).emit('currentRoomInfo', room);
@@ -96,6 +96,8 @@ module.exports = function(io) {
           { new: true }
         );
     
+        room.increment();
+        
         // 채팅 메시지 전송
         io.to(roomId).emit('message', {
           _id: chat._id,

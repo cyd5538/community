@@ -51,3 +51,23 @@ export const deleteRoom = async (
     }
   }
 };
+
+export const getRoomMessages = async (
+  roomId: string, 
+  token: string | null
+) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.get(`${API_URL}/${roomId}/messages`, config);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log(error);
+    }
+  }
+};

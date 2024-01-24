@@ -15,29 +15,36 @@ module.exports = function(io) {
     
       // 채팅방 정보
       const room = await Room.findById(roomId)
-        .populate({
-          path: 'owner',
-          select: '_id profileImage nickname'
-        })  
-        .populate({
-          path: 'members',
-          select: '_id profileImage nickname'
-        })
-        .populate({
-          path: 'chats', 
-        });
-      // 사용자를 방의 멤버로 추가
-      if (room) {
-        if (!room.members.includes(userId)) {
-          room.members.push(user);
-          room.currentMembers += 1;
-          await room.save();
-        }
-      }
+      .populate({
+        path: 'owner',
+        select: '_id profileImage nickname'
+      })  
+      .populate({
+        path: 'members',
+        select: '_id profileImage nickname'
+      });
     
-      // 사용자에게 채팅방 정보 전송
-      io.to(roomId).emit('currentRoomInfo', room);
-    });
+        // 사용자를 방의 멤버로 추가
+        if (room) {
+          if (!room.members.includes(userId)) {
+            room.members.push(user);
+            room.currentMembers += 1;
+            await room.save();
+          }
+        }
+      
+        io.to(roomId).emit('currentRoomInfo', {
+          _id: room._id,
+          room: room.room,
+          owner: room.owner,
+          members: room.members,
+          maxMembers: room.maxMembers,
+          chat: [],
+          currentMembers: room.currentMembers,
+          createdAt: room.createdAt,
+          updatedAt: room.updatedAt,
+        });
+      });
   
     // 유저 채팅방 퇴장
     socket.on('leaveRoom', async (roomId, userId) => {
@@ -53,9 +60,6 @@ module.exports = function(io) {
           path: 'members',
           select: '_id profileImage nickname'
         })
-        .populate({
-          path: 'chats', 
-        });
     
       if (room) {
         room.members = room.members?.filter(memberId => !memberId.equals(userId));
@@ -63,7 +67,17 @@ module.exports = function(io) {
         room.increment();
         await room.save();
     
-        io.to(roomId).emit('currentRoomInfo', room);
+        io.to(roomId).emit('currentRoomInfo', {
+          _id: room._id,
+          room: room.room,
+          owner: room.owner,
+          members: room.members,
+          maxMembers: room.maxMembers,
+          chat: [],
+          currentMembers: room.currentMembers,
+          createdAt: room.createdAt,
+          updatedAt: room.updatedAt,
+        });
       } 
     });
 

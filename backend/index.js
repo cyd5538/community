@@ -18,6 +18,7 @@ app.use('/api/posts', require('./routes/postRoutes.js'));
 app.use('/api/posts', require('./routes/likeRoute.js'));
 app.use('/api/comments', require('./routes/commentRoute.js'));
 app.use('/api/rooms', require('./routes/roomRoute.js'));
+app.use('/api/football', require('./routes/footballRoute.js'));
 
 require("./models/likeModel.js");
 require("./models/commentModel.js");

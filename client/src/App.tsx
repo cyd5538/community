@@ -12,6 +12,7 @@ import useAuth from "./store/useAuth"
 import Search from "./pages/Search"
 import ChatRoom from "./pages/ChatRoom"
 import Chat from "./pages/Chat"
+import Football from "./pages/Football"
 
 function App() {
   const { user } = useAuth();
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/search" element={<Search />}/>
+          <Route path="/football" element={<Football />}/>
           <Route path="/Register" element={<Register />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/room" element={<ChatRoom />}/>

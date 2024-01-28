@@ -11,6 +11,20 @@ interface LeagueTableProps {
 }
 
 const LeagueTable: React.FC<LeagueTableProps> = ({ rankData }) => {
+
+  const getRecentResultsStyle = (result: string) => {
+    switch (result) {
+      case 'W':
+        return { color: 'blue' }; 
+      case 'D':
+        return { color: 'gray' };
+      case 'L':
+        return { color: 'red' }; 
+      default:
+        return {}; 
+    }
+  };
+
   return (
     <TableRow>
       <TableCell className="text-center">{rankData.position}</TableCell>
@@ -26,7 +40,13 @@ const LeagueTable: React.FC<LeagueTableProps> = ({ rankData }) => {
       <TableCell className="text-center">{rankData.goalsFor}</TableCell>
       <TableCell className="text-center">{rankData.goalsAgainst}</TableCell>
       <TableCell className="text-center">{rankData.goalDifference}</TableCell>
-      <TableCell className="text-center">{rankData.form}</TableCell>
+      <TableCell className="text-center font-semibold">
+      {rankData.form?.split("").map((result, index) => (
+        <span key={index} style={getRecentResultsStyle(result)}>
+          {result}
+        </span>
+      ))}
+      </TableCell>
     </TableRow>
   )
 }

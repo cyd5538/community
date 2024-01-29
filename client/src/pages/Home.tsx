@@ -1,3 +1,4 @@
+import HomeLeagueTable from '@/components/Home/HomeLeagueTable';
 import Posts from '@/components/Home/Posts';
 import Searchbar from '@/components/Home/Searchbar';
 import PostModal from '@/components/Modal/PostModal'
@@ -16,6 +17,9 @@ const Home = () => {
         <div className='hidden md:w-1/3 md:flex flex-col gap-4'>
           <div className=''>
             <RoomList cardHeight={200} cardWidth={390}/>
+          </div>
+          <div className='w-[390px]'>
+            <HomeLeagueTable />
           </div>
         </div>
       </div>

@@ -34,7 +34,7 @@ const HomeLeagueTable = () => {
     <div className='overflow-hidden flex flex-col justify-center items-start border-gray-10 border-[1px] p-2'>
       <h2 className='text-center mb-4 w-full text-md'>현재 리그 순위</h2>
       <select
-        className="bg-green-400 text-white rounded-md block w-26 p-2 mb-4"
+        className="bg-green-400 text-white rounded-md block w-26 p-2 mb-4 outline-none"
         value={leagueChoice}
         onChange={handleLeagueChange}
       >

@@ -26,7 +26,7 @@ const RoomList:React.FC<RoomListProps> = ({cardHeight, cardWidth}) => {
       <h2 className='text-lg mb-10 text-center'>실시간 채팅 {data?.length}</h2>
       {data.length === 0 ?
       <div className='flex justify-center items-center'>개설된 방이 없습니다.</div> :
-      <div style={{ maxHeight: `${cardHeight}px`, height: "100%"}} className={`flex flex-col gap-2 overflow-y-auto`}>
+      <div style={{ maxHeight: `${cardHeight}px`, height: "100%"}} className={`w-full flex flex-col gap-2 overflow-y-auto`}>
         {data?.map((room:RoomType) => 
           <RoomCard room={room} key={room._id} />
         )}

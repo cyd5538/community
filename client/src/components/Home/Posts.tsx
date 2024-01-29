@@ -79,7 +79,7 @@ const Posts = () => {
           ))}
         </div>
         <button
-          className='px-2 py-1 border-[1px] rounded-full bg-green-400 text-white drop-shadow-md hover:bg-green-500'
+          className='px-2 h-10 border-[1px] rounded-md bg-green-400 text-white drop-shadow-md hover:bg-green-500'
           onClick={handlePostClick}
         >
           글쓰기

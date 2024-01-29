@@ -6,7 +6,7 @@ const Search = () => {
   return (
     <div>
       <Searchbar />
-      <div className='mt-20'>
+      <div className='my-20 mx-8'>
         <SearchResult />
       </div>
     </div>

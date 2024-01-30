@@ -27,8 +27,8 @@ const Post:React.FC<PostProps> = ({data, user}) => {
         </div>
       </div>
       <div className='flex flex-col gap-4'>
-        <h2 className='font-semibold text-lg'>{data.title}</h2>
-        <div>{data.description}</div>
+        <h2 className='font-semibold text-lg break-words'>{data.title}</h2>
+        <div className="break-words">{data.description}</div>
         <div className="m-auto ml-4 flex justify-center items-center w-full">
           {data.image && <img src={data.image} width={400} height={200} alt={data.title}/>}
         </div>

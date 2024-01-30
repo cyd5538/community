@@ -40,7 +40,7 @@ const MypostDelbtn: React.FC<MypostDelbtnProps> = ({ id }) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="hover:bg-green-500 bg-green-300 text-lg px-[8px] py-[8px] rounded-full">
+      <AlertDialogTrigger className="cursor-pointer">
         <AiFillDelete size={16} />
       </AlertDialogTrigger>
       <AlertDialogContent>

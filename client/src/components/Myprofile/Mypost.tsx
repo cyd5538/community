@@ -1,8 +1,3 @@
-import {
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table"
 import useWindowWidth from "@/hook/useWindowWidth"
 import { PostType } from "@/types/types"
 import { format, parseISO } from "date-fns"
@@ -15,13 +10,12 @@ interface MypostProp {
 }
 
 const Mypost: React.FC<MypostProp> = ({ post }) => {
-  const width = useWindowWidth()
   const postModal = usePostModel()
 
   const handleEditClick = () => {
     postModal.onOpen();
     usePostModel.setState({
-      titleStore: post.title || "", 
+      titleStore: post.title || "",
       descriptionStore: post.description || "",
       imageStore: post.image || "",
       videoStore: post.video || "",
@@ -30,32 +24,30 @@ const Mypost: React.FC<MypostProp> = ({ post }) => {
   }
 
   return (
-    <TableBody>
-      <TableRow>
-        {width > 650 ?
-          <TableCell>
-            {post.image && <img className="w-12 h-12" src={post.image} alt={post.title} />}
-          </TableCell> : 
-          <></>
+    <div className="p-2 drop-shadow-md shadow-black rounded-md border-[1px] border-gray ">
+      <div>
+        {post.image ? 
+          <img className="w-auto h-40 mb-2" src={post.image} alt={post.title} /> : 
+          <div className="w-auto h-40 flex justify-center items-center text-gray-300 mb-2">사진이 없습니다.</div>
         }
-        <TableCell className="flex flex-col">
-          <div className="font-bold">{post.title}</div>
-          <div>{post.description}</div>
-        </TableCell>
-        <TableCell className="text-center">{post.comments.length}</TableCell>
-        <TableCell className="flex flex-col gap-2">
-          <div className="text-center">
-            {format(parseISO(post.createdAt), 'yy-MM-dd')}
-          </div>
-          <div className="flex justify-center gap-4">
-            <div onClick={handleEditClick} className="hover:bg-green-500 bg-green-300 text-lg px-[8px] py-[8px] rounded-full cursor-pointer">
-              <AiFillEdit size={16}/>
+        <div className="flex flex-col h-32 overflow-hidden w-full">
+          <h2 className="font-semibold text-xl break-words mb-2">{post.title}</h2>
+          <h3 className="h-24 text-sm break-words">{post.description}</h3>      
+        </div>
+        <div className="text-left text-xs pr-2 mb-4 mt-8 flex gap-2 text-gray-500">
+          <p>{format(parseISO(post.createdAt), 'yy년 MM월dd일')}</p>
+          <p>{post.comments.length}개의 댓글</p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-end gap-4">
+            <div onClick={handleEditClick} className="cursor-pointer">
+              <AiFillEdit size={16} />
             </div>
-            <MypostDelbtn id={post?._id}/>
+            <MypostDelbtn id={post?._id} />
           </div>
-        </TableCell>
-      </TableRow>
-    </TableBody>
+        </div>
+      </div>
+    </div>
 
   )
 }

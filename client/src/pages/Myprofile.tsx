@@ -1,11 +1,21 @@
 import PostModal from "@/components/Modal/PostModal";
 import MyInfo from "@/components/Myprofile/MyInfo";
 import Myposts from "@/components/Myprofile/Myposts";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import MyprofileTab from "@/components/Myprofile/MyprofileTab";
 import useAuth from "@/store/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import { ReactNode, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
+interface TabComponents {
+  myinfo: ReactNode; 
+  myposts: ReactNode;
+  [key: string]: ReactNode; 
+}
 
 const Myprofile = () => {
+  const [searchParams] = useSearchParams();
+  const [tab, setTab] = useState<string>("myinfo")
   const { getMe } = useAuth();
 
   const { isLoading, data } = useQuery({
@@ -13,22 +23,35 @@ const Myprofile = () => {
     queryFn: getMe,
   });
 
+  const param = searchParams.get('profile');
+  
+  useEffect(() => {
+    const paramMapping: { [key: string]: string } = {
+      'null': "myinfo",
+      'myposts': "myposts",
+    };
+
+    setTab(paramMapping[String(param)] || "myinfo");
+  }, [param]);  
+
+  const tabComponents: TabComponents = {
+    myinfo: <MyInfo isLoading={isLoading} user={data} />,
+    myposts: <Myposts isLoading={isLoading} user={data} />,
+  };
+  
+  const profileTab: ReactNode = tabComponents[tab] 
+
   return (
-    <div className="pl-4 py-4">
-      <Tabs defaultValue="profile" className="w-full">
-        <TabsList>
-          <TabsTrigger value="profile">내 정보</TabsTrigger>
-          <TabsTrigger value="mypost">내 글 목록</TabsTrigger>
-        </TabsList>
-        <TabsContent value="profile">
-          <MyInfo isLoading={isLoading} user={data} />
-        </TabsContent>
-        <TabsContent value="mypost">
-          <Myposts isLoading={isLoading} user={data} />
-        </TabsContent>
-      </Tabs>
+    <>
+      <div className="pl-4 py-4 w-full">
+        <MyprofileTab 
+          setTab={setTab}
+          tab={tab}
+        />
+          {profileTab}
+      </div>
       <PostModal />
-    </div>
+    </>
   )
 }
 

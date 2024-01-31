@@ -10,19 +10,15 @@ interface MyPostProps {
 }
 
 const Myposts: React.FC<MyPostProps> = ({ user }) => {
-
+  
   const getMypost = async () => {
-    try {
-      const getUserId = user?.id
-      const response = await getMyposts(getUserId as string)
-      return response
-    } catch (error) {
-      console.log(error)
-    }
+    const getUserId = user?.id
+    const response = await getMyposts(getUserId as string)
+    return response
   }
 
   const { isLoading, data } = useQuery({
-    queryKey: ["post", "mypost"],
+    queryKey: ["post", "mypost", user],
     queryFn: getMypost,
   });
 
@@ -30,13 +26,13 @@ const Myposts: React.FC<MyPostProps> = ({ user }) => {
     return <Loading />
   }
 
-  if (data.length === 0) {
+  if (data?.length === 0) {
     return <div>글이 없습니다.</div>
   }
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 gap-y-4 mt-10 pr-2'>
-      {data.map((post: PostType) => (
+      {data?.map((post: PostType) => (
         <Mypost post={post} key={post._id} />
       ))}
     </div>

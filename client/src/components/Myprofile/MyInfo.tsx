@@ -18,7 +18,7 @@ interface MyInfoProps {
 const MyInfo:React.FC<MyInfoProps> = ({user, isLoading}) => {
   const { token } = useAuth();
 
-  const [nickname, setNickname] = useState<string>();
+  const [nickname, setNickname] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   

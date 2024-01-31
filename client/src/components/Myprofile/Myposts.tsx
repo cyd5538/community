@@ -3,6 +3,9 @@ import { PostType, UserType } from '@/types/types';
 import Loading from '../ui/Loading';
 import { useQuery } from '@tanstack/react-query';
 import Mypost from './Mypost';
+import { useEffect, useState } from 'react';
+import MypostsPage from './MypostsPage';
+import { useSearchParams } from 'react-router-dom';
 
 interface MyPostProps {
   user: UserType | undefined
@@ -10,7 +13,11 @@ interface MyPostProps {
 }
 
 const Myposts: React.FC<MyPostProps> = ({ user }) => {
-  
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchParams] = useSearchParams();
+  const SearchQuery = searchParams.get("profile")
+  const page = SearchQuery?.match(/page=(\d+)/);
+
   const getMypost = async () => {
     const getUserId = user?.id
     const response = await getMyposts(getUserId as string)
@@ -22,6 +29,21 @@ const Myposts: React.FC<MyPostProps> = ({ user }) => {
     queryFn: getMypost,
   });
 
+  const PAGE_SLICE = 12
+  const startIndex = (currentPage - 1) * PAGE_SLICE;
+  const endIndex = startIndex + PAGE_SLICE;
+
+  const paginatedData = data?.slice(startIndex, endIndex);
+
+  const handlePageChange = (newPage:number) => {
+    setCurrentPage(newPage);
+  };
+
+  useEffect(() => {
+    const pageQuery = Number(page?.[1]) || 1
+    setCurrentPage(pageQuery)
+  },[page])
+
   if (isLoading) {
     return <Loading />
   }
@@ -31,10 +53,17 @@ const Myposts: React.FC<MyPostProps> = ({ user }) => {
   }
 
   return (
+    <div className='flex flex-col gap-4'>
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 gap-y-4 mt-10 pr-2'>
-      {data?.map((post: PostType) => (
+      {paginatedData?.map((post: PostType) => (
         <Mypost post={post} key={post._id} />
-      ))}
+        ))}
+    </div>
+      <MypostsPage 
+        onPageChange={handlePageChange} 
+        totalPages={Math.ceil(data?.length / PAGE_SLICE)} 
+        currentPage={currentPage} 
+      />
     </div>
   )
 }

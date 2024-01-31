@@ -26,13 +26,14 @@ const Myprofile = () => {
   const param = searchParams.get('profile');
   
   useEffect(() => {
+    const tabValue = String(param).split('?')[0]; 
     const paramMapping: { [key: string]: string } = {
       'null': "myinfo",
       'myposts': "myposts",
     };
-
-    setTab(paramMapping[String(param)] || "myinfo");
-  }, [param]);  
+    
+    setTab(paramMapping[tabValue] || "myinfo");
+  }, [param]);
 
   const tabComponents: TabComponents = {
     myinfo: <MyInfo isLoading={isLoading} user={data} />,

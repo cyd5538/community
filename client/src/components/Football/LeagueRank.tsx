@@ -1,36 +1,34 @@
-import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { leagueData } from '@/utils/league'
 import { LeagueDatatable } from '@/types/foontballTypes'
 import LeagueRankSelect from './LeagueRankSelect'
 import LeagueTableHead from './LeagueTableHead'
 import LeagueTable from './LeagueTable'
 import { Table } from '../ui/table'
 import Loading from '../ui/Loading'
-import { getLeagueRank } from '@/lib/footballApi'
+import LeagueRankTopfour from './LeagueRankTopfour'
 
-const LeagueRank = () => {
-  const [leagueChoice, setLeagueChoice] = useState<string>(leagueData[0].league)
-  
-  const getData = async () => {
-    try {
-      const response = await getLeagueRank(leagueChoice)
-      return response.data.table
-    } catch (error) {
-      console.log(error)
-    }
-  }
+interface LeagueRankProp {
+  leagueData: {
+    name: string;
+    league: string;
+  }[]
+  isLoading: boolean
+  leagueChoice: string
+  setLeagueChoice: React.Dispatch<React.SetStateAction<string>>
+  data: LeagueDatatable[]
+}
 
-  const { isLoading ,data } = useQuery({
-    queryKey: ['football', leagueChoice],
-    queryFn: getData
-  });
-
+const LeagueRank: React.FC<LeagueRankProp> = ({ 
+  leagueData, 
+  isLoading, 
+  leagueChoice, 
+  setLeagueChoice, 
+  data 
+}) => {
   return (
     <div className='pl-6 pt-6 pr-4 flex flex-col gap-8'>
       <div className='flex gap-2'>
-        {leagueData.map((league) => 
-          <LeagueRankSelect 
+        {leagueData.map((league) =>
+          <LeagueRankSelect
             key={league.name}
             league={league}
             leagueChoice={leagueChoice}
@@ -38,18 +36,23 @@ const LeagueRank = () => {
           />
         )}
       </div>
-      {isLoading ? 
-        <Loading /> 
+      {isLoading ?
+        <Loading />
         :
-        <Table>
-          <LeagueTableHead />
-          {data?.map((rankData: LeagueDatatable) => 
-            <LeagueTable 
-              rankData={rankData}
-              key={rankData.team.id}
-            />
-          )}
-        </Table>
+        <>
+          <LeagueRankTopfour 
+            data={data}
+          />
+          <Table>
+            <LeagueTableHead />
+            {data?.map((rankData: LeagueDatatable) =>
+              <LeagueTable
+                rankData={rankData}
+                key={rankData.team.id}
+              />
+            )}
+          </Table>
+        </>
       }
     </div>
   )

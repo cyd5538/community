@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface LeagueRankSelectProps {
   league: {
     name: string;
@@ -10,12 +12,13 @@ interface LeagueRankSelectProps {
 const LeagueRankSelect:React.FC<LeagueRankSelectProps> = ({league, leagueChoice, setLeagueChoice}) => {
 
   return (
-    <div 
+    <Link
+      to={`?league=${league.league}`} 
       className={`${league.league === leagueChoice ? "bg-green-400 rounded-md text-white" : ""} font-semibold px-2 py-1 cursor-pointer`}
       onClick={() => setLeagueChoice(league.league)}
     >
       {league.name}
-    </div>
+    </Link>
   )
 }
 

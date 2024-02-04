@@ -2,11 +2,18 @@ import LeagueRank from '@/components/Football/LeagueRank'
 import { getLeagueRank } from '@/lib/footballApi'
 import { leagueData } from '@/utils/league'
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 const Football = () => {
   const [leagueChoice, setLeagueChoice] = useState<string>(leagueData[0].league)
-  
+  const [searchParams] = useSearchParams();
+  const param = searchParams.get('league');
+
+  useLayoutEffect(() => {
+    setLeagueChoice(param ? param : "PL")
+  }, [param]);
+
   const getData = async () => {
     try {
       const response = await getLeagueRank(leagueChoice)

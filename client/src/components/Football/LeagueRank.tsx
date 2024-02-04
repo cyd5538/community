@@ -27,7 +27,7 @@ const LeagueRank: React.FC<LeagueRankProp> = ({
   return (
     <div className='pl-6 pt-6 pr-4 flex flex-col gap-8'>
       <div className='flex gap-2'>
-        {leagueData.map((league) =>
+        {leagueData?.map((league) =>
           <LeagueRankSelect
             key={league.name}
             league={league}

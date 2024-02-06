@@ -49,6 +49,7 @@ const PostComment:React.FC<PostCommentProps> = ({userId, postId, comments}) => {
     mutationFn: handleSubmit,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["post"]});
+      setShowEmoji(false)
     },
     onError : (err) => {
       console.log(err)

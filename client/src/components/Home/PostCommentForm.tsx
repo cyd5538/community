@@ -9,6 +9,7 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { BsEmojiNeutral } from "react-icons/bs";
 import { Emoji } from '@/types/etc';
+import customToast from '../ui/customToast';
 
 interface PostCommentFormProp {
   userId: string | undefined
@@ -27,6 +28,10 @@ const PostCommentForm:React.FC<PostCommentFormProp> = ({ userId, postId }) => {
     
     if(!token) {
       return status402Error()
+    }
+
+    if(comment === "") {
+      customToast("error", "빈 댓글은 안돼요.")
     }
 
     try {

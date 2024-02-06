@@ -61,7 +61,7 @@ const PostComment:React.FC<PostCommentProps> = ({userId, postId, comments}) => {
 
   return (
     <div className='flex flex-col pt-4'>
-      <form onSubmit={CommentMutation .mutate} className='flex gap-2 relative justify-center items-center'>
+      <form onSubmit={CommentMutation.mutate} className='flex gap-2 relative justify-center items-center'>
         <Input value={comment} type="text" onChange={(e) => setComment(e.target.value)}/>
         <BsEmojiNeutral className='cursor-pointer' onClick={() => setShowEmoji(!showEmoji)} size={30}/>
         {showEmoji && (

@@ -6,7 +6,7 @@ interface PostCommentUpdateBtnProps {
 
 const PostCommentUpdateBtn:React.FC<PostCommentUpdateBtnProps> = ({openNewComment}) => {
   return (
-    <div className="hover:bg-green-300 bg-green-100 text-lg px-[8px] py-[8px] rounded-full cursor-pointer">
+    <div className="hover:bg-green-300 bg-green-100 text-xs w-4 h-4 rounded-full cursor-pointer flex justify-center items-center">
       <PiPencilSimpleLineLight 
         onClick={openNewComment}
       />

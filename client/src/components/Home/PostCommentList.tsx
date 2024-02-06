@@ -16,7 +16,7 @@ interface PostCommentListProps {
 const PostCommentList: React.FC<PostCommentListProps> = ({ com, userId }) => {
   const [isupdate, setIsupdate] = useState<boolean>(false);
   const [newComment, setNewComment] = useState<string>("");
-  
+
   const queryClient = useQueryClient()
 
   const openNewComment = () => {
@@ -28,6 +28,7 @@ const PostCommentList: React.FC<PostCommentListProps> = ({ com, userId }) => {
     try {
       const response = await handelCommentUpdate(com._id, newComment, token)
       setNewComment("");
+      return response
       setIsupdate(false);
     } catch (error) {
       console.log(error)
@@ -37,9 +38,9 @@ const PostCommentList: React.FC<PostCommentListProps> = ({ com, userId }) => {
   const commentUpdateMutation = useMutation({
     mutationFn: handelComment,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["post"]});
+      queryClient.invalidateQueries({ queryKey: ["post"] });
     },
-    onError : (err) => {
+    onError: (err) => {
       console.log(err)
     }
   })
@@ -48,15 +49,15 @@ const PostCommentList: React.FC<PostCommentListProps> = ({ com, userId }) => {
     <>
       <div className="flex items-start justify-between flex-wrap sm:w-full">
         <div className="flex w-full">
-          <div className="flex flex-col items-center w-16">
+          <div className="flex flex-col items-center w-20 flex-shrink-0">
             <img
               src={com.user.profileImage ? com.user.profileImage : '/public/user.png'}
               alt={com.user.nickname}
               className="w-8 h-8 object-cover rounded-full"
             />
-            <div className="text-sm">{com.user.nickname}</div>
+            <div className="text-sm text-center">{com.user.nickname}</div>
           </div>
-          {isupdate ? 
+          {isupdate ?
             <div className="flex gap-2 w-full">
               <Input value={newComment} onChange={(e) => setNewComment(e.target.value)} type="text" />
               <div className="flex gap-2">
@@ -65,30 +66,26 @@ const PostCommentList: React.FC<PostCommentListProps> = ({ com, userId }) => {
               </div>
             </div>
             :
-            <span className="bg-gray-100 text-sm max-w-[200px] sm:max-w-[300px] md:max-w-[300px] lg:max-w-[400px] xl:max-w-[500px] p-4 rounded">
-              {com.text}
-            </span>
+            <div className="flex gap-2">
+              <span className="bg-gray-100 text-sm max-w-fit w-auto p-4 rounded">
+                {com.text}
+              </span>
+              <div className="flex flex-col items-center justify-center">
+                {userId === com.user._id && (
+                  <div className="flex gap-2 text-xs p-2 justify-end">
+                    <PostCommentUpdateBtn openNewComment={openNewComment} />
+                    <PostCommentDelBtn postId={com._id} />
+                  </div>
+                )}
+                <div className="text-xs text-center">
+                  {format(parseISO(com.user.createdAt), 'MM월 dd일 HH:mm')}
+                </div>
+              </div>
+            </div>
           }
         </div>
       </div>
-      <div className="flex justify-end gap-4 items-center w-full sm:w-auto sm:ml-2 mt-2 sm:mt-0">
-        {userId === com.user._id && (
-          <div className="flex gap-2 text-xs p-2 justify-end">
-            <PostCommentUpdateBtn openNewComment={openNewComment}/>
-            <PostCommentDelBtn postId={com._id}/>
-          </div>
-        )}
-        <div className="text-xs">
-          {format(parseISO(com.user.createdAt), 'MM월 dd일 HH:mm')}
-        </div>
-      </div>
     </>
-
-
-
-
-
-
   )
 }
 

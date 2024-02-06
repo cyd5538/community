@@ -24,6 +24,7 @@ const PostCommentDelBtn:React.FC<PostCommentDelBtnProps> = ({postId}) => {
 
     try {
       const response = await handleCommentDelete(postId,token)
+      return response
     } catch (error) {
       console.log(error)
     }
@@ -41,7 +42,7 @@ const PostCommentDelBtn:React.FC<PostCommentDelBtnProps> = ({postId}) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="hover:bg-green-300 bg-green-100 text-lg px-[8px] py-[8px] rounded-full">
+      <AlertDialogTrigger className="hover:bg-green-300 bg-green-100 text-xs w-4 h-4 rounded-full cursor-pointer flex justify-center items-center">
         <AiOutlineDelete />
       </AlertDialogTrigger>
       <AlertDialogContent>

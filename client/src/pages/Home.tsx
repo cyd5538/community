@@ -11,14 +11,14 @@ const Home = () => {
       <Searchbar />
       <PostModal />
       <div className='pt-16 w-full flex gap-8'>
-        <div className='w-full md:w-3/5 border-gray-10 border-[1px] p-4'>
+        <div className='w-full min-[1250px]:w-3/5 border-gray-10 border-[1px] p-4'>
           <Posts />
         </div>
-        <div className='hidden md:w-1/3 md:flex flex-col gap-4'>
+        <div className='hidden min-[1250px]:w-2/5 min-[1250px]:flex flex-col gap-4'>
           <div>
-            <RoomList cardHeight={500} cardWidth={390}/>
+            <RoomList cardHeight={500} cardWidth={430}/>
           </div>
-          <div className='w-[390px]'>
+          <div className='w-[430px]'>
             <HomeLeagueTable />
           </div>
         </div>

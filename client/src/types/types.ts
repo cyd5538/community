@@ -4,6 +4,7 @@ export type CommentType = {
   post: string;
   text: string;
   updatedAt: string;
+  likes: string[];
   user: {
     createdAt: string;
     nickname: string;

@@ -7,6 +7,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { handelCommentUpdate } from "@/lib/commentApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import PostCommentLike from "./PostCommentLike";
 
 interface PostCommentListProps {
   com: CommentType
@@ -70,16 +71,21 @@ const PostCommentList: React.FC<PostCommentListProps> = ({ com, userId }) => {
               <span className="bg-gray-100 text-sm max-w-fit w-auto p-4 rounded">
                 {com.text}
               </span>
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-end justify-start">
+                <div className="text-xs text-center flex gap-2 justify-center items-center text-gray-400">
+                  <PostCommentLike 
+                    commentId={com._id}
+                    userId={userId}
+                    likneLength={com.likes.length}
+                  />
+                  {format(parseISO(com.user.createdAt), 'MM월 dd일 HH:mm')}
+                </div>
                 {userId === com.user._id && (
                   <div className="flex gap-2 text-xs p-2 justify-end">
                     <PostCommentUpdateBtn openNewComment={openNewComment} />
                     <PostCommentDelBtn postId={com._id} />
                   </div>
                 )}
-                <div className="text-xs text-center">
-                  {format(parseISO(com.user.createdAt), 'MM월 dd일 HH:mm')}
-                </div>
               </div>
             </div>
           }

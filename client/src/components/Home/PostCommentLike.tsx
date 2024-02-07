@@ -1,3 +1,4 @@
+import { useThrottle } from "@/hook/useThrottle";
 import { handleToggleLike } from "@/lib/commentApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AiFillHeart } from "react-icons/ai";
@@ -10,6 +11,7 @@ interface PostCommentLikeProp {
 
 const PostCommentLike:React.FC<PostCommentLikeProp> = ({commentId, userId, likneLength}) => {
   const queryClient = useQueryClient()
+  const throttle = useThrottle();
 
   const handleLike = async () => {
     const token = localStorage.getItem('token');
@@ -22,6 +24,7 @@ const PostCommentLike:React.FC<PostCommentLikeProp> = ({commentId, userId, likne
       console.log(error)
     }
   }
+  const onClickThrottle = throttle(() => commentLikeMutation.mutate(), 1000);
 
   const commentLikeMutation = useMutation({
     mutationFn: handleLike,
@@ -35,7 +38,7 @@ const PostCommentLike:React.FC<PostCommentLikeProp> = ({commentId, userId, likne
 
   return (
     <div className="flex justify-center items-center text-black">
-      <div className="cursor-pointer" onClick={() => commentLikeMutation.mutate()}>
+      <div className="cursor-pointer" onClick={onClickThrottle}>
         <AiFillHeart size={16}/> 
       </div>
       <div>{likneLength}</div>

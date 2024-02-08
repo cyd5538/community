@@ -20,7 +20,11 @@ const CommentSchema = new Schema({
   likes: [{ 
     type: mongoose.Types.ObjectId,
     ref: "User"
-  }]
+  }],
+  disLikes: [{ 
+    type: mongoose.Types.ObjectId,
+    ref: "DisLike"
+  }],
 },{
   timestamps : true
 });

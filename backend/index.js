@@ -16,6 +16,7 @@ app.use(cors());
 app.use('/api/users', require('./routes/userRoutes.js'))
 app.use('/api/posts', require('./routes/postRoutes.js'));
 app.use('/api/posts', require('./routes/likeRoute.js'));
+app.use('/api/posts', require('./routes/dislikeRoute'));
 app.use('/api/comments', require('./routes/commentRoute.js'));
 app.use('/api/rooms', require('./routes/roomRoute.js'));
 app.use('/api/football', require('./routes/footballRoute.js'));

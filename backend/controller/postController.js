@@ -15,6 +15,10 @@ const getPaginatedPosts = asyncHandler(async (req, res) => {
       select: 'user',
     })
     .populate({
+      path: 'disLikes',
+      select: 'user',
+    })
+    .populate({
       path: 'comments',
       populate: {
         path: 'user',
@@ -44,6 +48,10 @@ const getPostsByLikes = asyncHandler(async (req, res) => {
       select: 'user',
     })
     .populate({
+      path: 'disLikes',
+      select: 'user',
+    })
+    .populate({
       path: 'comments',
       populate: {
         path: 'user',
@@ -70,6 +78,10 @@ const getPostsByComments = asyncHandler(async (req, res) => {
     .limit(pageSize)
     .populate({
       path: 'likes',
+      select: 'user',
+    })
+    .populate({
+      path: 'disLikes',
       select: 'user',
     })
     .populate({

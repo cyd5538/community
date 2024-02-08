@@ -5,6 +5,7 @@ export type CommentType = {
   text: string;
   updatedAt: string;
   likes: string[];
+  disLikes: string[];
   user: {
     createdAt: string;
     nickname: string;

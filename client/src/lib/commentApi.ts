@@ -1,5 +1,6 @@
 import axios from "axios";
 import customToast from "@/components/ui/customToast";
+import { status401Error } from "./userApi";
 
 const apiUrl = "http://localhost:5000/api/comments";
 
@@ -87,7 +88,48 @@ export const handleToggleLike = async (
   try {
     const response = await axios.post(`${apiUrl}/${commentId}/like`, data, config);
     customToast("success", response.data.message);
-  } catch (error) {
-    console.error(error);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if(axios.isAxiosError(error)){
+        if(error?.response?.status === 400) {
+          customToast("error", error.response.data.message)
+        }
+        if(error?.response?.status === 401) {
+          status401Error()
+        }
+      }
+    }
+  }
+};
+
+export const handleToggleDisLike = async (
+  commentId: string,
+  userId: string,
+  token: string | null
+) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const data = {
+    userId,
+  };
+
+  try {
+    const response = await axios.post(`${apiUrl}/${commentId}/dislike`, data, config);
+    customToast("success", response.data.message);
+  }  catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if(axios.isAxiosError(error)){
+        if(error?.response?.status === 400) {
+          customToast("error", error.response.data.message)
+        }
+        if(error?.response?.status === 401) {
+          status401Error()
+        }
+      }
+    }
   }
 };

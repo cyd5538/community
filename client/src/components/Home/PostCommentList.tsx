@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { handelCommentUpdate } from "@/lib/commentApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import PostCommentLike from "./PostCommentLike";
+import PostCommentDisLike from "./PostCommentDisLike";
 
 interface PostCommentListProps {
   com: CommentType
@@ -29,8 +30,9 @@ const PostCommentList: React.FC<PostCommentListProps> = ({ com, userId }) => {
     try {
       const response = await handelCommentUpdate(com._id, newComment, token)
       setNewComment("");
-      return response
       setIsupdate(false);
+      return response
+      return
     } catch (error) {
       console.log(error)
     }
@@ -68,15 +70,20 @@ const PostCommentList: React.FC<PostCommentListProps> = ({ com, userId }) => {
             </div>
             :
             <div className="flex gap-2">
-              <span className="bg-gray-100 text-sm max-w-fit w-auto p-4 rounded">
+              <span className="bg-gray-100 text-sm max-w-fit w-auto p-4 rounded break-all">
                 {com.text}
               </span>
-              <div className="flex flex-col items-end justify-start">
+              <div className="flex flex-col items-end justify-start w-28 flex-shrink-0">
                 <div className="text-xs text-center flex gap-2 justify-center items-center text-gray-400">
                   <PostCommentLike 
                     commentId={com._id}
                     userId={userId}
                     likneLength={com.likes.length}
+                  />
+                  <PostCommentDisLike 
+                    commentId={com._id}
+                    userId={userId}
+                    likneLength={com.disLikes.length}
                   />
                   {format(parseISO(com.user.createdAt), 'MM월 dd일 HH:mm')}
                 </div>

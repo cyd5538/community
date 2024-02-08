@@ -1,15 +1,15 @@
 import { useThrottle } from "@/hook/useThrottle";
-import { handleToggleLike } from "@/lib/commentApi";
+import { handleToggleDisLike } from "@/lib/commentApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaRegThumbsUp } from "react-icons/fa";
+import { FaRegThumbsDown } from "react-icons/fa";
 
-interface PostCommentLikeProp {
+interface PostCommentDisLikeProp {
   commentId: string;
   userId: string | undefined
   likneLength: number;
 }
 
-const PostCommentLike:React.FC<PostCommentLikeProp> = ({commentId, userId, likneLength}) => {
+const PostCommentDisLike:React.FC<PostCommentDisLikeProp> = ({commentId, userId, likneLength}) => {
   const queryClient = useQueryClient()
   const throttle = useThrottle();
 
@@ -17,7 +17,7 @@ const PostCommentLike:React.FC<PostCommentLikeProp> = ({commentId, userId, likne
     const token = localStorage.getItem('token');
     try {
       if(userId) {
-        const response = await handleToggleLike(commentId, userId, token)
+        const response = await handleToggleDisLike(commentId, userId, token)
         return response
       }
     } catch (error) {
@@ -39,11 +39,11 @@ const PostCommentLike:React.FC<PostCommentLikeProp> = ({commentId, userId, likne
   return (
     <div className="flex justify-center items-center text-black">
       <div className="cursor-pointer" onClick={onClickThrottle}>
-        <FaRegThumbsUp size={16}/> 
+        <FaRegThumbsDown size={16}/> 
       </div>
       <div>{likneLength}</div>
     </div>
   )
 }
 
-export default PostCommentLike
+export default PostCommentDisLike

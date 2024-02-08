@@ -31,6 +31,7 @@ export type PostType = {
   description: string;
   image: string | null;
   likes: LikeType[]; 
+  disLikes: LikeType[]; 
   title: string;
   updatedAt: string;
   user: UserType;

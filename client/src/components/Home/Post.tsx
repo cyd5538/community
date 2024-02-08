@@ -4,6 +4,7 @@ import { AiOutlineComment } from "react-icons/ai";
 import PostLike from "./PostLike";
 import PostComment from "./PostComment";
 import { useState } from "react";
+import PostDisLike from "./PostDisLike";
 
 interface PostProps {
   data: PostType
@@ -45,6 +46,7 @@ const Post:React.FC<PostProps> = ({data, user}) => {
           <span className="text-xl">{data.comments.length}</span>
         </div>
         <PostLike data={data} id={user?.id}/>
+        <PostDisLike data={data} id={user?.id}/>
       </div>
       <div
         className={`${

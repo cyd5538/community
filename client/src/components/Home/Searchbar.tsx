@@ -20,7 +20,7 @@ const Searchbar = () => {
   }
 
   return (
-    <div className='fixed top-0 left-[-4px] w-full h-14 bg-green-400 z-20'>
+    <div className='fixed top-0 left-[-4px] w-full h-14 bg-green-500 z-20'>
       <div className='absolute left-20 top-[10px] text-xl font-bold flex justify-center items-center gap-2'>
         <h1 className='hidden md:block'>
           Football Community
@@ -38,9 +38,9 @@ const Searchbar = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)} 
         />
-        <span className='absolute top-[5px] right-4'>
+        <button className='absolute top-[5px] right-4'>
           <Search size={20}/>
-        </span>
+        </button>
       </form>
     </div>
   )

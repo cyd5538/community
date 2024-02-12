@@ -12,6 +12,7 @@ const Football = () => {
 
   useLayoutEffect(() => {
     setLeagueChoice(param ? param : "PL")
+    window.scrollTo(0, 0);
   }, [param]);
 
   const getData = async () => {

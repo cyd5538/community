@@ -8,16 +8,13 @@ import HomeLeagueSelect from './HomeLeagueSelect'
 import HomeLeagueTableHead from './HomeLeagueTableHead'
 import HomeLeagueTableBody from './HomeLeagueTableBody'
 import { Loader } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const HomeLeagueTable = () => {
   const [leagueChoice, setLeagueChoice] = useState<string>(leagueData[0].league);
-  const [rankStart, setRankStart] = useState<number>(0);
-  const [rankEnd, setRankEnd] = useState<number>(10);
 
   const handleLeagueChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setLeagueChoice(event.target.value);
-    setRankStart(0)
-    setRankEnd(10);
   }
 
   const getData = async () => {
@@ -33,11 +30,6 @@ const HomeLeagueTable = () => {
     queryKey: ['football', leagueChoice],
     queryFn: getData
   });
-
-  const handleLoadMore = () => {
-    setRankStart(rankStart);
-    setRankEnd(rankEnd + 10);
-  }
 
   return (
     <div className='overflow-hidden flex flex-col justify-center items-start border-gray-10 border-[1px] p-2'>
@@ -61,7 +53,7 @@ const HomeLeagueTable = () => {
       :
         <Table>
           <HomeLeagueTableHead />
-          {data?.slice(rankStart, rankEnd).map((rankData: LeagueDatatable) => 
+          {data?.slice(0,10).map((rankData: LeagueDatatable) => 
             <HomeLeagueTableBody 
               rankData={rankData}
               key={rankData.team.id}
@@ -69,16 +61,20 @@ const HomeLeagueTable = () => {
           )}
         </Table>
       }
-      {rankEnd < data?.length && (
-        <div className='w-full flex justify-center py-2'>
-          <button 
-            onClick={handleLoadMore}
-            className='px-2 py-1 bg-green-400 text-white cursor-pointer rounded-md'
+      <div className='w-full flex justify-center py-2'>
+        <button
+          className='px-2 py-1 bg-green-400 text-white cursor-pointer rounded-md'
+        >
+          <Link 
+            to={{
+              pathname: '/football',
+              search: `?league=${leagueChoice}`,
+            }}
           >
-            더보기
-          </button>
-        </div>  
-      )}
+            순위 더 보러가기
+          </Link>
+        </button>
+      </div>  
     </div>
   )
 }

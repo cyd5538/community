@@ -17,3 +17,35 @@ export interface LeagueDatatable {
   }; 
   won: number;
 }
+
+export interface Player {
+  assists: number;
+  goals: number;
+  penalties: number;
+  playedMatches: number;
+  player: {
+    dateOfBirth: string;
+    firstName: string;
+    id: number;
+    lastName: string;
+    lastUpdated: string;
+    name: string;
+    nationality: string;
+    position: string | null;
+    section: string;
+    shirtNumber: number | null;
+  };
+  team: {
+    address: string;
+    clubColors: string;
+    crest: string;
+    founded: number;
+    id: number;
+    lastUpdated: string;
+    name: string;
+    shortName: string;
+    tla: string;
+    venue: string;
+    website: string;
+  };
+}

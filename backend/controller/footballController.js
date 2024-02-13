@@ -22,6 +22,27 @@ const getLeagueLank = asyncHandler(async (req, res) => {
   }
 });
 
+const getScoreLank = asyncHandler(async (req, res) => {
+  const league = req.params.league;
+  const season = req.params.season;
+
+  try {
+    const response = await axios.get(`https://api.football-data.org/v4/competitions/${league}/scorers?season=${season}`, {
+      headers: {
+        'X-Auth-Token': FOOTBALL_API_KEY,  
+      },
+    });
+
+    const data = response.data.scorers
+   
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '서버 에러' });
+  }
+});
+
 module.exports = {
-  getLeagueLank
+  getLeagueLank,
+  getScoreLank
 }

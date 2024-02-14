@@ -18,10 +18,10 @@ const LeagueYearSelect: React.FC<LeagueYearSelect> = ({ season, handleYearChange
         <SelectValue placeholder="Select seasons" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="2023">2023 시즌</SelectItem>
-        <SelectItem value="2022">2022 시즌</SelectItem>
-        <SelectItem value="2021">2021 시즌</SelectItem>
-        <SelectItem value="2020">2020 시즌</SelectItem>
+        <SelectItem value="2023">2023</SelectItem>
+        <SelectItem value="2022">2022</SelectItem>
+        <SelectItem value="2021">2021</SelectItem>
+        <SelectItem value="2020">2020</SelectItem>
       </SelectContent>
     </Select>
   )

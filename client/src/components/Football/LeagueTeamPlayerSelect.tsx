@@ -4,17 +4,19 @@ interface LeagueTeamPlayerSelectProp {
 }
 
 const LeagueTeamPlayerSelect:React.FC<LeagueTeamPlayerSelectProp> = ({teamPlayerSelect, setTeamPlaterSelect}) => {
-  console.log(teamPlayerSelect);
+
   return (
     <div className='flex gap-4'>
       <div 
       onClick={() => setTeamPlaterSelect("팀 순위")}
-      className='text-xl cursor-pointer bg-green-500 px-2 py-1 text-white rounded-md font-semibold'>
+      className={`${teamPlayerSelect === "팀 순위" ? "bg-green-900 text-white" : "hover:bg-green-200 "} cursor-pointer px-2 py-1 rounded-md font-semibold`}
+      >
         팀 순위
       </div>
       <div 
     onClick={() => setTeamPlaterSelect("개인 순위")}
-      className='text-xl cursor-pointer bg-green-500 px-2 py-1 text-white rounded-md font-semibold'>
+      className={`${teamPlayerSelect === "개인 순위" ? "bg-green-900 text-white" :"hover:bg-green-200 "} cursor-pointer px-2 py-1 rounded-md font-semibold`}
+      >
         개인 순위
       </div>
     </div>

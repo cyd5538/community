@@ -1,24 +1,32 @@
-import { Link } from "react-router-dom";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { leagueData } from "@/utils/league"
 
 interface LeagueRankSelectProps {
-  league: {
-    name: string;
-    league: string;
-  }
   leagueChoice: string
-  setLeagueChoice: React.Dispatch<React.SetStateAction<string>>
+  handleLeagueChange:  (e: string) => void
 }
 
-const LeagueRankSelect:React.FC<LeagueRankSelectProps> = ({league, leagueChoice, setLeagueChoice}) => {
+const LeagueRankSelect:React.FC<LeagueRankSelectProps> = ({leagueChoice, handleLeagueChange}) => {
 
-  return (
-    <Link
-      to={`?league=${league.league}`} 
-      className={`${league.league === leagueChoice ? "bg-green-400 rounded-md text-white" : ""} font-semibold px-2 py-1 cursor-pointer`}
-      onClick={() => setLeagueChoice(league.league)}
-    >
-      {league.name}
-    </Link>
+  return (  
+    <Select onValueChange={handleLeagueChange} defaultValue={leagueChoice}>
+      <SelectTrigger  className="w-32">
+        <SelectValue placeholder="Select seasons" />
+      </SelectTrigger>
+      <SelectContent>
+        {leagueData.map((league) => (
+          <SelectItem value={league.league}>
+              {league.name}
+          </SelectItem> 
+        ))}
+      </SelectContent>
+    </Select>
   )
 }
 

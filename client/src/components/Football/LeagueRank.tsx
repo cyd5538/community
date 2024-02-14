@@ -3,7 +3,6 @@ import LeagueTableHead from './LeagueTableHead'
 import LeagueTable from './LeagueTable'
 import { Table } from '../ui/table'
 import Loading from '../ui/Loading'
-import LeagueRankTopfour from './LeagueRankTopfour'
 import { getLeagueRank } from '@/lib/footballApi'
 import { useQuery } from '@tanstack/react-query'
 
@@ -36,9 +35,6 @@ const LeagueRank: React.FC<LeagueRankProp> = ({
         <Loading />
         :
         <>
-          <LeagueRankTopfour 
-            data={data}
-          />
           <Table>
             <LeagueTableHead />
             {data?.map((rankData: LeagueDatatable) =>

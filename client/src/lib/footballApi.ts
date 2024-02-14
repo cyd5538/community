@@ -7,7 +7,7 @@ export const getLeagueRank = async (leagueChoice: string) => {
   return res
 };
 
-export const getLeagueScoreRank = async (leagueChoice: string, season: number) => {
+export const getLeagueScoreRank = async (leagueChoice: string, season: string) => {
   const res =  await axios.get(`${API_URL}/${leagueChoice}/score/${season}`);
   return res
 };

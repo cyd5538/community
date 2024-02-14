@@ -9,7 +9,7 @@ import { Table } from "../ui/table";
 interface LeagueScoreRankProp {
   leagueChoice: string;
   teamPlayerSelect: string;
-  season: number;
+  season: string;
 }
 
 const LeagueScoreRank: React.FC<LeagueScoreRankProp> = ({ leagueChoice, teamPlayerSelect, season }) => {

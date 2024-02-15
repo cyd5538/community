@@ -5,9 +5,10 @@ const FOOTBALL_API_KEY = process.env.FOOTBALL_API_KEY
 
 const getLeagueLank = asyncHandler(async (req, res) => {
   const league = req.params.league;
+  const season = req.params.season;
 
   try {
-    const response = await axios.get(`https://api.football-data.org/v4/competitions/${league}/standings?season=2023&matchday=38`, {
+    const response = await axios.get(`https://api.football-data.org/v4/competitions/${league}/standings?season=${season}&matchday=38`, {
       headers: {
         'X-Auth-Token': FOOTBALL_API_KEY,  
       },

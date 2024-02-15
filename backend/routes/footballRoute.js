@@ -5,7 +5,7 @@ const {
   getScoreLank
 } = require('../controller/footballController');
 
-router.get('/:league/standings', getLeagueLank);
+router.get('/:league/standings/:season', getLeagueLank);
 router.get('/:league/score/:season', getScoreLank);
 
 module.exports = router;

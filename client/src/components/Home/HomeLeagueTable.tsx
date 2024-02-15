@@ -19,7 +19,7 @@ const HomeLeagueTable = () => {
 
   const getData = async () => {
     try {
-      const response = await getLeagueRank(leagueChoice)
+      const response = await getLeagueRank(leagueChoice, "2023")
       return response.data.table
     } catch (error) {
       console.log(error)

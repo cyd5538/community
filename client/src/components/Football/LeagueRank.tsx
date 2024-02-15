@@ -9,15 +9,17 @@ import { useQuery } from '@tanstack/react-query'
 interface LeagueRankProp {
   leagueChoice: string;
   teamPlayerSelect: string
+  season: string;
 }
 
 const LeagueRank: React.FC<LeagueRankProp> = ({ 
   leagueChoice,
-  teamPlayerSelect
+  teamPlayerSelect,
+  season
 }) => {
   const getData = async () => {
     try {
-      const response = await getLeagueRank(leagueChoice)
+      const response = await getLeagueRank(leagueChoice, season)
       return response.data.table
     } catch (error) {
       console.log(error)
@@ -25,7 +27,7 @@ const LeagueRank: React.FC<LeagueRankProp> = ({
   }
 
   const { isLoading, data } = useQuery({
-    queryKey: ['football', leagueChoice, teamPlayerSelect],
+    queryKey: ['football', leagueChoice, teamPlayerSelect, season],
     queryFn: getData
   });
 

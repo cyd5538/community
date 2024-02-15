@@ -10,6 +10,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 const Football = () => {
   const [searchParams] = useSearchParams();
   const param = searchParams.get('league');
+  const searchParam = searchParams.get('season');
 
   const [leagueChoice, setLeagueChoice] = useState<string>(() => {
     return param ? param : leagueData[0].league;
@@ -25,15 +26,11 @@ const Football = () => {
       navigate(`?league=PL&season=2023`)
     }
 
-    const leagueParam = param?.replace(/\?.*/, "");
-    const seasonMatch = param?.match(/season=(\d+)/);
-    const seasonParam = seasonMatch ? seasonMatch[1] : null;
-
-    setLeagueChoice(leagueParam ? leagueParam : "PL")
-    setSeason(seasonParam ? seasonParam : "2023")
+    setLeagueChoice(param ? param : "PL")
+    setSeason(searchParam ? searchParam : "2023")
 
     window.scrollTo(0, 0);
-  }, [param, leagueChoice, season, navigate]);
+  }, [param, searchParam, leagueChoice, season, navigate]);
   
   const handleLeagueChange = (e: string) => {
     setLeagueChoice(e); 
@@ -64,6 +61,7 @@ const Football = () => {
       </div>
       {teamPlayerSelect === "팀 순위" && 
       <LeagueRank 
+        season={season}
         leagueChoice={leagueChoice} 
         teamPlayerSelect={teamPlayerSelect}/>
       }

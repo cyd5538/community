@@ -20,10 +20,10 @@ app.use('/api/posts', require('./routes/dislikeRoute'));
 app.use('/api/comments', require('./routes/commentRoute.js'));
 app.use('/api/rooms', require('./routes/roomRoute.js'));
 app.use('/api/football', require('./routes/footballRoute.js'));
+app.use('/api/football', require('./routes/teamRoute.js'));
 
 require("./models/likeModel.js");
 require("./models/commentModel.js");
-
 
 const io = new Server(httpServer, {
   cors: {

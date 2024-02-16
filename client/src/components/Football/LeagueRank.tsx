@@ -5,6 +5,7 @@ import { Table } from '../ui/table'
 import Loading from '../ui/Loading'
 import { getLeagueRank } from '@/lib/footballApi'
 import { useQuery } from '@tanstack/react-query'
+import LeagueTeamModal from './LeagueTeamModal'
 
 interface LeagueRankProp {
   leagueChoice: string;
@@ -46,6 +47,7 @@ const LeagueRank: React.FC<LeagueRankProp> = ({
               />
             )}
           </Table>
+          <LeagueTeamModal />
         </>
       }
     </>

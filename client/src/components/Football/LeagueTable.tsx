@@ -2,6 +2,7 @@ import {
   TableCell,
   TableRow,
 } from "@/components/ui/table"
+import useTeamModel from "@/store/useTeamModel";
 import { LeagueDatatable } from '@/types/foontballTypes'
 
 interface LeagueTableProps {
@@ -9,6 +10,7 @@ interface LeagueTableProps {
 }
 
 const LeagueTable: React.FC<LeagueTableProps> = ({ rankData }) => {
+  const teamlModal = useTeamModel();
 
   const getRecentResultsStyle = (result: string) => {
     switch (result) {
@@ -23,8 +25,15 @@ const LeagueTable: React.FC<LeagueTableProps> = ({ rankData }) => {
     }
   };
 
+  const handleTeamInfo = () => {
+    teamlModal.onOpen()
+    useTeamModel.setState({
+      id: rankData.team.id
+    });
+  }
+
   return (
-    <TableRow>
+    <TableRow onClick={handleTeamInfo}>
       <TableCell className="text-center">{rankData.position}</TableCell>
       <TableCell className="flex items-center gap-2">
         <img src={rankData.team.crest} alt="" className='w-4 h-4 md:w-8 md:h-8'/>

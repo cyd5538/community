@@ -11,35 +11,50 @@ const Football = () => {
   const [searchParams] = useSearchParams();
   const param = searchParams.get('league');
   const searchParam = searchParams.get('season');
+  const teamParam = searchParams.get('rank');
 
   const [leagueChoice, setLeagueChoice] = useState<string>(() => {
     return param ? param : leagueData[0].league;
   });
-  const [season, setSeason] = useState<string>("2023");
-  const [teamPlayerSelect, setTeamPlaterSelect] = useState<string>("팀 순위")
+  const [season, setSeason] = useState<string>(() => {
+    return searchParam ? searchParam : "2023";
+  });
+  const [teamPlayerSelect, setTeamPlaterSelect] = useState<string>("team")
 
   const navigate = useNavigate();
 
   useEffect(() => {
     // 기본값 라우팅
     if(!param) {
-      navigate(`?league=PL&season=2023`)
+      navigate(`?rank=team&league=PL&season=2023`)
     }
-
+  
+    setTeamPlaterSelect(teamParam ? teamParam: "team")
     setLeagueChoice(param ? param : "PL")
     setSeason(searchParam ? searchParam : "2023")
 
     window.scrollTo(0, 0);
-  }, [param, searchParam, leagueChoice, season, navigate]);
+  }, [param, searchParam, teamParam, leagueChoice, season, teamPlayerSelect, navigate]);
   
+  const handleTeamIndividualChange = (select: string) => {
+    if(select === "team") {
+      setTeamPlaterSelect("personal")
+      navigate(`?rank=personal&league=${leagueChoice}&season=${season}`)
+    } else {
+      setTeamPlaterSelect("team")
+      navigate(`?rank=team&league=${leagueChoice}&season=${season}`)
+    }
+    
+  }
+
   const handleLeagueChange = (e: string) => {
     setLeagueChoice(e); 
-    navigate(`?league=${e}&season=${season}`)
+    navigate(`?rank=${teamPlayerSelect}&league=${e}&season=${season}`)
   };
   
   const handleYearChange = (e: string) => {
     setSeason(e); 
-    navigate(`?league=${leagueChoice}&season=${e}`)
+    navigate(`?rank=${teamPlayerSelect}&league=${leagueChoice}&season=${e}`)
   };
 
 
@@ -47,7 +62,7 @@ const Football = () => {
     <div className='pl-6 pt-6 pr-4 flex flex-col gap-4'>
       <LeagueTeamPlayerSelect 
         teamPlayerSelect={teamPlayerSelect}
-        setTeamPlaterSelect={setTeamPlaterSelect}
+        handleTeamIndividualChange={handleTeamIndividualChange}
       />
       <div className='flex gap-2'>
         <LeagueRankSelect
@@ -59,13 +74,13 @@ const Football = () => {
           handleYearChange={handleYearChange}
         />
       </div>
-      {teamPlayerSelect === "팀 순위" && 
+      {teamPlayerSelect === "team" && 
       <LeagueRank 
         season={season}
         leagueChoice={leagueChoice} 
         teamPlayerSelect={teamPlayerSelect}/>
       }
-      {teamPlayerSelect === "개인 순위" && 
+      {teamPlayerSelect === "personal" && 
       <LeagueScoreRank 
         teamPlayerSelect={teamPlayerSelect}
         leagueChoice={leagueChoice}

@@ -12,16 +12,19 @@ interface LeagueYearSelect {
 }
 
 const LeagueYearSelect: React.FC<LeagueYearSelect> = ({ season, handleYearChange }) => {
+  const data = ["2023","2022","2021","2020"];
+
   return (
     <Select onValueChange={handleYearChange} defaultValue={season}>
       <SelectTrigger  className="w-48">
         <SelectValue placeholder="Select seasons" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="2023">2023</SelectItem>
-        <SelectItem value="2022">2022</SelectItem>
-        <SelectItem value="2021">2021</SelectItem>
-        <SelectItem value="2020">2020</SelectItem>
+        {data.map((league) => (
+          <SelectItem value={league}>
+              {league}
+          </SelectItem> 
+        ))}
       </SelectContent>
     </Select>
   )

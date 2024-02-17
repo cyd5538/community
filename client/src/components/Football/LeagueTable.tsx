@@ -33,7 +33,7 @@ const LeagueTable: React.FC<LeagueTableProps> = ({ rankData }) => {
   }
 
   return (
-    <TableRow onClick={handleTeamInfo}>
+    <TableRow className="cursor-pointer hover:bg-slate-100" onClick={handleTeamInfo}>
       <TableCell className="text-center">{rankData.position}</TableCell>
       <TableCell className="flex items-center gap-2">
         <img src={rankData.team.crest} alt="" className='w-4 h-4 md:w-8 md:h-8'/>

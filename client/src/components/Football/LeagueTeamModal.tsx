@@ -4,6 +4,7 @@ import useTeamModel from '@/store/useTeamModel'
 import { getLeagueTeamInfo, getLeagueTeamSchedule } from '@/lib/footballApi';
 import Loading from '../ui/Loading';
 import { TeamData, ResultSet } from '@/types/foontballTypes';
+import LeagueTeamModalSchedule from './LeagueTeamModalSchedule';
 
 const LeagueTeamModal = () => {
   const teamModal = useTeamModel();
@@ -41,12 +42,14 @@ const LeagueTeamModal = () => {
       <img src={teamInfo?.crest} alt={teamInfo?.name} className='w-12 h-12'/>
     </div>
   )
-  
+
   const bodyContent = (
-    <div>
+    <div className="w-full">
       {loading ?
         <Loading /> :
-        "s"
+        <LeagueTeamModalSchedule 
+          teamSchedule={teamSchedule}
+        />
       }
     </div>
   )

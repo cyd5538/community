@@ -23,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, body, }) => {
           items-center 
           flex 
           overflow-x-hidden 
-          overflow-y-auto 
+          overflow-y-hidden 
           fixed 
           inset-0 
           z-50 
@@ -78,7 +78,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, body, }) => {
                 <AiOutlineClose size={20} />
               </button>
             </div>
-            <div className="relative p-10 flex-auto">
+            <div className="relative p-10 flex-auto overflow-y-auto max-h-screen">
               {body}
             </div>
           </div>

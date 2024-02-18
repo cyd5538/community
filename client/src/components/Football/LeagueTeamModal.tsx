@@ -5,6 +5,7 @@ import { getLeagueTeamInfo, getLeagueTeamSchedule } from '@/lib/footballApi';
 import Loading from '../ui/Loading';
 import { TeamData, ResultSet } from '@/types/foontballTypes';
 import LeagueTeamModalSchedule from './LeagueTeamModalSchedule';
+import LeagueTeamModalSquads from './LeagueTeamModalSquad';
 
 const LeagueTeamModal = () => {
   const teamModal = useTeamModel();
@@ -47,9 +48,14 @@ const LeagueTeamModal = () => {
     <div className="w-full">
       {loading ?
         <Loading /> :
-        <LeagueTeamModalSchedule 
-          teamSchedule={teamSchedule}
-        />
+        <>
+          <LeagueTeamModalSchedule 
+            teamSchedule={teamSchedule}
+          />
+          <LeagueTeamModalSquads 
+            squads={teamInfo?.squad}
+          />
+        </>
       }
     </div>
   )

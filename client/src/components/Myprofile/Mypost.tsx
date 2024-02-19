@@ -1,5 +1,4 @@
 import { PostType } from "@/types/types"
-
 import { AiFillEdit } from "react-icons/ai"
 import MypostDelbtn from "./MypostDelbtn"
 import usePostModel from "@/store/userPostModel"
@@ -44,7 +43,7 @@ const Mypost: React.FC<MypostProp> = ({ post }) => {
           null
         }
         {post.video ?
-          <video className="w-auto h-auto mx-auto mb-2" src={post.video} idth={500} height={300} controls/> :
+          <video className="w-auto h-auto mx-auto mb-2" src={post.video} width={500} height={300} controls/> :
           null
         }
         <span className="pb-2">{post.comments.length}개의 댓글</span>

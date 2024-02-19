@@ -54,11 +54,12 @@ const Myposts: React.FC<MyPostProps> = ({ user }) => {
 
   return (
     <div className='flex flex-col gap-4'>
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 gap-y-4 mt-10 pr-2'>
+      <h2 className='mt-6 text-lg font-semibold'> 총 {data?.length}개의 글이 있습니다.</h2>
+    <div className='grid grid-cols-1 gap-4 gap-y-4 mt-4 pr-2'>
       {paginatedData?.map((post: PostType) => (
         <Mypost post={post} key={post._id} />
-        ))}
-    </div>
+      ))}
+    </div>  
       <MypostsPage 
         onPageChange={handlePageChange} 
         totalPages={Math.ceil(data?.length / PAGE_SLICE)} 

@@ -3,7 +3,7 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Myprofile from "./pages/Myprofile"
-import Sidebar from "./components/sidebar/sidebar"
+import Sidebars from "./components/sidebar/Sidebars"
 import Container from "./components/ui/Container"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className="flex">
-      <Sidebar />
+      <Sidebars />
       <Container>
       <ToastContainer />
         <Routes>

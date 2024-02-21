@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { CiMenuBurger } from "react-icons/ci";
 import { CiHome, CiLogin, CiLogout } from "react-icons/ci";
 import { AiTwotoneProfile } from "react-icons/ai";
 import { IoSettings } from "react-icons/io5";
 import { FiMessageSquare } from "react-icons/fi";
 import { IoFootballOutline } from "react-icons/io5";
 import { FaWpforms } from "react-icons/fa6";
+import { CiSearch } from "react-icons/ci";
+import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
+
 import useAuth from "@/store/useAuth";
 import Sidebar from "./Sidebar";
 
@@ -17,7 +19,8 @@ const Sidebars = () => {
     { name: "Home", link: "/", icon: CiHome },
     { name: "Chat", link: "/room", icon: FiMessageSquare },
     { name: "League", link: "/football", icon: IoFootballOutline },
-    { name: "Profile", link: "/me", icon: AiTwotoneProfile, margin: true },
+    { name: "Profile", link: "/me", icon: AiTwotoneProfile },
+    { name: "Search", link: "/search", icon: CiSearch, margin: true },
     { name: "Setting", link: "/", icon: IoSettings },
     { name: "Login", link: "/login", icon: CiLogin, margin: true },
     { name: "Logout", link: "/", icon: CiLogout, margin: true, onClick: logout },
@@ -39,20 +42,24 @@ const Sidebars = () => {
   return (
     <header className="flex fixed top-0 left-0 z-40 gap-6">
       <div
-        className={`bg-green-400 min-h-screen ${open ? "w-40" : "w-16"
-          } duration-500 text-black px-4`}
+        className={`bg-green-400 min-h-screen ${open ? "w-40" : "w-[70px]"
+          } duration-500 text-black px-4 relative`}
       >
-        <div className="py-3 flex justify-end">
-          <CiMenuBurger
-            size={26}
-            className="cursor-pointer"
-            onClick={() => setOpen(!open)}
-          />
+        <div
+          className={`absolute duration-500 top-6 w-8 h-8 flex justify-center 
+          items-center cursor-pointer bg-white rounded-full shadow-lg shadow-green-500/50 
+          ${open ? "left-36" : "left-14"}`}
+          onClick={() => setOpen(!open)}
+        >
+          {open ?
+            <IoIosArrowRoundBack size={26} /> :
+            <IoIosArrowRoundForward size={26} />
+          }
         </div>
         <nav>
-          <ul className="mt-4 flex flex-col gap-4 relative">
+          <ul className="mt-16 flex flex-col gap-4 relative">
             {filteredMenus?.map((menu, i) => (
-              <Sidebar 
+              <Sidebar
                 key={menu.name}
                 menu={menu}
                 open={open}

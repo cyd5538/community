@@ -14,11 +14,13 @@ const SearchResult = () => {
   const SearchQuery = searchParams.get("query")
   const query = SearchQuery?.match(/([^?]+)/) || "";
   const page = SearchQuery?.match(/page=(\d+)/);
-
+  
   const postQuery = useQuery({
     queryKey: ['search', query], 
-    queryFn: () => getSearchByPost(query[0] as string)
+    queryFn: () => getSearchByPost(query[0] as string),
+    enabled: !!query[0],
   });
+
   const userQuery = useQuery({ queryKey: ['user'], queryFn: getMe })
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -41,21 +43,27 @@ const SearchResult = () => {
     return <Loading />
   }
 
-  if(postQuery.data.length === 0) {
+  if(postQuery.data?.length === 0) {
     return <div>검색 결과가 없습니다.</div>
   }
 
   return (
     <>
-    <div className='pb-4'>{postQuery.data?.length}개의 검색결과가 나왔습니다.</div>
-      {paginatedData?.map((post: PostType) => (
-        <Post key={post._id} data={post} user={userQuery.data} />
-      ))}
-      <SearchPage 
-        onPageChange={handlePageChange} 
-        totalPages={Math.ceil(postQuery.data?.length / PAGE_SLICE)} 
-        currentPage={currentPage} 
-      />
+      {postQuery.data?.length > 0 ?
+        <>
+          <div className='pb-4'>{postQuery.data?.length}개의 검색결과가 나왔습니다.</div>
+          {paginatedData?.map((post: PostType) => (
+            <Post key={post._id} data={post} user={userQuery.data} />
+          ))}
+          <SearchPage 
+            onPageChange={handlePageChange} 
+            totalPages={Math.ceil(postQuery.data?.length / PAGE_SLICE)} 
+            currentPage={currentPage} 
+          /> 
+        </>
+        :
+        null
+      }
     </>
   )
 }

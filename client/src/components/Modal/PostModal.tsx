@@ -95,7 +95,7 @@ const PostModal = () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <div className='flex gap-4'>
+      <div className='flex flex-col gap-2 relative'>
         <PostModalImage
           setFile={setFile}
         />

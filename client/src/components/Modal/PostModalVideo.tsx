@@ -40,7 +40,7 @@ const PostModalVideo: React.FC<PostModalVideoProps> = ({ setVideo }) => {
   }
 
   return (
-    <div className="VideoInput">
+    <div className="">
       <input
         ref={inputRef}
         className="hidden"
@@ -49,9 +49,9 @@ const PostModalVideo: React.FC<PostModalVideoProps> = ({ setVideo }) => {
         accept=".mov,.mp4"
       />
       {videoPreview ? (
-        <div className="realtive">
+        <div className="relative">
           <video
-            className="w-36 h-36"
+            className="w-ful h-auto"
             controls
             src={videoPreview}
           />
@@ -63,7 +63,7 @@ const PostModalVideo: React.FC<PostModalVideoProps> = ({ setVideo }) => {
         </div>
       ) : 
       <>
-        <CiVideoOn className="text-2xl cursor-pointer" onClick={handleChoose} />
+        <CiVideoOn className="text-2xl cursor-pointer absolute bottom-[-30px] left-8" onClick={handleChoose} />
       </>
       }
     </div>

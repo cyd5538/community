@@ -59,7 +59,7 @@ const PostModalImage: React.FC<PostModalImageProps> = ({ setFile }) => {
       />
       {filePreview ?
         <div className='relative w-full'>
-          <img className='w-36 h-36 object-cover' src={filePreview} alt="File Preview" />
+          <img className='w-full h-auto object-cover' src={filePreview} alt="File Preview" />
           <div
             className='text-white absolute top-2 right-4 p-1 rounded-full bg-blue-300 cursor-pointer hover:bg-blue-500'
             onClick={imageDelete}>
@@ -67,7 +67,7 @@ const PostModalImage: React.FC<PostModalImageProps> = ({ setFile }) => {
           </div>
         </div> :
         <>
-          <CiImageOff className="text-2xl cursor-pointer" onClick={handleButtonClick} />
+          <CiImageOff className="text-2xl cursor-pointer absolute bottom-[-30px] left-0" onClick={handleButtonClick} />
         </>
       }
     </div>

@@ -34,7 +34,7 @@ export const getMyInfo = async () => {
   return response.data;
 };
 
-export const profieUpdate = async (
+export const profileUpdate = async (
   nickname: string | undefined,
   file: File | null,
   token: string | null

@@ -4,14 +4,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import MyInfoImage from './MyInfoImage';
-import { profieUpdate, status401Error, status402Error } from '@/lib/userApi';
+import { profileUpdate, status401Error, status402Error } from '@/lib/userApi';
 import axios from 'axios';
 import customToast from '../ui/customToast';
 import Loading from '../ui/Loading';
 import { UserType } from '@/types/types';
 
 interface MyInfoProps {
-  user: UserType | undefined
+  user?: UserType
   isLoading: boolean;
 }
 
@@ -38,18 +38,22 @@ const MyInfo:React.FC<MyInfoProps> = ({user, isLoading}) => {
     try {
       setLoading(true);
       
-      const response = await profieUpdate(nickname, file,  token);
+      const response = await profileUpdate(nickname, file,  token);
       customToast("succes", "프로필이 성공적으로 변경되었습니다.")
       return response;
     } catch (error: unknown) {
-      if(axios.isAxiosError(error)){
-        if(error?.response?.status === 401) {
-          status401Error()
-        }
-        customToast("error", error?.response?.data.message)
-      }
+      handleRequestError(error)
     } finally {
       setLoading(false);
+    }
+  };
+  
+  const handleRequestError = (error: unknown) => {
+    if (axios.isAxiosError(error)) {
+      if (error?.response?.status === 401) {
+        status401Error();
+      }
+      customToast("error", error?.response?.data.message);
     }
   };
 

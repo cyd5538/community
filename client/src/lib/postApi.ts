@@ -102,7 +102,7 @@ export const handlePostUpdate = async (
   }
 };
 
-export const getMyposts = async (userId: string) => {
+export const getMyposts = async (userId: string | undefined) => {
   const token = localStorage.getItem("token");
   const config = {
     headers: {

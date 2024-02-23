@@ -19,10 +19,9 @@ const Myposts: React.FC<MyPostProps> = ({ user }) => {
   const page = SearchQuery?.match(/page=(\d+)/);
 
   const getMypost = async () => {
-    const getUserId = user?.id
-    const response = await getMyposts(getUserId as string)
-    return response
-  }
+    const response = await getMyposts(user?.id);
+    return response;
+  };
 
   const { isLoading, data } = useQuery({
     queryKey: ["post", "mypost", user],

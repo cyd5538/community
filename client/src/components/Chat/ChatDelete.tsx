@@ -27,7 +27,7 @@ const ChatDelete:React.FC<ChatDeleteProp> = ({id}) => {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await deleteRoom(id as string,token)
+      const response = await deleteRoom(id,token)
      
       customToast("success", response.message)
       navigate("/")

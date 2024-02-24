@@ -37,7 +37,7 @@ const RoomModal = () => {
     try {
       setLoading(true);
       if(user) {
-        const response = await postRoom(title, user.id as string, maxpeople, token);
+        const response = await postRoom(title, user.id, maxpeople, token);
         setTitle("")
         setMaxpeople(3)
         navigate(`/room/${response.room._id}`)

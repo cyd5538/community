@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:5000/api/rooms';
 
 export const postRoom = async (
   title: string, 
-  owner: string, 
+  owner: string | undefined, 
   maxMembers: number, 
   token: string | null
 ) => {
@@ -34,7 +34,7 @@ export const getRooms = async () => {
 };
 
 export const deleteRoom = async (
-  id: string,
+  id: string | undefined,
   token: string | null
 ) => {
   const config = {

@@ -85,7 +85,7 @@ const PostCommentList: React.FC<PostCommentListProps> = ({ com, userId }) => {
                     userId={userId}
                     likneLength={com.disLikes.length}
                   />
-                  {format(parseISO(com.user.createdAt), 'MM월 dd일 HH:mm')}
+                  {format(parseISO(com.createdAt), 'MM월 dd일 HH:mm')}
                 </div>
                 {userId === com.user._id && (
                   <div className="flex gap-2 text-xs p-2 justify-end">

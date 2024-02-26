@@ -68,7 +68,7 @@ const PostCommentForm:React.FC<PostCommentFormProp> = ({ userId, postId }) => {
       <BsEmojiNeutral className='cursor-pointer' onClick={() => setShowEmoji(!showEmoji)} size={30} />
       {showEmoji && (
         <div className='absolute top-10 right-16 z-40'>
-          <Picker data={data} onEmojiSelect={handleEmojiSelect} />
+          <Picker locale="kr" data={data} onEmojiSelect={handleEmojiSelect} />
         </div>
       )}
       <Button>댓글</Button>

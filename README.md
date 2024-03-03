@@ -1,4 +1,5 @@
-![쿼리스트링](https://github.com/cyd5538/community/assets/91642972/e49e82e2-5d08-4d49-96d3-faaddeef1a9e)# Football Community
+# Football Community
+
 <div align="center">
     <img src="https://github.com/cyd5538/community/assets/91642972/738d3135-d09f-4f58-9683-f180c61fe590" alt="image" width="800">
 </div>
@@ -47,6 +48,7 @@
 | 무한 스크롤      | React-query를 사용하여 무한 스크롤을 구현합니다.                 | [관련 포스트](https://yjin.vercel.app/posts/react-query-infinite) |
 | 유효성 체크      | React-hook-form과 Zod를 활용하여 사용자 입력값의 유효성을 체크합니다. | [관련 포스트](https://yjin.vercel.app/posts/zod-reacthookform) |
 | 정렬 기능        | 게시물을 최신순, 댓글순, 좋아요순으로 가져올 수 있습니다.              | |
+| 정렬 기능        | 게시물을 최신순, 댓글순, 좋아요순으로 가져올 수 있습니다.              | |
 | 실시간 채팅      | Socket을 활용하여 실시간 채팅 기능을 구현합니다.                    |  |
 | 데이터 필터링    | URL의 쿼리 스트링을 사용하여 특정 데이터를 가져오는 기능을 추가합니다. |  |
 
@@ -60,16 +62,16 @@
 |![쿼리스트링](https://github.com/cyd5538/community/assets/91642972/10a5504d-7bc5-46e3-a07e-6b646f16da66) | ![채팅](https://github.com/cyd5538/community/assets/91642972/f85b42d7-29ee-4e4d-80c1-e3de72708506)|
 | 검색기능         |  프로필 수정                                                 |
 |![검색기능](https://github.com/cyd5538/community/assets/91642972/32783aba-6c7c-4a6e-84bd-734e70db0085) | ![프로필-바꾸기](https://github.com/cyd5538/community/assets/91642972/89c65b31-2bce-4740-adcf-8d821aff96f4) |
-| 내 글 수정         |                                                  |
-|![글-수정하기](https://github.com/cyd5538/community/assets/91642972/6f73e115-68f3-4414-a4aa-3e77406542b3) ||
-
-
+| 내 글 수정         | 댓글 작성,수정,삭제, 좋아요                                                 |
+|![글-수정하기](https://github.com/cyd5538/community/assets/91642972/6f73e115-68f3-4414-a4aa-3e77406542b3) |![댓글](https://github.com/cyd5538/community/assets/91642972/5f006cfa-cef7-4be5-92ab-7357fe6c2e11)|
+| 팀 정보,일정        |                                             |
+|![팀정보](https://github.com/cyd5538/community/assets/91642972/7162effa-575c-46d5-a00e-b7562d4e7b0b)||
 
 
 
 
 ## 아키텍쳐
-### 폴더 구조
+### 클라이언트 폴더 구조
 ```
 \---src
     |   App.css

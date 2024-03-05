@@ -7,8 +7,8 @@ import { LeagueDatatable } from '@/types/foontballTypes'
 import HomeLeagueSelect from './HomeLeagueSelect'
 import HomeLeagueTableHead from './HomeLeagueTableHead'
 import HomeLeagueTableBody from './HomeLeagueTableBody'
-import { Loader } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Loader, Loader2 } from 'lucide-react'
+import HomeLeaguePlusbtn from './HomeLeaguePlusbtn'
 
 const HomeLeagueTable = () => {
   const [leagueChoice, setLeagueChoice] = useState<string>(leagueData[0].league);
@@ -26,10 +26,17 @@ const HomeLeagueTable = () => {
     }
   }
 
-  const { isLoading ,data } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ['football', leagueChoice],
     queryFn: getData
   });
+
+  if(isLoading) {
+    return (
+    <div className='w-full h-96 flex justify-center items-center'>
+      <Loader2 className='animate-spin'/>
+    </div>)
+  }
 
   return (
     <div className='overflow-hidden flex flex-col justify-center items-start border-gray-10 border-[1px] p-2'>
@@ -40,41 +47,24 @@ const HomeLeagueTable = () => {
         onChange={handleLeagueChange}
       >
         {leagueData.map((data) => (
-          <HomeLeagueSelect 
+          <HomeLeagueSelect
             data={data}
             key={data.name}
           />
         ))}
       </select>
-      {isLoading ? 
-      <div className="animate-spin w-full h-60 flex justify-center items-center">
-        <Loader />
-      </div>
-      :
-        <Table>
-          <HomeLeagueTableHead />
-          {data?.slice(0,10).map((rankData: LeagueDatatable) => 
-            <HomeLeagueTableBody 
-              rankData={rankData}
-              key={rankData.team.id}
-            />
-          )}
-        </Table>
-      }
-      <div className='w-full flex justify-center py-2'>
-        <button
-          className='px-2 py-1 bg-green-400 text-white cursor-pointer rounded-md'
-        >
-          <Link 
-            to={{
-              pathname: '/football',
-              search: `?league=${leagueChoice}`,
-            }}
-          >
-            순위 더 보러가기
-          </Link>
-        </button>
-      </div>  
+      <Table>
+        <HomeLeagueTableHead />
+        {data?.slice(0, 10).map((rankData: LeagueDatatable) =>
+          <HomeLeagueTableBody
+            rankData={rankData}
+            key={rankData.team.id}
+          />
+        )}
+      </Table>
+      <HomeLeaguePlusbtn 
+        leagueChoice={leagueChoice}
+      />
     </div>
   )
 }

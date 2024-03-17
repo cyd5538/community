@@ -7,13 +7,6 @@ import path from "path"
 
 export default defineConfig({
   plugins: [react()],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    pool: 'forks',
-    setupFiles: "./src/test/setup.ts",
-    css: true,
-  },
   server: {
     proxy: {
       '/api': {
@@ -22,6 +15,13 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    pool: 'forks',
+    setupFiles: "./src/test/setup.ts",
+    css: true,
   },
   resolve: {
     alias: {

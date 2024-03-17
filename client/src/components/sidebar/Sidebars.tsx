@@ -14,7 +14,7 @@ import Sidebar from "./Sidebar";
 const Sidebars = () => {
   const { user, logout } = useAuth()
   const [open, setOpen] = useState(false);
-
+  
   const menus = [
     { name: "Home", link: "/", icon: CiHome },
     { name: "Chat", link: "/room", icon: FiMessageSquare },
@@ -42,18 +42,27 @@ const Sidebars = () => {
   return (
     <header className="flex fixed top-0 left-0 z-40 gap-6">
       <div
+        data-testid="sidebar"
         className={`bg-green-400 min-h-screen ${open ? "w-40" : "w-[70px]"
           } duration-500 text-black px-4 relative`}
       >
         <div
+          data-testid="toggle-button"
           className={`absolute duration-500 top-6 w-8 h-8 flex justify-center 
           items-center cursor-pointer bg-white rounded-full shadow-lg shadow-green-500/50 
           ${open ? "left-36" : "left-14"}`}
           onClick={() => setOpen(!open)}
         >
           {open ?
-            <IoIosArrowRoundBack size={26} /> :
-            <IoIosArrowRoundForward size={26} />
+            <IoIosArrowRoundBack 
+              data-testid="arrow-roundBack-icon" 
+              size={26} 
+            /> 
+            :
+              <IoIosArrowRoundForward 
+              size={26}
+              data-testid="arrow-roundForward-icon" 
+            />
           }
         </div>
         <nav>

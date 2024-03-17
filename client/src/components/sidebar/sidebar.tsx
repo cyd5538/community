@@ -21,7 +21,6 @@ const Sidebar: React.FC<SidebarProp> = ({ menu, i, open }) => {
   return (
     <li
       onClick={menu.onClick}
-      key={i}
     >
       {menu.link ?
         <Link

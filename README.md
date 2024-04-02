@@ -77,147 +77,171 @@
 ### 클라이언트 폴더 구조
 ```
 \---src
-    |   App.css
-    |   App.tsx
-    |   firebase.ts
-    |   index.css
-    |   main.tsx
-    |   vite-env.d.ts
-    |
-    +---components // 페이지별로 폴더 만들어 구조화
-    |   |   ProtectedRoute.tsx
-    |   |
-    |   +---Chat
-    |   |       ChatContainer.tsx
-    |   |       ChatDelete.tsx
-    |   |       ChatInfo.tsx
-    |   |       ChatInput.tsx
-    |   |       ChatTitle.tsx
-    |   |       ChatUser.tsx
-    |   |
-    |   +---Football
-    |   |       LeagueRank.tsx
-    |   |       LeagueRankSelect.tsx
-    |   |       LeagueScoreRank.tsx
-    |   |       LeagueScoreTable.tsx
-    |   |       LeagueScoreTableHead.tsx
-    |   |       LeagueTable.tsx
-    |   |       LeagueTableHead.tsx
-    |   |       LeagueTeamModal.tsx
-    |   |       LeagueTeamModalSchedule.tsx
-    |   |       LeagueTeamModalSquad.tsx
-    |   |       LeagueTeamModalSquadSelect.tsx
-    |   |       LeagueTeamPlayerSelect.tsx
-    |   |       LeagueTeamScheduleCarousel.tsx
-    |   |       LeagueTeamSquadBody.tsx
-    |   |       LeagueTeamSquadHead.tsx
-    |   |       LeagueYearSelect.tsx
-    |   |
-    |   +---Home
-    |   |       Allposts.tsx
-    |   |       HomeLeagueSelect.tsx
-    |   |       HomeLeagueTable.tsx
-    |   |       HomeLeagueTableBody.tsx
-    |   |       HomeLeagueTableHead.tsx
-    |   |       Post.tsx
-    |   |       PostComment.tsx
-    |   |       PostCommentDelBtn.tsx
-    |   |       PostCommentDisLike.tsx
-    |   |       PostCommentForm.tsx
-    |   |       PostCommentLike.tsx
-    |   |       PostCommentList.tsx
-    |   |       PostCommentUpdateBtn.tsx
-    |   |       PostDisLike.tsx
-    |   |       PostLike.tsx
-    |   |       Posts.tsx
-    |   |       Searchbar.tsx
-    |   |
-    |   +---Modal
-    |   |       PostModal.tsx
-    |   |       PostModalImage.tsx
-    |   |       PostModalVideo.tsx
-    |   |
-    |   +---Myprofile
-    |   |       MyInfo.tsx
-    |   |       MyInfoImage.tsx
-    |   |       Mypost.tsx
-    |   |       MypostComment.tsx
-    |   |       MypostDelbtn.tsx
-    |   |       Myposts.tsx
-    |   |       MypostsPage.tsx
-    |   |       MyprofileTab.tsx
-    |   |
-    |   +---Room
-    |   |       RoomCard.tsx
-    |   |       RoomCreateBtn.tsx
-    |   |       RoomList.tsx
-    |   |       RoomModal.tsx
-    |   |
-    |   +---search
-    |   |       SearchPage.tsx
-    |   |       SearchResult.tsx
-    |   |
-    |   +---sidebar
-    |   |       Sidebar.tsx
-    |   |       Sidebars.tsx
-    |   |
-    |   \---ui // shadn/ui 파일
-    |           alert-dialog.tsx
-    |           button.tsx
-    |           card.tsx
-    |           carousel.tsx
-    |           Container.tsx
-    |           customToast.tsx
-    |           input.tsx
-    |           label.tsx
-    |           Loading.tsx
-    |           Modal.tsx
-    |           pagination.tsx
-    |           ScrollTop.tsx
-    |           select.tsx
-    |           sheet.tsx
-    |           table.tsx
-    |           tabs.tsx
-    |           textarea.tsx
-    |
-    +---hook // 커스텀 훅
-    |       getUser.tsx
-    |       useScroll.tsx
-    |       useThrottle.tsx
-    |       useWindowWidth.tsx
-    |
-    +---lib // api 파일
-    |       commentApi.ts
-    |       footballApi.ts
-    |       likeApi.ts
-    |       postApi.ts
-    |       roomApi.ts
-    |       socket.ts
-    |       userApi.ts
-    |       utils.ts
-    |
-    +---pages // 페이지
-    |       Chat.tsx
-    |       ChatRoom.tsx
-    |       Football.tsx
-    |       Home.tsx
-    |       Login.tsx
-    |       Myprofile.tsx
-    |       Register.tsx
-    |       Search.tsx
-    |
-    +---store // 전역관리
-    |       useAuth.tsx // 인증 상태 관리
-    |       useRoomModel.tsx // 채팅방 모달 상태 관리
-    |       userPostModel.tsx // 게시물 모달 상태 관리
-    |       useTeamModel.tsx // 팀 모달 상태 관리 
-    |
-    +---types // 타입스크립트 타입
-    |       etc.ts 
-    |       foontballTypes.ts
-    |       types.ts
-    |
-    \---utils // 기타
-            formSchema.ts  // 회원가입 양식 스키마
-            league.ts // 리그 데이터
+📦src
+ ┣ 📂components
+ ┃ ┣ 📂Chat
+ ┃ ┃ ┣ 📜ChatContainer.tsx
+ ┃ ┃ ┣ 📜ChatDelete.tsx
+ ┃ ┃ ┣ 📜ChatInfo.tsx
+ ┃ ┃ ┣ 📜ChatInput.tsx
+ ┃ ┃ ┣ 📜ChatTitle.tsx
+ ┃ ┃ ┗ 📜ChatUser.tsx
+ ┃ ┣ 📂Football
+ ┃ ┃ ┣ 📜LeagueRank.tsx
+ ┃ ┃ ┣ 📜LeagueRankSelect.tsx
+ ┃ ┃ ┣ 📜LeagueScoreRank.tsx
+ ┃ ┃ ┣ 📜LeagueScoreTable.tsx
+ ┃ ┃ ┣ 📜LeagueScoreTableHead.tsx
+ ┃ ┃ ┣ 📜LeagueTable.tsx
+ ┃ ┃ ┣ 📜LeagueTableHead.tsx
+ ┃ ┃ ┣ 📜LeagueTeamModal.tsx
+ ┃ ┃ ┣ 📜LeagueTeamModalSchedule.tsx
+ ┃ ┃ ┣ 📜LeagueTeamModalSquad.tsx
+ ┃ ┃ ┣ 📜LeagueTeamModalSquadSelect.tsx
+ ┃ ┃ ┣ 📜LeagueTeamPlayerSelect.tsx
+ ┃ ┃ ┣ 📜LeagueTeamScheduleCarousel.tsx
+ ┃ ┃ ┣ 📜LeagueTeamSquadBody.tsx
+ ┃ ┃ ┣ 📜LeagueTeamSquadHead.tsx
+ ┃ ┃ ┗ 📜LeagueYearSelect.tsx
+ ┃ ┣ 📂Home
+ ┃ ┃ ┣ 📜Allposts.tsx
+ ┃ ┃ ┣ 📜HomeLeagueSelect.tsx
+ ┃ ┃ ┣ 📜HomeLeagueTable.tsx
+ ┃ ┃ ┣ 📜HomeLeagueTableBody.tsx
+ ┃ ┃ ┣ 📜HomeLeagueTableHead.tsx
+ ┃ ┃ ┣ 📜Post.tsx
+ ┃ ┃ ┣ 📜PostComment.tsx
+ ┃ ┃ ┣ 📜PostCommentDelBtn.tsx
+ ┃ ┃ ┣ 📜PostCommentDisLike.tsx
+ ┃ ┃ ┣ 📜PostCommentForm.tsx
+ ┃ ┃ ┣ 📜PostCommentLike.tsx
+ ┃ ┃ ┣ 📜PostCommentList.tsx
+ ┃ ┃ ┣ 📜PostCommentUpdateBtn.tsx
+ ┃ ┃ ┣ 📜PostDisLike.tsx
+ ┃ ┃ ┣ 📜PostLike.tsx
+ ┃ ┃ ┣ 📜Posts.tsx
+ ┃ ┃ ┗ 📜Searchbar.tsx
+ ┃ ┣ 📂Modal
+ ┃ ┃ ┣ 📜PostModal.tsx
+ ┃ ┃ ┣ 📜PostModalImage.tsx
+ ┃ ┃ ┗ 📜PostModalVideo.tsx
+ ┃ ┣ 📂Myprofile
+ ┃ ┃ ┣ 📜MyInfo.tsx
+ ┃ ┃ ┣ 📜MyInfoImage.tsx
+ ┃ ┃ ┣ 📜Mypost.tsx
+ ┃ ┃ ┣ 📜MypostComment.tsx
+ ┃ ┃ ┣ 📜MypostDelbtn.tsx
+ ┃ ┃ ┣ 📜Myposts.tsx
+ ┃ ┃ ┣ 📜MypostsPage.tsx
+ ┃ ┃ ┗ 📜MyprofileTab.tsx
+ ┃ ┣ 📂Room
+ ┃ ┃ ┣ 📜RoomCard.tsx
+ ┃ ┃ ┣ 📜RoomCreateBtn.tsx
+ ┃ ┃ ┣ 📜RoomList.tsx
+ ┃ ┃ ┗ 📜RoomModal.tsx
+ ┃ ┣ 📂search
+ ┃ ┃ ┣ 📜SearchPage.tsx
+ ┃ ┃ ┗ 📜SearchResult.tsx
+ ┃ ┣ 📂sidebar
+ ┃ ┃ ┣ 📜Sidebar.tsx
+ ┃ ┃ ┗ 📜Sidebars.tsx 
+ ┃ ┣ 📂ui // shadn/ui 파일
+ ┃ ┃ ┣ 📜alert-dialog.tsx
+ ┃ ┃ ┣ 📜button.tsx
+ ┃ ┃ ┣ 📜card.tsx
+ ┃ ┃ ┣ 📜carousel.tsx
+ ┃ ┃ ┣ 📜Container.tsx
+ ┃ ┃ ┣ 📜customToast.tsx
+ ┃ ┃ ┣ 📜input.tsx
+ ┃ ┃ ┣ 📜label.tsx
+ ┃ ┃ ┣ 📜Loading.tsx
+ ┃ ┃ ┣ 📜Modal.tsx
+ ┃ ┃ ┣ 📜pagination.tsx
+ ┃ ┃ ┣ 📜ScrollTop.tsx
+ ┃ ┃ ┣ 📜select.tsx
+ ┃ ┃ ┣ 📜sheet.tsx
+ ┃ ┃ ┣ 📜table.tsx
+ ┃ ┃ ┣ 📜tabs.tsx
+ ┃ ┃ ┗ 📜textarea.tsx
+ ┃ ┗ 📜ProtectedRoute.tsx
+ ┣ 📂hook // 커스텀 훅
+ ┃ ┣ 📜getUser.tsx
+ ┃ ┣ 📜useScroll.tsx
+ ┃ ┣ 📜useThrottle.tsx
+ ┃ ┗ 📜useWindowWidth.tsx
+ ┣ 📂lib // api 파일
+ ┃ ┣ 📜commentApi.ts
+ ┃ ┣ 📜footballApi.ts
+ ┃ ┣ 📜likeApi.ts
+ ┃ ┣ 📜postApi.ts
+ ┃ ┣ 📜roomApi.ts
+ ┃ ┣ 📜socket.ts
+ ┃ ┣ 📜userApi.ts
+ ┃ ┗ 📜utils.ts
+ ┣ 📂pages // 페이지
+ ┃ ┣ 📜Chat.tsx
+ ┃ ┣ 📜ChatRoom.tsx
+ ┃ ┣ 📜Football.tsx
+ ┃ ┣ 📜Home.tsx
+ ┃ ┣ 📜Login.tsx
+ ┃ ┣ 📜Myprofile.tsx
+ ┃ ┣ 📜Register.tsx
+ ┃ ┗ 📜Search.tsx
+ ┣ 📂store  // 전역관리
+ ┃ ┣ 📜useAuth.tsx // 인증 상태 관리
+ ┃ ┣ 📜useRoomModel.tsx // 채팅방 모달 상태 관리
+ ┃ ┣ 📜userPostModel.tsx // 게시물 모달 상태 관리
+ ┃ ┗ 📜useTeamModel.tsx // 팀 모달 상태 관리 
+ ┣ 📂types // 타입스크립트 타입
+ ┃ ┣ 📜etc.ts
+ ┃ ┣ 📜foontballTypes.ts
+ ┃ ┗ 📜types.ts
+ ┣ 📂utils // 기타
+ ┃ ┣ 📜formSchema.ts  // 회원가입 양식 스키마
+ ┃ ┗ 📜league.ts // 리그 데이터
+ ┣ 📜App.css
+ ┣ 📜App.tsx
+ ┣ 📜firebase.ts
+ ┣ 📜index.css
+ ┣ 📜main.tsx
+ ┗ 📜vite-env.d.ts
+```
+
+### 백엔드 폴더 구조
+```
+ ┣ 📦config
+ ┃ ┗ 📜db.js
+ ┣ 📦controller
+ ┃ ┣ 📜chatController.js
+ ┃ ┣ 📜commentController.js
+ ┃ ┣ 📜disLikeController.js
+ ┃ ┣ 📜footballController.js
+ ┃ ┣ 📜likeController.js
+ ┃ ┣ 📜postController.js
+ ┃ ┣ 📜roomController.js
+ ┃ ┣ 📜teamController.js
+ ┃ ┗ 📜userController.js
+📦middlewear
+ ┗ 📜authMiddlewear.js
+ ┣ 📦models
+ ┃ ┣ 📜chatModel.js
+ ┃ ┣ 📜commentModel.js
+ ┃ ┣ 📜disLikeModel.js
+ ┃ ┣ 📜likeModel.js
+ ┃ ┣ 📜postModel.js
+ ┃ ┣ 📜roomModel.js
+ ┃ ┗ 📜userModel.js
+ ┣ 📂routes
+ ┃ ┣ 📜commentRoute.js
+ ┃ ┣ 📜dislikeRoute.js
+ ┃ ┣ 📜footballRoute.js
+ ┃ ┣ 📜likeRoute.js
+ ┃ ┣ 📜postRoutes.js
+ ┃ ┣ 📜roomRoute.js
+ ┃ ┣ 📜teamRoute.js
+ ┃ ┗ 📜userRoutes.js
+ ┣ 📜.env
+ ┣ 📜index.js
+ ┣ 📜package-lock.json
+ ┗ 📜package.json
 ```
